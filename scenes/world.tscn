@@ -1,12 +1,56 @@
-[gd_scene load_steps=8 format=4 uid="uid://5y0jwdp2fykd"]
+[gd_scene load_steps=20 format=4 uid="uid://5y0jwdp2fykd"]
 
 [ext_resource type="Texture2D" uid="uid://e2mbfuf6d2m0" path="res://assets/images/tilesheetA.png" id="1_nnsk1"]
+[ext_resource type="Gradient" uid="uid://ixmfmbjkop10" path="res://assets/scenes/grass_gradient.tres" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://1l2raaklf5gf" path="res://scenes/player.tscn" id="2_rwgxs"]
+[ext_resource type="Shader" uid="uid://cl7fr4cgjxc0k" path="res://scenes/world.gdshader" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://dohegk7v3dqh1" path="res://scenes/enemy.tscn" id="5_71j4m"]
+
+[sub_resource type="MultiMesh" id="MultiMesh_4wyf3"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k0juu"]
+gradient = ExtResource("2_k0juu")
+fill_to = Vector2(0.9557522, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
+shader = ExtResource("3_4wyf3")
+shader_parameter/wind = true
+shader_parameter/wind_multiplier = 0.2
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qfnet"]
+gradient = ExtResource("2_k0juu")
+height = 256
+fill_from = Vector2(0.49532712, 1)
+fill_to = Vector2(0.4906542, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e5uuo"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_rwgxs"]
 tile_data = PackedInt32Array(0, 327680, 0, 65536, 393216, 0, 131072, 262144, 0, 196608, 262144, 0, 262144, 262144, 0, 327680, 262144, 0, 393216, 393216, 0, 458752, 196608, 0, 524288, 393216, 0, 458753, 0, 0, 524289, 196608, 0, 458754, 0, 0, 524290, 196608, 0, 458755, 0, 0, 524291, 196608, 0, 458756, 0, 0, 524292, 196608, 0, 458757, 0, 0, 524293, 196608, 0, 6, 196608, 0, 65542, 196608, 0, 131078, 196608, 0, 196614, 196608, 0, 262150, 196608, 0, 327686, 196608, 0, 393222, 196608, 0, 458758, 196608, 0)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_71j4m"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_qfnet"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, 5.0390625, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, 5.036045, -8, 8, 8, 8, 8, -8, -8, -8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_i7141"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_4mrxx"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwgxs"]
 texture = ExtResource("1_nnsk1")
@@ -16,12 +60,16 @@ texture = ExtResource("1_nnsk1")
 2:0/0 = 0
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.7985878, -8, 8, 8, 8, 8, -8, -8, -8)
+3:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_71j4m")
 4:0/0 = 0
 4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.7985878, -8, 8, 8, 8, 8, -8, -8, -8)
+4:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_qfnet")
 5:0/0 = 0
 5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.7985878, -8, 8, 8, 8, 8, -8, -8, -8)
+5:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_i7141")
 6:0/0 = 0
 6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 1.7985878, -8, 8, 8, 8, 8, -8, -8, -8)
+6:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_4mrxx")
 7:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_4wyf3"]
@@ -29,13 +77,28 @@ physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 physics_layer_1/collision_layer = 128
 physics_layer_1/collision_mask = 128
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_rwgxs")
 pattern_0 = SubResource("TileMapPattern_rwgxs")
 
 [sub_resource type="Environment" id="Environment_k0juu"]
 fog_enabled = true
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_k0juu"]
+
 [node name="world" type="Node2D"]
+
+[node name="MultiMeshInstance2D" type="MultiMeshInstance2D" parent="."]
+position = Vector2(31, -176.00002)
+scale = Vector2(0.15625, 2.3632813)
+multimesh = SubResource("MultiMesh_4wyf3")
+texture = SubResource("GradientTexture2D_k0juu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_k0juu")
+position = Vector2(31, -76.49999)
+scale = Vector2(0.15625, 0.5976562)
+texture = SubResource("GradientTexture2D_qfnet")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(2, 193)
@@ -54,3 +117,9 @@ environment = SubResource("Environment_k0juu")
 
 [node name="player" parent="." instance=ExtResource("2_rwgxs")]
 position = Vector2(24, -23)
+
+[node name="infected" parent="." instance=ExtResource("5_71j4m")]
+position = Vector2(178, -16)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_k0juu")

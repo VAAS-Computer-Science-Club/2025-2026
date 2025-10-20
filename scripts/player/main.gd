@@ -14,6 +14,18 @@ var health = 5
 var last_health = 5
 var main
 var last_direction = 0
+enum directions {
+	up,
+	down,
+	left,
+	right
+}
+var slash_positions = { 
+	directions.right: Vector2(17,0),
+	directions.left: Vector2(-17,0),
+	directions.up: Vector2(0,-18),
+	directions.down: Vector2(0,18)
+}
 var invincible = false
 var can_move = true
 var took_dmg = false
@@ -21,7 +33,7 @@ var is_jumping = false
 @export var can_dash = true
 var is_dashing = false
 var unlocked_dash = true
-
+var unlocked_jump = false
 func _ready() -> void:
 	spawn = self.global_position
 	root = get_tree().root
@@ -31,6 +43,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	
 	if unlocked_dash and is_on_floor():
 		can_dash = true
 	if took_dmg == true:
@@ -48,10 +61,10 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if (floor_ray.is_colliding() == false or Input.is_action_pressed("ui_accept") == false):
 		is_jumping = false
-	if Input.is_action_pressed("ui_accept") and (is_on_floor() or coyote) and can_move and floor_ray.is_colliding():
+	if Input.is_action_pressed("ui_accept") and (is_on_floor() or coyote) and can_move and floor_ray.is_colliding() and unlocked_jump:
 		velocity.y = JUMP_VELOCITY
 		is_jumping = true
-	if Input.is_action_pressed("ui_accept") and can_move and floor_ray.is_colliding() and is_jumping:
+	if Input.is_action_pressed("ui_accept") and can_move and floor_ray.is_colliding() and is_jumping and unlocked_jump:
 		velocity.y = JUMP_VELOCITY
 		
 	# Get the input direction and handle the movement/deceleration.
@@ -110,30 +123,43 @@ func _on_spike_check_body_entered(body: Node2D) -> void:
 	anim.stop()
 	
 	self.global_position = spawn
-	deduct_health(1)
+	deduct_health(1,true)
 
 
 func jerk_camera():
 	$jerk.play("jerk")
 	
 	
-func deduct_health(value : int):
+func deduct_health(value : int, fade : bool):
 	if (invincible == false):
 		invincible = true
-		can_move = false
+		if (fade):
+			can_move = false
 		health = health - value
 		
 		invincible = true
 		anim.play("invincibility_frames")
-		UI.fade_out()
+		if (fade):
+			UI.fade_out()
 		await get_tree().create_timer(1.5).timeout
 		invincible = false
-		can_move = true
+		if (fade):
+			can_move = true
 
 
 func _on_coyote_area_entered(area: Area2D) -> void:
 	coyote = true
 
+func attack(dir : directions):
+	match dir:
+		directions.up:
+			pass
+		directions.down:
+			pass
+		directions.right:
+			pass
+		directions.left:
+			pass
 
 func _on_coyote_area_exited(area: Area2D) -> void:
 	coyote = false
