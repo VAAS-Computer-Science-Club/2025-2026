@@ -1,10 +1,9 @@
-[gd_scene load_steps=55 format=3 uid="uid://1l2raaklf5gf"]
+[gd_scene load_steps=54 format=3 uid="uid://1l2raaklf5gf"]
 
 [ext_resource type="Texture2D" uid="uid://dkqch7s1dsmyt" path="res://pm.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bkj1smg876r5g" path="res://scripts/player/main.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="3_qhqgy"]
 [ext_resource type="Shader" uid="uid://b2dx3lgnf1qcr" path="res://scenes/player.gdshader" id="4_dqkch"]
-[ext_resource type="Texture2D" uid="uid://kejj5ida2kyr" path="res://assets/images/slash.PNG" id="5_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -241,6 +240,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(25, 6)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
 size = Vector2(14, 16)
 
@@ -364,8 +366,6 @@ radial_velocity_max = 99.99998
 radial_velocity_curve = SubResource("CurveTexture_tuyoq")
 gravity = Vector3(0, 98, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
-
 [node name="player" type="CharacterBody2D" groups=["uninfected"]]
 script = ExtResource("1_g2els")
 
@@ -374,6 +374,12 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fulsm")
 animation = &"walk_side"
 frame_progress = 0.5722827
+
+[node name="Attack_Box" type="Area2D" parent="AnimatedSprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Attack_Box"]
+position = Vector2(22.5, 0)
+shape = SubResource("RectangleShape2D_dqkch")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3vyb7")
@@ -447,15 +453,7 @@ lifetime = 0.4
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_fjrip")
 
-[node name="slash" type="Area2D" parent="."]
-position = Vector2(0, -18)
-
-[node name="Sprite2D" type="Sprite2D" parent="slash"]
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("5_qlg0r")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="slash"]
-shape = SubResource("RectangleShape2D_tuyoq")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="body_entered" from="spike_check" to="." method="_on_spike_check_body_entered"]
 [connection signal="area_entered" from="coyote" to="." method="_on_coyote_area_entered"]
