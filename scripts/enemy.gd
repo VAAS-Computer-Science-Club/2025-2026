@@ -63,9 +63,9 @@ func _on_is_player_near_body_exited(body: Node2D) -> void:
 			target = null
 
 
-func damage():
-	if health - damage < 0:
+func damage(dmg : int):
+	if health - dmg < 0:
 		current_state = states.Dead
 	else:
-		health = health - damage
+		health = health - dmg
 	

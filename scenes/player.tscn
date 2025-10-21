@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bkj1smg876r5g" path="res://scripts/player/main.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="3_qhqgy"]
 [ext_resource type="Animation" uid="uid://biki3q1bor2g8" path="res://Poke.res" id="3_tuyoq"]
-[ext_resource type="Shader" uid="uid://b2dx3lgnf1qcr" path="res://scenes/player.gdshader" id="4_dqkch"]
+[ext_resource type="Shader" path="res://scenes/player.gdshader" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://co0n1fm6h5yub" path="res://scenes/animation_player.gd" id="5_qlg0r"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
@@ -397,6 +397,7 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_fulsm")
 animation = &"walk_side"
 frame_progress = 0.5722827
+flip_h = true
 
 [node name="Attack_Box" type="Area2D" parent="AnimatedSprite2D"]
 

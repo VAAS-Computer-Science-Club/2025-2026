@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var coyote_collider = $coyote
 @onready var floor_ray = $floor_ray
 @onready var atk_anim: AnimationPlayer = $AnimationPlayer
+@onready var atk_collider: CollisionShape2D = $AnimatedSprite2D/Attack_Box/CollisionShape2D
 const SPEED = 100.0
 const JUMP_VELOCITY = -200.0
 var spawn : Vector2
@@ -91,9 +92,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		match direction:
 			1.0:
+				atk_collider.position = Vector2(20,0)
 				sprite.play("walk_side")
 				sprite.flip_h = false
 			-1.0:
+				atk_collider.position = Vector2(-20,0)
 				sprite.play("walk_side")
 				sprite.flip_h = true
 		last_direction = direction
@@ -164,4 +167,4 @@ func _on_coyote_area_exited(area: Area2D) -> void:
 
 func _on_attack_box_area_entered(area: Area2D) -> void:
 	if area.is_in_group("HurtBox"):
-		area.TakeDamage()
+		area.TakeDamage(1)
