@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dohegk7v3dqh1"]
+[gd_scene load_steps=7 format=3 uid="uid://dohegk7v3dqh1"]
 
 [ext_resource type="Texture2D" uid="uid://doju4rcdr8rsg" path="res://assets/images/froggy.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="3_4ra3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(122, 107)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 
 [node name="infected" type="CharacterBody2D" groups=["infected"]]
 script = ExtResource("1_md0e3")
@@ -26,6 +29,12 @@ texture = ExtResource("1_7p1mj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="is_player_near"]
 position = Vector2(0, -43.5)
 shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="HurtBox" type="Area2D" parent="." groups=["HurtBox"]]
+script = ExtResource("3_4ra3w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_md0e3")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

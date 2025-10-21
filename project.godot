@@ -15,6 +15,10 @@ run/main_scene="uid://2mh5x26el6ki"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Attacking="*res://scenes/animation_player.gd"
+
 [global_group]
 
 HurtBox=""

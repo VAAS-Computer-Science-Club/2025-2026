@@ -14,6 +14,8 @@ var health = 5
 var last_health = 5
 var main
 var last_direction = 0
+var attack_unlocked = true
+
 enum directions {
 	up,
 	down,
@@ -66,6 +68,9 @@ func _physics_process(delta: float) -> void:
 		is_jumping = true
 	if Input.is_action_pressed("ui_accept") and can_move and floor_ray.is_colliding() and is_jumping and unlocked_jump:
 		velocity.y = JUMP_VELOCITY
+		
+	if Input.is_action_just_pressed("Attack") and attack_unlocked == true:
+		Attacking.Attacking()
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -150,16 +155,12 @@ func deduct_health(value : int, fade : bool):
 func _on_coyote_area_entered(area: Area2D) -> void:
 	coyote = true
 
-func attack(dir : directions):
-	match dir:
-		directions.up:
-			pass
-		directions.down:
-			pass
-		directions.right:
-			pass
-		directions.left:
-			pass
+
 
 func _on_coyote_area_exited(area: Area2D) -> void:
 	coyote = false
+
+
+func _on_attack_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("HurtBox"):
+		area.TakeDamage()
