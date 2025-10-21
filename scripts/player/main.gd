@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
+	var direction := Input.get_axis("Left", "Right")
 	if (velocity.x == 0):
 		is_dashing = false
 	if direction == 0:
@@ -92,12 +92,12 @@ func _physics_process(delta: float) -> void:
 				sprite.flip_h = true
 		last_direction = direction
 	
-	if direction and can_move and !Input.is_action_just_pressed("dash") and is_dashing == false:
+	if direction and can_move and !Input.is_action_just_pressed("Dash") and is_dashing == false:
 		velocity.x = direction * SPEED
 	else:
-		if (!Input.is_action_just_pressed("dash") and is_dashing == false):
+		if (!Input.is_action_just_pressed("Dash") and is_dashing == false):
 			velocity.x = move_toward(velocity.x, 0, SPEED)
-	if can_dash and Input.is_action_just_pressed("dash"):
+	if can_dash and Input.is_action_just_pressed("Dash"):
 		velocity.x = last_direction * (SPEED * 3)
 		is_dashing = true
 		stop_dash()
