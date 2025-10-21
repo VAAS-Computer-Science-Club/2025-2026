@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var anim = $invincible
 @onready var coyote_collider = $coyote
 @onready var floor_ray = $floor_ray
+@onready var sword_anim: AnimationPlayer = $AnimationPlayer
 const SPEED = 100.0
 const JUMP_VELOCITY = -200.0
 var spawn : Vector2
@@ -70,7 +71,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("Attack") and attack_unlocked == true:
-		Attacking.Attacking()
+		sword_anim.Attack()
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.

@@ -1,4 +1,4 @@
 extends AnimationPlayer
-func Attacking():
-	play("Poke")
-	
+
+func Attack():
+	play("ATK_Poke")

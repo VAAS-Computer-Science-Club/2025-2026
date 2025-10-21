@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dkqch7s1dsmyt" path="res://pm.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bkj1smg876r5g" path="res://scripts/player/main.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="3_qhqgy"]
+[ext_resource type="Animation" uid="uid://biki3q1bor2g8" path="res://Poke.res" id="3_tuyoq"]
 [ext_resource type="Shader" uid="uid://b2dx3lgnf1qcr" path="res://scenes/player.gdshader" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://co0n1fm6h5yub" path="res://scenes/animation_player.gd" id="5_qlg0r"]
 
@@ -367,8 +368,8 @@ radial_velocity_max = 99.99998
 radial_velocity_curve = SubResource("CurveTexture_tuyoq")
 gravity = Vector3(0, 98, 0)
 
-[sub_resource type="Animation" id="Animation_tuyoq"]
-resource_name = "Poke"
+[sub_resource type="Animation" id="Animation_fjrip"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -376,45 +377,6 @@ tracks/0/path = NodePath("AnimatedSprite2D/Attack_Box/CollisionShape2D:disabled"
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/Attack_Box/Polygon2D:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_fjrip"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D/Attack_Box/Polygon2D:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D/Attack_Box/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -423,7 +385,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_smehm"]
 _data = {
-&"Poke": SubResource("Animation_tuyoq"),
+&"ATK_Poke": ExtResource("3_tuyoq"),
 &"RESET": SubResource("Animation_fjrip")
 }
 
@@ -443,10 +405,6 @@ position = Vector2(20, 0)
 scale = Vector2(1, 0.6)
 shape = SubResource("RectangleShape2D_dqkch")
 disabled = true
-
-[node name="Polygon2D" type="Polygon2D" parent="AnimatedSprite2D/Attack_Box"]
-visible = false
-polygon = PackedVector2Array(7, -2, 7, 2, 32, 2, 32, -2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_3vyb7")
@@ -520,7 +478,7 @@ lifetime = 0.4
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_fjrip")
 
-[node name="Attacking" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_smehm")
 }
