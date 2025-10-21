@@ -9,7 +9,7 @@ var target : Node = null
 var dead_sprite = preload("res://assets/images/froggy.png")
 var dead_modulation = Color(0.251, 0.251, 0.251, 1.0)
 var has_died = false
-var health = 5
+var health = 1
 var current_state = states.Alive
 enum states {
 	Alive,
@@ -63,11 +63,7 @@ func _on_is_player_near_body_exited(body: Node2D) -> void:
 			target = null
 
 
-func damage(value : int):
-	var original_mod = sprite.self_modulate
-	sprite.self_modulate = Color(1,1,1,1)
-	await get_tree().create_timer(0.2).timeout
-	sprite.self_modulate = original_mod
+func damage():
 	if health - damage < 0:
 		current_state = states.Dead
 	else:

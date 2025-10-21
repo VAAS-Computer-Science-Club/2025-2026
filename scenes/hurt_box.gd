@@ -1,3 +1,4 @@
 extends Area2D
+@onready var damage: CharacterBody2D = $".."
 func TakeDamage():
-	print("you did it")
+	damage.damage()
