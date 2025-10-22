@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var atk_collider: CollisionShape2D = $AnimatedSprite2D/Attack_Box/CollisionShape2D
 const SPEED = 100.0
 const JUMP_VELOCITY = -200.0
+var attack_cooldown = 0.45
 var spawn : Vector2
 var coyote = false
 var root
@@ -72,7 +73,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		
 	if Input.is_action_just_pressed("Attack") and attack_unlocked == true:
+		attack_unlocked = false
 		atk_anim.Attack()
+		await get_tree().create_timer(attack_cooldown).timeout
+		attack_unlocked = true
 		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -166,5 +170,7 @@ func _on_coyote_area_exited(area: Area2D) -> void:
 
 
 func _on_attack_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtBox"):
+	if area.is_in_group("HurtBox") and $AnimatedSprite2D/Attack_Box/CollisionShape2D.disabled == false:
 		area.TakeDamage(1)
+		atk_anim.stop()
+		$AnimatedSprite2D/Attack_Box/CollisionShape2D.disabled = true

@@ -9,12 +9,13 @@ var target : Node = null
 var dead_sprite = preload("res://assets/images/froggy.png")
 var dead_modulation = Color(0.251, 0.251, 0.251, 1.0)
 var has_died = false
-var health = 1
+var health = 5
 var current_state = states.Alive
 enum states {
 	Alive,
 	Tracking,
-	Dead
+	Dead,
+	Attacking,
 }
 func _physics_process(delta: float) -> void:
 	if is_on_screen and target != null and current_state != states.Dead:
@@ -33,6 +34,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			_on_agent_2d_velocity_computed(new_velocity)
 	if current_state == states.Dead and has_died == false:
+		$CollisionShape2D.disabled = true
 		sprite.texture = dead_sprite
 		sprite.self_modulate = dead_modulation
 		has_died = true
@@ -68,4 +70,7 @@ func damage(dmg : int):
 		current_state = states.Dead
 	else:
 		health = health - dmg
+		sprite.get_material().set_shader_parameter("is_flashing",true)
+		await get_tree().create_timer(0.2).timeout
+		sprite.get_material().set_shader_parameter("is_flashing",false)
 	

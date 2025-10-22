@@ -1,11 +1,17 @@
-[gd_scene load_steps=58 format=3 uid="uid://1l2raaklf5gf"]
+[gd_scene load_steps=60 format=3 uid="uid://1l2raaklf5gf"]
 
 [ext_resource type="Texture2D" uid="uid://dkqch7s1dsmyt" path="res://pm.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bkj1smg876r5g" path="res://scripts/player/main.gd" id="1_g2els"]
+[ext_resource type="Shader" uid="uid://2vdkdc3nmebh" path="res://scenes/player_flash.gdshader" id="2_fjrip"]
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="3_qhqgy"]
 [ext_resource type="Animation" uid="uid://biki3q1bor2g8" path="res://Poke.res" id="3_tuyoq"]
 [ext_resource type="Shader" path="res://scenes/player.gdshader" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://co0n1fm6h5yub" path="res://scenes/animation_player.gd" id="5_qlg0r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_smehm"]
+shader = ExtResource("2_fjrip")
+shader_parameter/is_flashing = false
+shader_parameter/flash_value = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
 atlas = ExtResource("1_3vyb7")
@@ -394,6 +400,7 @@ script = ExtResource("1_g2els")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_smehm")
 sprite_frames = SubResource("SpriteFrames_fulsm")
 animation = &"walk_side"
 frame_progress = 0.5722827
