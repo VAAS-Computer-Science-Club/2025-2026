@@ -5,7 +5,12 @@ extends CharacterBody2D
 @onready var coyote_collider = $coyote
 @onready var floor_ray = $floor_ray
 @onready var atk_anim: AnimationPlayer = $AnimationPlayer
-@onready var atk_collider: CollisionShape2D = $AnimatedSprite2D/Attack_Box/CollisionShape2D
+@onready var atk_collider: CollisionShape2D = $Attack_Box/CollisionShape2D
+@onready var atk_player: AnimationPlayer = $player_animation_handler
+@onready var the_full_power_of_the_sun = $PointLight2D
+var moving_lights = false
+var lights = false
+
 const SPEED = 100.0
 const JUMP_VELOCITY = -200.0
 var attack_cooldown = 0.45
@@ -18,7 +23,13 @@ var last_health = 5
 var main
 var last_direction = 0
 var attack_unlocked = true
-
+enum states {
+	living,
+	attacking,
+	dashing,
+	dead,
+}
+var current_state = states.living
 enum directions {
 	up,
 	down,
@@ -48,7 +59,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
-	
+	light()
 	if unlocked_dash and is_on_floor():
 		can_dash = true
 	if took_dmg == true:
@@ -71,7 +82,16 @@ func _physics_process(delta: float) -> void:
 		is_jumping = true
 	if Input.is_action_pressed("ui_accept") and can_move and floor_ray.is_colliding() and is_jumping and unlocked_jump:
 		velocity.y = JUMP_VELOCITY
-		
+	if Input.is_action_just_pressed("Attack_L") and (current_state != states.attacking or states.dead):
+		#this is where I wanted to add the lunge, colliders already work but idk how to implement Iframes
+		#It's to keep everything on the keyboard, mouse gets difficult to test on a laptop 
+		#
+		#I wanted too make the grass a brighter green so I just added green to the shader 
+		#This works so far, I need help with I frames though
+		atk_player.play("Lunge")
+		current_state = states.attacking
+		await atk_anim.animation_finished
+		current_state = states.living
 	if Input.is_action_just_pressed("Attack") and attack_unlocked == true:
 		attack_unlocked = false
 		atk_anim.Attack()
@@ -85,24 +105,25 @@ func _physics_process(delta: float) -> void:
 		is_dashing = false
 	if direction == 0:
 		match last_direction:
-			0.0:
-				sprite.play("idle_down")
 			1.0:
 				sprite.play("idle_side")
-				sprite.flip_h = false
+				sprite.scale = Vector2(0.03,0.03)
+				sprite.flip_h = true
+				
 			-1.0:
 				sprite.play("idle_side")
-				sprite.flip_h = true
+				sprite.scale = Vector2(0.03,0.03)
+				sprite.flip_h = false
 	else:
 		match direction:
 			1.0:
 				atk_collider.position = Vector2(20,0)
 				sprite.play("walk_side")
-				sprite.flip_h = false
+				sprite.flip_h = true
 			-1.0:
 				atk_collider.position = Vector2(-20,0)
 				sprite.play("walk_side")
-				sprite.flip_h = true
+				sprite.flip_h = false
 		last_direction = direction
 	
 	if direction and can_move and !Input.is_action_just_pressed("Dash") and is_dashing == false:
@@ -170,7 +191,20 @@ func _on_coyote_area_exited(area: Area2D) -> void:
 
 
 func _on_attack_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtBox") and $AnimatedSprite2D/Attack_Box/CollisionShape2D.disabled == false:
+	if area.is_in_group("HurtBox") and $Attack_Box/CollisionShape2D.disabled == false:
 		area.TakeDamage(1)
-		atk_anim.stop()
-		$AnimatedSprite2D/Attack_Box/CollisionShape2D.disabled = true
+		if (current_state != states.attacking):
+			$Attack_Box/CollisionShape2D.disabled = true
+
+
+func light():
+	if moving_lights == false and global.lights_enabled != lights:
+		moving_lights = true
+		var tween = get_tree().create_tween()
+		if global.lights_enabled == true:
+			tween.tween_property(the_full_power_of_the_sun,"energy",1.46,0.8)
+		else:
+			tween.tween_property(the_full_power_of_the_sun,"energy",0,0.8)
+		await tween.finished
+		lights = global.lights_enabled
+		moving_lights = false

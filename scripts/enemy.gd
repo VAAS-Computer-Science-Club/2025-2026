@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var agent = $NavigationAgent2D
-const SPEED = 300.0
+const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
 var is_on_screen = false
 var target : Node = null
@@ -18,7 +18,16 @@ enum states {
 	Attacking,
 }
 func _physics_process(delta: float) -> void:
-	if is_on_screen and target != null and current_state != states.Dead:
+	var new_velocity : Vector2 = Vector2.ZERO
+	if is_on_screen and target != null and (current_state != states.Dead or current_state != states.Attacking):
+		var distance_to_target = global_position.distance_to(target.global_position)
+		if (distance_to_target > 5):
+			#Lunge
+			pass
+		elif (distance_to_target < 5):
+			#Drop Hit
+			pass 
+		
 		agent.target_position = target.position
 		# Do not query when the map has never synchronized and is empty.
 		if NavigationServer2D.map_get_iteration_id(agent.get_navigation_map()) == 0:
@@ -28,7 +37,7 @@ func _physics_process(delta: float) -> void:
 
 		var movement_delta = SPEED * delta
 		var next_path_position: Vector2 = agent.get_next_path_position()
-		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
+		new_velocity = global_position.direction_to(next_path_position) * movement_delta
 		if agent.avoidance_enabled:
 			agent.set_velocity(new_velocity)
 		else:
@@ -38,6 +47,18 @@ func _physics_process(delta: float) -> void:
 		sprite.texture = dead_sprite
 		sprite.self_modulate = dead_modulation
 		has_died = true
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+	if new_velocity.x <= 0.1 and new_velocity.x >= -0.1:
+		sprite.play("idle")
+	else:
+		if new_velocity.x <= 0.1:
+			sprite.flip_h = false
+			sprite.stop()
+		elif new_velocity.x <= -0.1:
+			sprite.flip_h = true
+			sprite.stop()
+		sprite.stop()
 	move_and_slide()
 
 
