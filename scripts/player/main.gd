@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var atk_collider: CollisionShape2D = $Attack_Box/CollisionShape2D
 @onready var atk_player: AnimationPlayer = $player_animation_handler
 @onready var the_full_power_of_the_sun = $PointLight2D
+@export var player_pos = global_position
 var moving_lights = false
 var lights = false
 
@@ -144,6 +145,11 @@ func stop_dash():
 	velocity.x = 0
 	can_dash = false
 	move_and_slide()
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("P_Hitbox"):
+		took_dmg = true
+		deduct_health(1,true)
 
 func _on_spike_check_body_entered(body: Node2D) -> void:
 	took_dmg = true

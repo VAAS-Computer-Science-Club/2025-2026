@@ -103,42 +103,72 @@ tracks/7/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-
-[sub_resource type="Animation" id="Animation_4ra3w"]
-resource_name = "MeleeLeft"
-length = 0.9
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0),
-"points": PackedFloat32Array(0, 0, 0, 0.022222225, 1.3333334, 8, -0.2490595, -14.312268, 0.26666665, 15.324068, -60, 0, 73.728004, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.7)
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CollisionShape2D:position:x")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
+tracks/9/type = "bezier"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CollisionShape2D:position:y")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
-tracks/2/type = "bezier"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"handle_modes": PackedInt32Array(2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.24517655, -0.48723188, 0.13333334, 0.26496926, 0.2223765, -0.06666666, 0.02904439, 0, 0, -0.4, -0.16666663, 0.32422715, 0, 0, -0.016142994, -0.099999964, -0.46852043, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.7, 0.9)
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sprite2D:position:x")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Sprite2D:position:y")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sprite2D:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Sprite2D:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.03, 0.03)]
 }
 
 [sub_resource type="Animation" id="Animation_xwavj"]
@@ -265,40 +295,145 @@ length = 0.9
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position:x")
+tracks/0/path = NodePath("CollisionShape2D:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(2, 0, 0),
-"points": PackedFloat32Array(0, 0, 0, 0.022222225, 1.3333334, -8.358, -0.2490595, -14.312268, 0.26666665, 15.324068, 60, 0, 88.2899, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.7)
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0, -1.6666667e-05, 0, 0, 0, -31.710833, -0.03333333, 3.0000114, 0, 0, 60, -0.0333333, -119.99518, 0, 0, 0, -0.100000024, 12.289346, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:position:y")
+tracks/1/path = NodePath("CollisionShape2D:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(),
-"points": PackedFloat32Array(),
-"times": PackedFloat32Array()
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(0, -0.24987428, 17.404325, 0.11070321, -7.7107353, -8, -0.022630125, 1.2892685, 0, 0, 0, -0.08929676, -15.710768, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
+tracks/2/path = NodePath("Sprite2D:position:x")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(2, 2, 2, 2),
-"points": PackedFloat32Array(0, -0.24486364, 0.64199287, 0.13623081, -0.35717514, -0.222, -0.06376919, 0.15698992, 0, 0, 0.4, -0.16376913, -1.3962862, 0, 0, -0.016142994, -0.09710246, 0.86414874, 0, 0),
-"times": PackedFloat32Array(0, 0.2, 0.7, 0.9)
+"points": PackedFloat32Array(0, -0.25321636, 42.136265, 0.16666667, -27.734032, -31.598782, -0.03333333, 3.7161064, 0, 0, 60, -0.0333333, -118.71094, 0, 0, 0, -0.100000024, 8.28933, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(0, -0.23487681, 14.833785, 0.1, -6.3155603, -8, -0.03333333, 0.9292879, 0, 0, 0, -0.06666666, -14.790042, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.24996866, -0.036217406, 0.12600826, 0.018257057, -0.50148207, -0.040658414, -0.105602324, 0, 0, 0.7, -0.040658355, 0.08686572, 0, 0, 0, -0.007325053, 0.2646439, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-0.03, 0.03)]
+}
+
+[sub_resource type="Animation" id="Animation_md484"]
+resource_name = "MeleeLeft"
+length = 0.9
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2, 2, 2),
+"points": PackedFloat32Array(0.35772705, -1.6666667e-05, 0, 0, 0, 31.416777, -0.03333333, 0.07117844, 0, 0, -62.536613, -0.099999964, 118.74697, 0, 0, 0, -0.100000024, 47.17976, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(0, -0.24987428, 17.404325, 0.11070321, -7.7107353, -8, -0.022630125, 1.2892685, 0, 0, 0, -0.08929676, -15.710768, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.25283393, -45.147343, 0.1, 17.85652, 31.599, -0.03333333, -1.2163544, 0, 0, -60, -0.13333333, 120.34262, 0, 0, 0, -0.100000024, 35.389927, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2),
+"points": PackedFloat32Array(0, -0.23487681, 14.833785, 0.1, -6.3155603, -8, -0.03333333, 0.9292879, 0, 0, 0, -0.06666666, -14.790042, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.24209899, -1.1153114, 0.1, 0.460684, 0.501, -0.1, -0.028977692, 0, 0, -0.7, -0.06666666, 0.0268569, 0, 0, 0, -0.03333336, -0.62779003, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.8666667)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.03, 0.03)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nenq2"]
 _data = {
-&"MeleeLeft": SubResource("Animation_4ra3w"),
+&"MeleeLeft": SubResource("Animation_md484"),
 &"MeleeRight": SubResource("Animation_nenq2"),
 &"RESET": SubResource("Animation_c4w8v"),
 &"SpitLeft": SubResource("Animation_xwavj"),
@@ -383,10 +518,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_nenq2")
 }
 
-[node name="AttackShape" type="Area2D" parent="."]
+[node name="AttackShape" type="Area2D" parent="." groups=["P_Hitbox"]]
 scale = Vector2(0.03, 0.03)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackShape"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackShape" groups=["P_Hitbox"]]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_4ra3w")
 

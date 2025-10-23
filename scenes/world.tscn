@@ -1,9 +1,9 @@
 [gd_scene load_steps=23 format=4 uid="uid://5y0jwdp2fykd"]
 
-[ext_resource type="Script" uid="uid://dyrsorwx5ncvg" path="res://scripts/world.gd" id="1_7r4gi"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_7r4gi"]
 [ext_resource type="Texture2D" uid="uid://bqukocse8bbky" path="res://assets/images/Bg idk.png" id="1_i7141"]
 [ext_resource type="Texture2D" uid="uid://e2mbfuf6d2m0" path="res://assets/images/tilesheetA.png" id="1_nnsk1"]
-[ext_resource type="Shader" uid="uid://bjuf1efcnav8j" path="res://assets/scenes/brighter.gdshader" id="2_4mrxx"]
+[ext_resource type="Shader" path="res://assets/scenes/brighter.gdshader" id="2_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://crqk7w3erpgqm" path="res://assets/images/grass_b.PNG" id="2_qfnet"]
 [ext_resource type="PackedScene" uid="uid://1l2raaklf5gf" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="Shader" uid="uid://cl7fr4cgjxc0k" path="res://scenes/world.gdshader" id="3_4wyf3"]
@@ -278,10 +278,9 @@ tile_set = SubResource("TileSet_4wyf3")
 environment = SubResource("Environment_k0juu")
 
 [node name="player" parent="." instance=ExtResource("2_rwgxs")]
-position = Vector2(24, -23)
+position = Vector2(-117, -23)
 
 [node name="infected" parent="." instance=ExtResource("5_71j4m")]
-position = Vector2(178, -16)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_k0juu")

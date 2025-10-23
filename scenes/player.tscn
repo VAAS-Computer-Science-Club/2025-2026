@@ -254,6 +254,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_smehm"]
 resource_name = "Lunge"
+length = 0.5
 tracks/0/type = "bezier"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -261,9 +262,9 @@ tracks/0/path = NodePath("AnimatedSprite2D:position:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 0),
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.116666675, 0, 0, 0, 7.075, -0.027777782, -1.1791667, 0, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.70000005, 0.86666673, 1)
+"times": PackedFloat32Array(0, 0.33333334, 0.43333334, 0.5)
 }
 tracks/1/type = "bezier"
 tracks/1/imported = false
@@ -272,9 +273,9 @@ tracks/1/path = NodePath("AnimatedSprite2D:position:y")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 0),
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -9.69, -0.116666675, 1.6149999, 0, 0, 0.895, -0.027777782, -1.7641666, 0, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.70000005, 0.86666673, 1)
+"times": PackedFloat32Array(0, 0.33333334, 0.43333334, 0.5)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
@@ -283,9 +284,9 @@ tracks/2/path = NodePath("AnimatedSprite2D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.5707964, -0.050000004, -0.2617994, 0, 0, 21.5, -0.06666668, -0.116355285, 0, 0, 2.268928, -0.027777782, 0, 0, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.3, 0.70000005, 0.86666673, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.5707964, -0.050000004, -0.2617994, 0, 0, 7.5, -0.06666668, -0.116355285, 0, 0, 0.269, -0.027777782, 0, 0, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.23333333, 0.33333334, 0.43333334, 0.5)
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -294,7 +295,7 @@ tracks/3/path = NodePath("Attack_Box/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.8666667, 1),
+"times": PackedFloat32Array(0, 0.43333334, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -306,7 +307,7 @@ tracks/4/path = NodePath("Attack_Box/CollisionShape2D:shape")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [SubResource("RectangleShape2D_dqkch"), SubResource("RectangleShape2D_dqkch")]
@@ -318,9 +319,9 @@ tracks/5/path = NodePath("Attack_Box/CollisionShape2D:shape:size:x")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 0),
-"points": PackedFloat32Array(25, -0.25, 0, 0.25, 0, 25, -0.06666668, 0, 0, 0, 25, -0.02222222, 0, 0, 0, 17.5, -0.050000004, 1.25, 0, 0, 25, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.40000004, 0.53333336, 0.8333334, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(25, -0.25, 0, 0.25, 0, 25, -0.06666668, 0, 0, 0, 25, -0.25, 0, 0.25, 0, 25, -0.02222222, 0, 0, 0, 17.5, -0.050000004, 1.25, 0, 0),
+"times": PackedFloat32Array(0, 0.26666668, 0.36666667, 0.43333334, 0.46666667)
 }
 tracks/6/type = "bezier"
 tracks/6/imported = false
@@ -329,9 +330,9 @@ tracks/6/path = NodePath("Attack_Box/CollisionShape2D:shape:size:y")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 2, 0),
-"points": PackedFloat32Array(6, -0.25, 0, 0.25, 0, 31.333332, -0.06666668, -4.2222223, 0, 0, 38.333332, -0.02222222, -1.1666666, 0, 0, 26.833332, -0.050000004, 1.9166667, 0, 0, 6, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.40000004, 0.53333336, 0.8333334, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(6, -0.25, 0, 0.25, 0, 31.333332, -0.06666668, -4.2222223, 0, 0, 6, -0.25, 0, 0.25, 0, 38.333332, -0.02222222, -1.1666666, 0, 0, 26.833332, -0.050000004, 1.9166667, 0, 0),
+"times": PackedFloat32Array(0, 0.26666668, 0.36666667, 0.43333334, 0.46666667)
 }
 tracks/7/type = "bezier"
 tracks/7/imported = false
@@ -340,9 +341,9 @@ tracks/7/path = NodePath("Attack_Box/CollisionShape2D:position:x")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 0),
-"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 2, -0.06666668, 3.0000002, 0, 0, 5.75, -0.072222225, -0.625, 0, 0, 20, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.40000004, 0.8333334, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(20, -0.25, 0, 0.25, 0, 2, -0.06666668, 3.0000002, 0, 0, 20, -0.25, 0, 0.25, 0, 5.75, -0.072222225, -0.625, 0, 0),
+"times": PackedFloat32Array(0, 0.26666668, 0.36666667, 0.46666667)
 }
 tracks/8/type = "bezier"
 tracks/8/imported = false
@@ -351,9 +352,9 @@ tracks/8/path = NodePath("Attack_Box/CollisionShape2D:position:y")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"handle_modes": PackedInt32Array(0, 2, 2, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -4.4, -0.06666668, 0.7333334, 0, 0, -0.95000005, -0.072222225, -0.575, 0, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.40000004, 0.8333334, 1)
+"handle_modes": PackedInt32Array(0, 0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -4.4, -0.06666668, 0.7333334, 0, 0, 0, -0.25, 0, 0.25, 0, -0.95000005, -0.072222225, -0.575, 0, 0),
+"times": PackedFloat32Array(0, 0.26666668, 0.36666667, 0.46666667)
 }
 
 [sub_resource type="Animation" id="Animation_ur7pv"]
@@ -586,6 +587,7 @@ shadow_enabled = true
 texture = SubResource("GradientTexture2D_smehm")
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_spike_check_body_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="area_entered" from="coyote" to="." method="_on_coyote_area_entered"]
 [connection signal="area_exited" from="coyote" to="." method="_on_coyote_area_exited"]
 [connection signal="area_entered" from="Attack_Box" to="." method="_on_attack_box_area_entered"]

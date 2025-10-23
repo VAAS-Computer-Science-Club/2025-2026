@@ -4,7 +4,6 @@ extends CharacterBody2D
 @onready var agent = $NavigationAgent2D
 @onready var cooldown = $Timer
 @onready var attack_ani = $AnimationPlayer
-
 const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
 var player_on_right = false
@@ -17,7 +16,7 @@ var has_died = false
 var health = 5
 var current_state = states.Alive
 var current_attack = attacks.None
-var cooldown_time = 1
+var cooldown_time = 1.5
 enum attacks {
 	None,
 	Spit,
@@ -32,7 +31,7 @@ enum states {
 func _ready() -> void:
 	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
-	if (player.global_position.x <= global_position.x):
+	if (velocity.x <= 0):
 		player_on_right = false
 	else:
 		player_on_right = true
@@ -86,11 +85,13 @@ func _physics_process(delta: float) -> void:
 	
 func _on_cooldown_timeout() -> void:
 	if(current_attack == attacks.Spit && current_attack != attacks.None):
+		cooldown_time = 1.5
 		if (player_on_right == true):
 			attack_ani.play("SpitRight")
 		else:
 			attack_ani.play("SpitLeft")
 	elif(current_attack == attacks.Melee && current_attack != attacks.None):
+		cooldown_time = 12
 		if (player_on_right == true):
 			attack_ani.play("MeleeRight")
 		else:
