@@ -1,8 +1,13 @@
 extends CharacterBody2D
 
+@onready var player = $"."
 @onready var agent = $NavigationAgent2D
-const SPEED = 300.0
+@onready var cooldown = $Timer
+@onready var attack_ani = $AnimationPlayer
+
+const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
+var player_on_right = false
 var is_on_screen = false
 var target : Node = null
 @onready var sprite = $Sprite2D
@@ -11,13 +16,40 @@ var dead_modulation = Color(0.251, 0.251, 0.251, 1.0)
 var has_died = false
 var health = 5
 var current_state = states.Alive
+var current_attack = attacks.None
+var cooldown_time = 1
+enum attacks {
+	None,
+	Spit,
+	Melee,
+}
 enum states {
 	Alive,
 	Tracking,
-	Dead
+	Dead,
+	Attacking,
 }
+func _ready() -> void:
+	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
-	if is_on_screen and target != null and current_state != states.Dead:
+	if (player.global_position.x <= global_position.x):
+		player_on_right = false
+	else:
+		player_on_right = true
+	var new_velocity : Vector2 = Vector2.ZERO
+	if is_on_screen and target != null and (current_state != states.Dead or current_state != states.Attacking):
+		var distance_to_target = global_position.distance_to(target.global_position)
+		if(distance_to_target < 120 && current_state != states.Dead):
+			if(cooldown.time_left == 0):
+				cooldown.start(cooldown_time)
+			if (distance_to_target > 60):
+				current_attack = attacks.Spit
+				
+			elif (distance_to_target <= 60): 
+				current_attack = attacks.Melee
+				
+		else :
+			current_attack = attacks.None
 		agent.target_position = target.position
 		# Do not query when the map has never synchronized and is empty.
 		if NavigationServer2D.map_get_iteration_id(agent.get_navigation_map()) == 0:
@@ -27,17 +59,42 @@ func _physics_process(delta: float) -> void:
 
 		var movement_delta = SPEED * delta
 		var next_path_position: Vector2 = agent.get_next_path_position()
-		var new_velocity: Vector2 = global_position.direction_to(next_path_position) * movement_delta
+		new_velocity = global_position.direction_to(next_path_position) * movement_delta
 		if agent.avoidance_enabled:
 			agent.set_velocity(new_velocity)
 		else:
 			_on_agent_2d_velocity_computed(new_velocity)
 	if current_state == states.Dead and has_died == false:
-		sprite.texture = dead_sprite
+		$CollisionShape2D.disabled = true
+		#sprite.texture = dead_sprite
 		sprite.self_modulate = dead_modulation
 		has_died = true
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+	if new_velocity.x <= 0.1 and new_velocity.x >= -0.1:
+		sprite.play("idle")
+	else:
+		if new_velocity.x <= 0.1:
+			sprite.flip_h = false
+			sprite.stop()
+		elif new_velocity.x <= -0.1:
+			sprite.flip_h = true
+			sprite.stop()
+		sprite.stop()
+		#start attack timer
 	move_and_slide()
-
+	
+func _on_cooldown_timeout() -> void:
+	if(current_attack == attacks.Spit && current_attack != attacks.None):
+		if (player_on_right == true):
+			attack_ani.play("SpitRight")
+		else:
+			attack_ani.play("SpitLeft")
+	elif(current_attack == attacks.Melee && current_attack != attacks.None):
+		if (player_on_right == true):
+			attack_ani.play("MeleeRight")
+		else:
+			attack_ani.play("MeleeLeft")
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	is_on_screen = true
@@ -63,13 +120,12 @@ func _on_is_player_near_body_exited(body: Node2D) -> void:
 			target = null
 
 
-func damage(value : int):
-	var original_mod = sprite.self_modulate
-	sprite.self_modulate = Color(1,1,1,1)
-	await get_tree().create_timer(0.2).timeout
-	sprite.self_modulate = original_mod
-	if health - damage < 0:
+func damage(dmg : int):
+	if health - dmg < 0:
 		current_state = states.Dead
 	else:
-		health = health - damage
+		health = health - dmg
+		#sprite.get_material().set_shader_parameter("is_flashing",true)
+		#await get_tree().create_timer(0.2).timeout
+		#sprite.get_material().set_shader_parameter("is_flashing",false)
 	
