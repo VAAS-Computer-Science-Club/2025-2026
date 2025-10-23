@@ -1,10 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://dohegk7v3dqh1"]
+[gd_scene load_steps=22 format=3 uid="uid://d0pf6yjbj4jlg"]
 
-[ext_resource type="Texture2D" uid="uid://doju4rcdr8rsg" path="res://assets/images/froggy.png" id="1_7p1mj"]
-[ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="3_4ra3w"]
-[ext_resource type="Texture2D" uid="uid://b0xjin3etnl8f" path="res://assets/images/zombomb/idle.png" id="3_5uy6h"]
-[ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="3_c4w8v"]
+[ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_x2k8k"]
+[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="2_qy6rc"]
+[ext_resource type="Texture2D" uid="uid://doju4rcdr8rsg" path="res://assets/images/froggy.png" id="3_ssemq"]
+[ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="4_vs2ja"]
+[ext_resource type="Texture2D" uid="uid://b0xjin3etnl8f" path="res://assets/images/zombomb/idle.png" id="5_ofvgw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 
@@ -523,23 +523,23 @@ _data = {
 radius = 159.08691
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_md484"]
-atlas = ExtResource("3_c4w8v")
+atlas = ExtResource("4_vs2ja")
 region = Rect2(0, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ipns3"]
-atlas = ExtResource("3_c4w8v")
+atlas = ExtResource("4_vs2ja")
 region = Rect2(4812, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(0, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(1203, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nenq2"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(2406, 0, 1203, 1201)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_md484"]
@@ -571,7 +571,7 @@ animations = [{
 }]
 
 [node name="infected" type="CharacterBody2D" groups=["infected"]]
-script = ExtResource("1_md0e3")
+script = ExtResource("1_x2k8k")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
@@ -589,7 +589,7 @@ shape = SubResource("RectangleShape2D_md0e3")
 [node name="HurtBox" type="Area2D" parent="." groups=["HurtBox"]]
 collision_layer = 1048577
 collision_mask = 1048577
-script = ExtResource("3_4ra3w")
+script = ExtResource("2_qy6rc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CircleShape2D_md0e3")
@@ -610,7 +610,7 @@ shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="Sprite2D" type="Sprite2D" parent="AttackShape/CollisionShape2D"]
 scale = Vector2(33.333332, 33.333332)
-texture = ExtResource("1_7p1mj")
+texture = ExtResource("3_ssemq")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.03, 0.03)

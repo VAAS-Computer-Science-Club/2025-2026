@@ -146,9 +146,7 @@ func stop_dash():
 	can_dash = false
 	move_and_slide()
 
-func _on_hitbox_body_entered(area: CollisionShape2D) -> void:
-	took_dmg = true
-	deduct_health(1,true)
+
 
 func _on_spike_check_body_entered(body: Node2D) -> void:
 	took_dmg = true
@@ -195,13 +193,6 @@ func _on_coyote_area_exited(area: Area2D) -> void:
 	coyote = false
 
 
-func _on_attack_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtBox") and $Attack_Box/CollisionShape2D.disabled == false:
-		area.TakeDamage(1)
-		if (current_state != states.attacking):
-			$Attack_Box/CollisionShape2D.disabled = true
-
-
 func light():
 	if moving_lights == false and global.lights_enabled != lights:
 		moving_lights = true
@@ -213,3 +204,8 @@ func light():
 		await tween.finished
 		lights = global.lights_enabled
 		moving_lights = false
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("P_Hitbox"):
+		deduct_health(1,true)

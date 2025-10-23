@@ -586,8 +586,8 @@ energy = 0.0
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_smehm")
 
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_spike_check_body_entered"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="area_entered" from="coyote" to="." method="_on_coyote_area_entered"]
 [connection signal="area_exited" from="coyote" to="." method="_on_coyote_area_exited"]
 [connection signal="area_entered" from="Attack_Box" to="." method="_on_attack_box_area_entered"]
