@@ -1,13 +1,13 @@
 [gd_scene load_steps=45 format=3 uid="uid://1l2raaklf5gf"]
 
 [ext_resource type="Script" uid="uid://bkj1smg876r5g" path="res://scripts/player/main.gd" id="1_g2els"]
-[ext_resource type="Shader" path="res://scenes/player_flash.gdshader" id="2_fjrip"]
+[ext_resource type="Shader" uid="uid://2vdkdc3nmebh" path="res://scenes/player_flash.gdshader" id="2_fjrip"]
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="3_smehm"]
 [ext_resource type="Animation" uid="uid://biki3q1bor2g8" path="res://Poke.res" id="3_tuyoq"]
 [ext_resource type="Shader" uid="uid://b2dx3lgnf1qcr" path="res://scenes/player.gdshader" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dg6wp46itgw8p" path="res://assets/images/annie/annie_run.png" id="4_ur7pv"]
-[ext_resource type="Script" path="res://scenes/animation_player.gd" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://co0n1fm6h5yub" path="res://scenes/animation_player.gd" id="5_qlg0r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_smehm"]
 shader = ExtResource("2_fjrip")
@@ -498,8 +498,8 @@ zoom = Vector2(5, 5)
 position_smoothing_enabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=["P_Hitbox"]]
-collision_layer = 128
-collision_mask = 128
+collision_layer = 1048704
+collision_mask = 1048704
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(-2, 1)

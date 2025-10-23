@@ -146,10 +146,9 @@ func stop_dash():
 	can_dash = false
 	move_and_slide()
 
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("P_Hitbox"):
-		took_dmg = true
-		deduct_health(1,true)
+func _on_hitbox_body_entered(area: CollisionShape2D) -> void:
+	took_dmg = true
+	deduct_health(1,true)
 
 func _on_spike_check_body_entered(body: Node2D) -> void:
 	took_dmg = true
