@@ -1,25 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://dohegk7v3dqh1"]
+[gd_scene load_steps=21 format=3 uid="uid://dohegk7v3dqh1"]
 
 [ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="3_4ra3w"]
+[ext_resource type="Script" path="res://scenes/hurt_box.gd" id="3_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://b0xjin3etnl8f" path="res://assets/images/zombomb/idle.png" id="3_5uy6h"]
+[ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="3_c4w8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
-size = Vector2(122, 107)
+size = Vector2(209, 115)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-
-[sub_resource type="Animation" id="Animation_xwavj"]
-resource_name = "Lung"
 
 [sub_resource type="Animation" id="Animation_c4w8v"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/0/path = NodePath("AttackShape/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -31,7 +29,7 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:position:x")
+tracks/1/path = NodePath("AttackShape/CollisionShape2D:position:x")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -42,7 +40,7 @@ tracks/1/keys = {
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:position:y")
+tracks/2/path = NodePath("AttackShape/CollisionShape2D:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -53,7 +51,7 @@ tracks/2/keys = {
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:scale:x")
+tracks/3/path = NodePath("AttackShape/CollisionShape2D:scale:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -64,10 +62,43 @@ tracks/3/keys = {
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Area2D/CollisionShape2D:scale:y")
+tracks/4/path = NodePath("AttackShape/CollisionShape2D:scale:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "handle_modes": PackedInt32Array(0),
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
@@ -78,7 +109,7 @@ resource_name = "Spit"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/0/path = NodePath("AttackShape/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -90,57 +121,102 @@ tracks/0/keys = {
 tracks/1/type = "bezier"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:position:x")
+tracks/1/path = NodePath("AttackShape/CollisionShape2D:position:x")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(2, 2, 2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, -0.016666668, 0, 0, 0, 22.5, -0.03333333, -10, 0.065781206, 19.734365, 50, -0.099999964, -3.5, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, -0.016666668, 0, 0, 0, 1206.8236, -0.03428057, -299.23523, 0.06513616, 568.5738, 2500, -0.099999964, -3.5, 0, 0),
 "times": PackedFloat32Array(0, 0.1, 0.3, 0.7)
 }
 tracks/2/type = "bezier"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:position:y")
+tracks/2/path = NodePath("AttackShape/CollisionShape2D:position:y")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "handle_modes": PackedInt32Array(2, 2, 2, 2),
-"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, -0.016666668, 0, 0, 0, -50.5, 0, 0, 0, 0, 0, -0.06666666, -86.5, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, -364.16135, -0.034280576, 486.25723, 0, 0, -2500, 0, 0, 0, 0, 0, -0.0676139, -1972.5507, 0, 0),
 "times": PackedFloat32Array(0, 0.1, 0.3, 0.7)
 }
 tracks/3/type = "bezier"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:scale:x")
+tracks/3/path = NodePath("AttackShape/CollisionShape2D:scale:x")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "handle_modes": PackedInt32Array(2, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.11666667, 0, 0, 0, 1.5, -0.016666671, 0.16666669, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.11666667, 0, 0, 0, 4, -0.016666671, 0.16666669, 0, 0),
 "times": PackedFloat32Array(0, 0.7, 0.8)
 }
 tracks/4/type = "bezier"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Area2D/CollisionShape2D:scale:y")
+tracks/4/path = NodePath("AttackShape/CollisionShape2D:scale:y")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "handle_modes": PackedInt32Array(2, 2, 2),
-"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.11666667, 0, 0, 0, 0.5, -0.016666671, 0.16666669, 0, 0),
+"points": PackedFloat32Array(1, -0.25, 0, 0.25, 0, 1, -0.11666667, 0, 0, 0, 4, -0.016666671, 0.16666669, 0, 0),
 "times": PackedFloat32Array(0, 0.7, 0.8)
+}
+
+[sub_resource type="Animation" id="Animation_4ra3w"]
+resource_name = "Thrust"
+length = 0.9
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.022222225, 1.3333334, 8, -0.2490595, -14.312268, 0.26666665, 15.324068, -60, 0, 73.728004, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 2, 2),
+"points": PackedFloat32Array(0, -0.24517655, -0.48723188, 0.13333334, 0.26496926, 0.2223765, -0.06666666, 0.02904439, 0, 0, -0.4, -0.16666663, 0.32422715, 0, 0, -0.016142994, -0.099999964, -0.46852043, 0, 0),
+"times": PackedFloat32Array(0, 0.2, 0.7, 0.9)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nenq2"]
 _data = {
-&"Lung": SubResource("Animation_xwavj"),
 &"RESET": SubResource("Animation_c4w8v"),
-&"Spit": SubResource("Animation_5uy6h")
+&"Spit": SubResource("Animation_5uy6h"),
+&"Thrust": SubResource("Animation_4ra3w")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
-radius = 6.0827627
+radius = 159.08691
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_md484"]
+atlas = ExtResource("3_c4w8v")
+region = Rect2(0, 0, 1203, 1201)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipns3"]
+atlas = ExtResource("3_c4w8v")
+region = Rect2(4812, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
 atlas = ExtResource("3_5uy6h")
@@ -158,6 +234,17 @@ region = Rect2(2406, 0, 1203, 1201)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_md484")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipns3")
+}],
+"loop": true,
+"name": &"dead_sprite",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_c4w8v")
 }, {
 "duration": 1.0,
@@ -170,6 +257,12 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
+radius = 94.00532
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c4w8v"]
+radius = 56.568542
 
 [node name="infected" type="CharacterBody2D" groups=["infected"]]
 script = ExtResource("1_md0e3")
@@ -184,7 +277,7 @@ shape = SubResource("RectangleShape2D_8tegq")
 [node name="is_player_near" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="is_player_near"]
-position = Vector2(0, -43.5)
+position = Vector2(-0.5, -47.5)
 shape = SubResource("RectangleShape2D_md0e3")
 
 [node name="HurtBox" type="Area2D" parent="." groups=["HurtBox"]]
@@ -198,20 +291,38 @@ libraries = {
 &"": SubResource("AnimationLibrary_nenq2")
 }
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="AttackShape" type="Area2D" parent="."]
 scale = Vector2(0.03, 0.03)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackShape"]
 scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.03, 0.03)
 sprite_frames = SubResource("SpriteFrames_md484")
-animation = &"idle"
+animation = &"dead_sprite"
+frame_progress = 0.22026478
+
+[node name="SpitRange" type="Area2D" parent="."]
+
+[node name="Spit" type="CollisionShape2D" parent="SpitRange"]
+shape = SubResource("CircleShape2D_5uy6h")
+
+[node name="MeleeRange" type="Area2D" parent="."]
+
+[node name="Melee" type="CollisionShape2D" parent="MeleeRange"]
+shape = SubResource("CircleShape2D_c4w8v")
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="body_entered" from="is_player_near" to="." method="_on_is_player_near_body_entered"]
 [connection signal="body_exited" from="is_player_near" to="." method="_on_is_player_near_body_exited"]
+[connection signal="area_entered" from="SpitRange" to="." method="_on_spit_range_area_entered"]
+[connection signal="area_exited" from="SpitRange" to="." method="_on_spit_range_area_exited"]
+[connection signal="area_entered" from="MeleeRange" to="." method="_on_melee_range_area_entered"]
+[connection signal="body_entered" from="MeleeRange" to="." method="_on_melee_range_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_cooldown_timeout"]
