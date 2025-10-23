@@ -1,11 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://dohegk7v3dqh1"]
+[gd_scene load_steps=22 format=3 uid="uid://d0pf6yjbj4jlg"]
 
-[ext_resource type="Texture2D" uid="uid://doju4rcdr8rsg" path="res://assets/images/froggy.png" id="1_7p1mj"]
-[ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_md0e3"]
-[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="3_4ra3w"]
-[ext_resource type="Texture2D" uid="uid://b0xjin3etnl8f" path="res://assets/images/zombomb/idle.png" id="3_5uy6h"]
-[ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="3_c4w8v"]
-[ext_resource type="Shader" uid="uid://2vdkdc3nmebh" path="res://scenes/player_flash.gdshader" id="4_xwavj"]
+[ext_resource type="Script" uid="uid://cua32cyiw1ky1" path="res://scripts/enemy.gd" id="1_x2k8k"]
+[ext_resource type="Script" uid="uid://vaa8rcv6ut1h" path="res://scenes/hurt_box.gd" id="2_qy6rc"]
+[ext_resource type="Texture2D" uid="uid://doju4rcdr8rsg" path="res://assets/images/froggy.png" id="3_ssemq"]
+[ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="4_vs2ja"]
+[ext_resource type="Texture2D" uid="uid://b0xjin3etnl8f" path="res://assets/images/zombomb/idle.png" id="5_ofvgw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tegq"]
 
@@ -295,7 +294,7 @@ tracks/4/keys = {
 tracks/5/type = "bezier"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CollisionShape2D:position:x")
+tracks/5/path = NodePath(".:position:x")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -306,7 +305,7 @@ tracks/5/keys = {
 tracks/6/type = "bezier"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CollisionShape2D:position:y")
+tracks/6/path = NodePath(".:position:y")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -317,7 +316,7 @@ tracks/6/keys = {
 tracks/7/type = "bezier"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Sprite2D:position:x")
+tracks/7/path = NodePath(".:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -328,7 +327,7 @@ tracks/7/keys = {
 tracks/8/type = "bezier"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Sprite2D:position:y")
+tracks/8/path = NodePath("CollisionShape2D:position:x")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -339,7 +338,7 @@ tracks/8/keys = {
 tracks/9/type = "bezier"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Sprite2D:rotation")
+tracks/9/path = NodePath("CollisionShape2D:position:y")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
@@ -347,13 +346,46 @@ tracks/9/keys = {
 "points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0)
 }
-tracks/10/type = "value"
+tracks/10/type = "bezier"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Sprite2D:scale")
+tracks/10/path = NodePath("Sprite2D:position:x")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/11/type = "bezier"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Sprite2D:position:y")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sprite2D:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Sprite2D:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -490,29 +522,24 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
 radius = 159.08691
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nenq2"]
-shader = ExtResource("4_xwavj")
-shader_parameter/is_flashing = false
-shader_parameter/flash_value = Color(0, 0, 0, 1)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_md484"]
-atlas = ExtResource("3_c4w8v")
+atlas = ExtResource("4_vs2ja")
 region = Rect2(0, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ipns3"]
-atlas = ExtResource("3_c4w8v")
+atlas = ExtResource("4_vs2ja")
 region = Rect2(4812, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c4w8v"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(0, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(1203, 0, 1203, 1201)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nenq2"]
-atlas = ExtResource("3_5uy6h")
+atlas = ExtResource("5_ofvgw")
 region = Rect2(2406, 0, 1203, 1201)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_md484"]
@@ -544,7 +571,7 @@ animations = [{
 }]
 
 [node name="infected" type="CharacterBody2D" groups=["infected"]]
-script = ExtResource("1_md0e3")
+script = ExtResource("1_x2k8k")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
@@ -562,7 +589,7 @@ shape = SubResource("RectangleShape2D_md0e3")
 [node name="HurtBox" type="Area2D" parent="." groups=["HurtBox"]]
 collision_layer = 1048577
 collision_mask = 1048577
-script = ExtResource("3_4ra3w")
+script = ExtResource("2_qy6rc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("CircleShape2D_md0e3")
@@ -582,12 +609,10 @@ scale = Vector2(1e-05, 1e-05)
 shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="Sprite2D" type="Sprite2D" parent="AttackShape/CollisionShape2D"]
-texture_filter = 1
 scale = Vector2(33.333332, 33.333332)
-texture = ExtResource("1_7p1mj")
+texture = ExtResource("3_ssemq")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_nenq2")
 scale = Vector2(0.03, 0.03)
 sprite_frames = SubResource("SpriteFrames_md484")
 animation = &"dead_sprite"

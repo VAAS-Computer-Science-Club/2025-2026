@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var sprite = $AnimatedSprite2D
+@onready var sprite = $Sprite2D
 @onready var anim = $invincible
 @onready var coyote_collider = $coyote
 @onready var floor_ray = $floor_ray
@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var atk_collider: CollisionShape2D = $Attack_Box/CollisionShape2D
 @onready var atk_player: AnimationPlayer = $player_animation_handler
 @onready var the_full_power_of_the_sun = $PointLight2D
+@export var player_pos = global_position
 var moving_lights = false
 var lights = false
 
@@ -145,6 +146,8 @@ func stop_dash():
 	can_dash = false
 	move_and_slide()
 
+
+
 func _on_spike_check_body_entered(body: Node2D) -> void:
 	took_dmg = true
 	self.global_position = self.global_position
@@ -167,13 +170,13 @@ func jerk_camera():
 func deduct_health(value : int, fade : bool):
 	if (invincible == false):
 		invincible = true
-		if (fade):
+		if (fade == true):
 			can_move = false
 		health = health - value
 		
 		invincible = true
 		anim.play("invincibility_frames")
-		if (fade):
+		if (fade == true):
 			UI.fade_out()
 		await get_tree().create_timer(1.5).timeout
 		invincible = false
@@ -190,13 +193,6 @@ func _on_coyote_area_exited(area: Area2D) -> void:
 	coyote = false
 
 
-func _on_attack_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("HurtBox") and $Attack_Box/CollisionShape2D.disabled == false:
-		area.TakeDamage(1)
-		if (current_state != states.attacking):
-			$Attack_Box/CollisionShape2D.disabled = true
-
-
 func light():
 	if moving_lights == false and global.lights_enabled != lights:
 		moving_lights = true
@@ -208,3 +204,15 @@ func light():
 		await tween.finished
 		lights = global.lights_enabled
 		moving_lights = false
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("P_Hitbox"):
+		deduct_health(1,false)
+
+
+func _on_attack_box_area_entered(area: Area2D) -> void:
+	if area.is_in_group("HurtBox") and $Attack_Box/CollisionShape2D.disabled == false:
+		area.TakeDamage(1)
+		if (current_state != states.attacking):
+			$Attack_Box/CollisionShape2D.disabled = true

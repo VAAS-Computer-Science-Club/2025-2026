@@ -22,7 +22,7 @@ global="*res://global.gd"
 [global_group]
 
 HurtBox=""
-P_Hurtbox=""
+P_Hitbox=""
 
 [input]
 

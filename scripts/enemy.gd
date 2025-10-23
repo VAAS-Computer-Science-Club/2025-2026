@@ -4,7 +4,6 @@ extends CharacterBody2D
 @onready var agent = $NavigationAgent2D
 @onready var cooldown = $Timer
 @onready var attack_ani = $AnimationPlayer
-
 const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
 var player_on_right = false
@@ -17,7 +16,7 @@ var has_died = false
 var health = 5
 var current_state = states.Alive
 var current_attack = attacks.None
-var cooldown_time = 1
+var cooldown_time = 1.5
 enum attacks {
 	None,
 	Spit,
@@ -30,9 +29,10 @@ enum states {
 	Attacking,
 }
 func _ready() -> void:
+	self.global_position = Vector2(0,-16)
 	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
-	if (player.global_position.x <= global_position.x):
+	if (velocity.x <= 0):
 		player_on_right = false
 	else:
 		player_on_right = true
@@ -44,9 +44,10 @@ func _physics_process(delta: float) -> void:
 				cooldown.start(cooldown_time)
 			if (distance_to_target > 60):
 				current_attack = attacks.Spit
-				
+				current_state = states.Attacking
 			elif (distance_to_target <= 60): 
 				current_attack = attacks.Melee
+				current_state = states.Attacking
 				
 		else :
 			current_attack = attacks.None
@@ -56,7 +57,8 @@ func _physics_process(delta: float) -> void:
 			return
 		if agent.is_navigation_finished():
 			return
-
+		if not is_on_floor():
+			velocity += get_gravity() * delta
 		var movement_delta = SPEED * delta
 		var next_path_position: Vector2 = agent.get_next_path_position()
 		new_velocity = global_position.direction_to(next_path_position) * movement_delta
@@ -85,16 +87,21 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _on_cooldown_timeout() -> void:
+	await get_tree().create_timer(2.5).timeout
 	if(current_attack == attacks.Spit && current_attack != attacks.None):
+		cooldown_time = 1.5
 		if (player_on_right == true):
 			attack_ani.play("SpitRight")
 		else:
 			attack_ani.play("SpitLeft")
 	elif(current_attack == attacks.Melee && current_attack != attacks.None):
+		cooldown_time = 12
 		if (player_on_right == true):
 			attack_ani.play("MeleeRight")
 		else:
 			attack_ani.play("MeleeLeft")
+	await attack_ani.animation_finished
+	current_state = states.Tracking
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	is_on_screen = true
@@ -120,12 +127,15 @@ func _on_is_player_near_body_exited(body: Node2D) -> void:
 			target = null
 
 
+
 func damage(dmg : int):
+	print("damaged!")
 	if health - dmg < 0:
 		current_state = states.Dead
 	else:
 		health = health - dmg
-		#sprite.get_material().set_shader_parameter("is_flashing",true)
-		#await get_tree().create_timer(0.2).timeout
-		#sprite.get_material().set_shader_parameter("is_flashing",false)
+		
+		sprite.get_material().set_shader_parameter("is_flashing",true)
+		await get_tree().create_timer(0.2).timeout
+		sprite.get_material().set_shader_parameter("is_flashing",false)
 	
