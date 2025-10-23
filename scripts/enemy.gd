@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var agent = $NavigationAgent2D
 @onready var cooldown = $Timer
 @onready var attack_ani = $AnimationPlayer
+
 const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
 var player_on_right = false
@@ -39,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_screen and target != null and (current_state != states.Dead or current_state != states.Attacking):
 		var distance_to_target = global_position.distance_to(target.global_position)
 		if(distance_to_target < 120 && current_state != states.Dead):
-			if(cooldown.is_stopped()):
+			if(cooldown.time_left == 0):
 				cooldown.start(cooldown_time)
 			if (distance_to_target > 60):
 				current_attack = attacks.Spit
@@ -84,12 +85,12 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _on_cooldown_timeout() -> void:
-	if(current_attack == attacks.Spit):
+	if(current_attack == attacks.Spit && current_attack != attacks.None):
 		if (player_on_right == true):
 			attack_ani.play("SpitRight")
 		else:
 			attack_ani.play("SpitLeft")
-	elif(current_attack == attacks.Melee):
+	elif(current_attack == attacks.Melee && current_attack != attacks.None):
 		if (player_on_right == true):
 			attack_ani.play("MeleeRight")
 		else:
