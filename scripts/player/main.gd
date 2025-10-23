@@ -51,6 +51,7 @@ var is_jumping = false
 var is_dashing = false
 var unlocked_dash = true
 var unlocked_jump = false
+var death_toll = false
 func _ready() -> void:
 	spawn = self.global_position
 	root = get_tree().root
@@ -60,6 +61,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
+	if (health <= 0 and death_toll == false):
+		can_move = false
+		global.death.emit()
+		death_toll = true
+		
 	light()
 	if unlocked_dash and is_on_floor():
 		can_dash = true

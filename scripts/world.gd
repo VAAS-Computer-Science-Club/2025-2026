@@ -1,6 +1,7 @@
 extends Node2D
 var moving_lights = false
 var lights = false
+
 @onready var the_full_power_of_the_sun = $DirectionalLight2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,7 +15,7 @@ func _process(delta: float) -> void:
 
 
 func light():
-	if moving_lights == false and global.lights_enabled != lights:
+	if global.lights_enabled != lights:
 		moving_lights = true
 		var tween = get_tree().create_tween()
 		if global.lights_enabled == false:

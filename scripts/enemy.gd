@@ -66,6 +66,8 @@ func _physics_process(delta: float) -> void:
 			agent.set_velocity(new_velocity)
 		else:
 			_on_agent_2d_velocity_computed(new_velocity)
+	if current_state == states.Dead:
+		velocity = Vector2.ZERO
 	if current_state == states.Dead and has_died == false:
 		$CollisionShape2D.disabled = true
 		#sprite.texture = dead_sprite
@@ -88,20 +90,24 @@ func _physics_process(delta: float) -> void:
 	
 func _on_cooldown_timeout() -> void:
 	await get_tree().create_timer(2.5).timeout
-	if(current_attack == attacks.Spit && current_attack != attacks.None):
-		cooldown_time = 1.5
-		if (player_on_right == true):
-			attack_ani.play("SpitRight")
-		else:
-			attack_ani.play("SpitLeft")
-	elif(current_attack == attacks.Melee && current_attack != attacks.None):
-		cooldown_time = 12
-		if (player_on_right == true):
-			attack_ani.play("MeleeRight")
-		else:
-			attack_ani.play("MeleeLeft")
-	await attack_ani.animation_finished
-	current_state = states.Tracking
+	if (current_state == states.Dead): 
+		$AttackShape/CollisionShape2D/Sprite2D.visible = false
+		return
+	else:
+		if(current_attack == attacks.Spit && current_attack != attacks.None):
+			cooldown_time = 1.5
+			if (player_on_right == true):
+				attack_ani.play("SpitRight")
+			else:
+				attack_ani.play("SpitLeft")
+		elif(current_attack == attacks.Melee && current_attack != attacks.None):
+			cooldown_time = 12
+			if (player_on_right == true):
+				attack_ani.play("MeleeRight")
+			else:
+				attack_ani.play("MeleeLeft")
+		await attack_ani.animation_finished
+		current_state = states.Tracking
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	is_on_screen = true
@@ -112,8 +118,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 
 func _on_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
-	velocity = safe_velocity
-	move_and_slide()
+	if (current_state != states.Dead):
+		velocity = safe_velocity
+		move_and_slide()
 
 
 func _on_is_player_near_body_entered(body: Node2D) -> void:

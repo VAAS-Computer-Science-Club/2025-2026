@@ -13,10 +13,26 @@ var max_health = 0
 var full_heart_texture = preload("res://assets/images/sfb.png")
 var empty_heart_texture = preload("res://assets/images/empty_sfb.png")
 # Called when the node enters the scene tree for the first time.
+
+
 func _ready() -> void:
-	pass
+	global.death.connect(dead)
 
-
+func dead():
+	$RichTextLabel.visible = true
+	for x in "You have died.".length():
+		$RichTextLabel/VBoxContainer/death.text = $RichTextLabel/VBoxContainer/death.text + "You have died."[x]
+		await get_tree().create_timer(0.1).timeout
+	await  get_tree().create_timer(0.8).timeout
+	for x in "Save them eventually.".length():
+		$RichTextLabel/VBoxContainer/eventually.text = $RichTextLabel/VBoxContainer/eventually.text + "Save them eventually."[x]
+		await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.8).timeout
+	for x in "Not today.".length():
+		$RichTextLabel/VBoxContainer/not.text = $RichTextLabel/VBoxContainer/not.text + "Not today."[x]
+		await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(5.5).timeout
+	get_tree().quit()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
