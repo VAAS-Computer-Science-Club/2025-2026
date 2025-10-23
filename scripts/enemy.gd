@@ -1,10 +1,12 @@
 extends CharacterBody2D
 
+@onready var player = $"."
 @onready var agent = $NavigationAgent2D
 @onready var cooldown = $Timer
 @onready var attack_ani = $AnimationPlayer
 const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
+var player_on_right = false
 var is_on_screen = false
 var target : Node = null
 @onready var sprite = $Sprite2D
@@ -29,16 +31,24 @@ enum states {
 func _ready() -> void:
 	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
+	if (player.global_position.x <= global_position.x):
+		player_on_right = false
+	else:
+		player_on_right = true
 	var new_velocity : Vector2 = Vector2.ZERO
 	if is_on_screen and target != null and (current_state != states.Dead or current_state != states.Attacking):
 		var distance_to_target = global_position.distance_to(target.global_position)
-		if (distance_to_target > 5):
-			#Lunge
-			pass
-		elif (distance_to_target < 5):
-			#Drop Hit
-			pass 
-		
+		if(distance_to_target < 120 && current_state != states.Dead):
+			if(cooldown.is_stopped()):
+				cooldown.start(cooldown_time)
+			if (distance_to_target > 60):
+				current_attack = attacks.Spit
+				
+			elif (distance_to_target <= 60): 
+				current_attack = attacks.Melee
+				
+		else :
+			current_attack = attacks.None
 		agent.target_position = target.position
 		# Do not query when the map has never synchronized and is empty.
 		if NavigationServer2D.map_get_iteration_id(agent.get_navigation_map()) == 0:
@@ -72,26 +82,18 @@ func _physics_process(delta: float) -> void:
 		sprite.stop()
 		#start attack timer
 	move_and_slide()
+	
 func _on_cooldown_timeout() -> void:
 	if(current_attack == attacks.Spit):
-			attack_ani.play("Spit")
+		if (player_on_right == true):
+			attack_ani.play("SpitRight")
+		else:
+			attack_ani.play("SpitLeft")
 	elif(current_attack == attacks.Melee):
-			attack_ani.play("Spit")
-
-
-func _on_melee_range_area_entered(area: Area2D) -> void:
-	current_attack = attacks.Melee
-
-
-func _on_spit_range_area_entered(area: Area2D) -> void:
-	cooldown.start(cooldown_time)
-	if (current_attack != attacks.Melee):
-		current_attack = attacks.Spit
-
-
-func _on_spit_range_area_exited(area: Area2D) -> void:
-	current_attack = attacks.None
-
+		if (player_on_right == true):
+			attack_ani.play("MeleeRight")
+		else:
+			attack_ani.play("MeleeLeft")
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	is_on_screen = true
