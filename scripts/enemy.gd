@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var agent = $NavigationAgent2D
 @onready var cooldown = $Timer
 @onready var attack_ani = $AnimationPlayer
+@onready var ray = $RayCast2D
 const SPEED = 600.0
 const JUMP_VELOCITY = -400.0
 var player_on_right = false
@@ -32,7 +33,7 @@ func _ready() -> void:
 	self.global_position = Vector2(0,-16)
 	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
-	if (velocity.x <= 0):
+	if (ray.is_colliding()):
 		player_on_right = false
 	else:
 		player_on_right = true
@@ -94,13 +95,13 @@ func _on_cooldown_timeout() -> void:
 		$AttackShape/CollisionShape2D/Sprite2D.visible = false
 		return
 	else:
-		if(current_attack == attacks.Spit && current_attack != attacks.None):
+		if(current_attack == attacks.Spit && current_attack != attacks.None && current_state != states.Dead):
 			cooldown_time = 1.5
 			if (player_on_right == true):
 				attack_ani.play("SpitRight")
 			else:
 				attack_ani.play("SpitLeft")
-		elif(current_attack == attacks.Melee && current_attack != attacks.None):
+		elif(current_attack == attacks.Melee && current_attack != attacks.None && current_state != states.Dead):
 			cooldown_time = 12
 			if (player_on_right == true):
 				attack_ani.play("MeleeRight")

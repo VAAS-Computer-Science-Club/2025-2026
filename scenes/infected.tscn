@@ -101,9 +101,9 @@ tracks/7/path = NodePath("AttackShape/CollisionShape2D:scale:x")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.0709375, 2.6306574, 4, -0.029062502, -1.773534, 0, 0),
+"times": PackedFloat32Array(0, 0.2)
 }
 tracks/8/type = "bezier"
 tracks/8/imported = false
@@ -112,9 +112,9 @@ tracks/8/path = NodePath("AttackShape/CollisionShape2D:scale:y")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"handle_modes": PackedInt32Array(2),
-"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(2, 0),
+"points": PackedFloat32Array(0.5, -0.24635535, -8.687292, 0.0709375, 2.5014873, 4, -0.029062502, -1.6443639, 0, 0),
+"times": PackedFloat32Array(0, 0.2)
 }
 
 [sub_resource type="Animation" id="Animation_nenq2"]
@@ -194,9 +194,9 @@ tracks/6/path = NodePath("AttackShape/CollisionShape2D:scale:x")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"handle_modes": PackedInt32Array(2),
-"points": PackedFloat32Array(4, -0.2278756, -1465.3696, 0.13333334, 857.4092),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(2, 2),
+"points": PackedFloat32Array(0.5, -0.23040663, -5.28274, 0.06666667, 1.5285268, 4, -0.03333333, -2.0008817, 0, 0),
+"times": PackedFloat32Array(0, 0.2)
 }
 tracks/7/type = "bezier"
 tracks/7/imported = false
@@ -205,9 +205,9 @@ tracks/7/path = NodePath("AttackShape/CollisionShape2D:scale:y")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(4, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0.5, -0.25, 0, 0.1, 2.027863, 4, -0.03333333, -2.117988, 0, 0),
+"times": PackedFloat32Array(0, 0.2)
 }
 tracks/8/type = "bezier"
 tracks/8/imported = false
@@ -619,6 +619,9 @@ animation = &"dead_sprite"
 frame_progress = 0.22026478
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(-105, 0)
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
