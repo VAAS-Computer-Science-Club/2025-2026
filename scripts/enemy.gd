@@ -17,7 +17,7 @@ var has_died = false
 var health = 5
 var current_state = states.Alive
 var current_attack = attacks.None
-var cooldown_time = 1.5
+var cooldown_time = 2
 enum attacks {
 	None,
 	Spit,
@@ -33,12 +33,14 @@ func _ready() -> void:
 	self.global_position = Vector2(0,-16)
 	cooldown.autostart = false
 func _physics_process(delta: float) -> void:
-	if (ray.is_colliding()):
-		player_on_right = false
+	if(current_state == states.Dead):
+		attack_ani.play("dead")
+	if(player_on_right):
+		print("right")
 	else:
-		player_on_right = true
+		print("left")
 	var new_velocity : Vector2 = Vector2.ZERO
-	if is_on_screen and target != null and (current_state != states.Dead or current_state != states.Attacking):
+	if is_on_screen and target != null and (has_died == false or current_state != states.Attacking):
 		var distance_to_target = global_position.distance_to(target.global_position)
 		if(distance_to_target < 120 && current_state != states.Dead):
 			if(cooldown.time_left == 0):
@@ -96,13 +98,11 @@ func _on_cooldown_timeout() -> void:
 		return
 	else:
 		if(current_attack == attacks.Spit && current_attack != attacks.None && current_state != states.Dead):
-			cooldown_time = 1.5
 			if (player_on_right == true):
 				attack_ani.play("SpitRight")
 			else:
 				attack_ani.play("SpitLeft")
 		elif(current_attack == attacks.Melee && current_attack != attacks.None && current_state != states.Dead):
-			cooldown_time = 12
 			if (player_on_right == true):
 				attack_ani.play("MeleeRight")
 			else:
@@ -134,11 +134,15 @@ func _on_is_player_near_body_exited(body: Node2D) -> void:
 		if target == body:
 			target = null
 
+func collision_right() -> void:
+	player_on_right = false
 
+func collision_left() -> void:
+	player_on_right = true
 
 func damage(dmg : int):
 	print("damaged!")
-	if health - dmg < 0:
+	if health - dmg <= 0:
 		current_state = states.Dead
 	else:
 		health = health - dmg

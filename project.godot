@@ -23,6 +23,7 @@ global="*res://global.gd"
 
 HurtBox=""
 P_Hitbox=""
+player=""
 
 [input]
 
