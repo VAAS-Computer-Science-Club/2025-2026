@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://hplq2kxvlego"]
+
+[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="1_0s2x3"]
+[ext_resource type="Script" uid="uid://cbaviv7eh1e5v" path="res://scripts/2.5D/Entities/NPC.gd" id="1_w4tgc"]
+[ext_resource type="Texture2D" uid="uid://k3f2lh2p54cg" path="res://assets/images/interact.png" id="3_x07t5"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nem0e"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_w4tgc"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7m7ow"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = SubResource("ViewportTexture_w4tgc")
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x07t5"]
+resource_local_to_scene = true
+next_pass = SubResource("StandardMaterial3D_7m7ow")
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_nem0e")
+billboard_keep_scale = true
+stencil_mode = 2
+stencil_flags = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_t57dp"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0s2x3"]
+radius = 2.4675474
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t57dp"]
+atlas = ExtResource("3_x07t5")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsuij"]
+atlas = ExtResource("3_x07t5")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebgdl"]
+atlas = ExtResource("3_x07t5")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pcj8a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t57dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsuij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebgdl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NPC" type="Area3D" unique_id=915975122]
+script = ExtResource("1_w4tgc")
+
+[node name="Sprite" type="SubViewport" parent="." unique_id=2089551388]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=432966178]
+position = Vector2(256, 256)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("1_0s2x3")
+animation = &"idle_side"
+
+[node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=1530811626]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
+material_overlay = SubResource("StandardMaterial3D_x07t5")
+texture = SubResource("ViewportTexture_t57dp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1147391633]
+shape = SubResource("SphereShape3D_0s2x3")
+
+[node name="interact" type="AnimatedSprite3D" parent="." unique_id=1149268743]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.17792088, -0.13280785, 0.38207042)
+visible = false
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_pcj8a")
+autoplay = "default"
+frame_progress = 0.5185705
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://ur5f2tn3gv7c"]
+
+[ext_resource type="Script" uid="uid://s2mj0duavpa7" path="res://scripts/2.5D/player.gd" id="1_7emhp"]
+[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="1_bmfl6"]
+[ext_resource type="Texture2D" uid="uid://c6xascym17tst" path="res://assets/images/under.png" id="2_7m7ow"]
+[ext_resource type="Texture2D" uid="uid://b10klil5r52l7" path="res://assets/images/over.png" id="3_vijvp"]
+[ext_resource type="Texture2D" uid="uid://cu2xjqhfxbqks" path="res://assets/images/progress.png" id="4_otu8x"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7emhp"]
+size = Vector3(1, 0.3701172, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nem0e"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7qx13"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7m7ow"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = SubResource("ViewportTexture_7qx13")
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vijvp"]
+resource_local_to_scene = true
+next_pass = SubResource("StandardMaterial3D_7m7ow")
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_nem0e")
+billboard_keep_scale = true
+stencil_mode = 2
+stencil_flags = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7emhp"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nem0e"]
+size = Vector3(1, 1.7456665, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7m7ow"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_7m7ow"]
+viewport_path = NodePath("Health")
+
+[node name="CharacterBody3D" type="CharacterBody3D" unique_id=915692485 groups=["player"]]
+script = ExtResource("1_7emhp")
+
+[node name="Health" type="SubViewport" parent="." unique_id=1131727483]
+transparent_bg = true
+
+[node name="Health" type="TextureProgressBar" parent="Health" unique_id=704821025]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -192.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+value = 75.0
+fill_mode = 5
+texture_under = ExtResource("2_7m7ow")
+texture_over = ExtResource("3_vijvp")
+texture_progress = ExtResource("4_otu8x")
+
+[node name="Sprite" type="SubViewport" parent="." unique_id=732399674]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=2058279248]
+position = Vector2(256, 256)
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("1_bmfl6")
+animation = &"walk_side"
+frame_progress = 0.1763471
+
+[node name="Collision_Box" type="CollisionShape3D" parent="." unique_id=685178136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8149414, 0)
+shape = SubResource("BoxShape3D_7emhp")
+
+[node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=294849310]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
+material_overlay = SubResource("StandardMaterial3D_vijvp")
+texture = SubResource("ViewportTexture_7emhp")
+
+[node name="HurtBox" type="Area3D" parent="." unique_id=418501028]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox" unique_id=266471139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08236694, 0)
+shape = SubResource("BoxShape3D_nem0e")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=745775129]
+transform = Transform3D(1, 0, 0, 0, 0.88122106, 0.47270456, 0, -0.47270456, 0.88122106, 0, 2.5785186, 3.6096175)
+
+[node name="Health2" type="SpringArm3D" parent="." unique_id=1121579372]
+transform = Transform3D(0.7, 0, 0, 0, 0.6999999, -2.9802322e-08, 0, 2.9802322e-08, 0.6999999, 0, -0.8939768, 0)
+shape = SubResource("BoxShape3D_7m7ow")
+spring_length = 0.0
+
+[node name="Health_Sprite" type="Sprite3D" parent="Health2" unique_id=1013189407]
+transform = Transform3D(1, 0, 0, 0, 1.0000001, 4.2574754e-08, 0, -4.2574754e-08, 1.0000001, 0, 0, 0)
+axis = 1
+texture = SubResource("ViewportTexture_7m7ow")

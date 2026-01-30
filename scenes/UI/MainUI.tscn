@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c2o53n2d5b5tx"]
+
+[ext_resource type="Script" uid="uid://b86ujce47l1lx" path="res://scenes/UI/dev_stats.gd" id="1_sb5dd"]
+
+[node name="Control" type="Control" unique_id=905674596]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1127003011]
+
+[node name="Dev Stats" type="VBoxContainer" parent="." unique_id=1089856213]
+layout_mode = 0
+offset_left = -565.0
+offset_top = -319.0
+offset_right = 579.0
+offset_bottom = 320.0
+script = ExtResource("1_sb5dd")
+
+[node name="State" type="RichTextLabel" parent="Dev Stats" unique_id=1698515972]
+layout_mode = 2
+text = "Idle
+Big 
+Balls"
+fit_content = true

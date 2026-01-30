@@ -1,0 +1,58 @@
+[gd_resource type="AnimatedTexture" format=3 uid="uid://i6o5vpa04y3x"]
+
+[sub_resource type="Gradient" id="Gradient_2twrv"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_73l7v"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t1cqm"]
+noise = SubResource("FastNoiseLite_73l7v")
+color_ramp = SubResource("Gradient_2twrv")
+
+[sub_resource type="Gradient" id="Gradient_aepmk"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rm1pt"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sgibi"]
+noise = SubResource("FastNoiseLite_rm1pt")
+color_ramp = SubResource("Gradient_aepmk")
+
+[sub_resource type="Gradient" id="Gradient_70knd"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hj8vk"]
+seed = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l73qr"]
+noise = SubResource("FastNoiseLite_hj8vk")
+color_ramp = SubResource("Gradient_70knd")
+
+[sub_resource type="Gradient" id="Gradient_5w2ar"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3fmxj"]
+seed = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nyaa6"]
+noise = SubResource("FastNoiseLite_3fmxj")
+color_ramp = SubResource("Gradient_5w2ar")
+
+[sub_resource type="Gradient" id="Gradient_yr6r3"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dules"]
+seed = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pm5xg"]
+noise = SubResource("FastNoiseLite_dules")
+color_ramp = SubResource("Gradient_yr6r3")
+
+[resource]
+frames = 5
+speed_scale = 13.1
+frame_0/texture = SubResource("NoiseTexture2D_t1cqm")
+frame_1/texture = SubResource("NoiseTexture2D_sgibi")
+frame_1/duration = 1.0
+frame_2/texture = SubResource("NoiseTexture2D_l73qr")
+frame_2/duration = 1.0
+frame_3/texture = SubResource("NoiseTexture2D_nyaa6")
+frame_3/duration = 1.0
+frame_4/texture = SubResource("NoiseTexture2D_pm5xg")
+frame_4/duration = 1.0

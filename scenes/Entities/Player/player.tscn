@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://dndsai5ihdsn3"]
+
+[ext_resource type="Script" uid="uid://bx5vrgj2d2jgj" path="res://scripts/Player/Movement.gd" id="1_qho8e"]
+[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="1_wf0sj"]
+[ext_resource type="Texture2D" uid="uid://kejj5ida2kyr" path="res://assets/images/slash.PNG" id="3_av5r4"]
+[ext_resource type="Texture2D" uid="uid://i6o5vpa04y3x" path="res://assets/objects/particles/static.tres" id="4_m4mw1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qho8e"]
+size = Vector2(14, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbj6x"]
+size = Vector2(16, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_av5r4"]
+size = Vector2(23, 20)
+
+[sub_resource type="Curve" id="Curve_7oxwj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.36627913, 1), -1.9862671, -1.9862671, 0, 0, Vector2(0.3895349, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_bdmca"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0rlin"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.01
+scale_max = 0.01
+
+[node name="PlayerController" type="CharacterBody2D" unique_id=791288474]
+script = ExtResource("1_qho8e")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=178050630]
+position = Vector2(0, -2.9999998)
+scale = Vector2(0.03, 0.03)
+sprite_frames = ExtResource("1_wf0sj")
+animation = &"idle_side"
+
+[node name="MainCollider" type="CollisionShape2D" parent="." unique_id=274269444]
+position = Vector2(-1, -0.5)
+shape = SubResource("RectangleShape2D_qho8e")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1267545829]
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="Hitbox" unique_id=1753084110]
+position = Vector2(-1, -2)
+shape = SubResource("RectangleShape2D_qbj6x")
+
+[node name="Cam" type="Camera2D" parent="." unique_id=716036358]
+zoom = Vector2(5, 5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=33398229]
+position = Vector2(-23.5, 0)
+shape = SubResource("RectangleShape2D_av5r4")
+
+[node name="Attack_Particles" type="CPUParticles2D" parent="." unique_id=2056700191]
+texture_filter = 1
+position = Vector2(-23, 0)
+amount = 1
+texture = ExtResource("3_av5r4")
+lifetime = 0.4
+gravity = Vector2(-980, 0)
+angle_min = 160.0
+angle_max = 200.0
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_7oxwj")
+hue_variation_curve = SubResource("Curve_bdmca")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1240956883]
+texture_filter = 1
+position = Vector2(-5, -7)
+texture = ExtResource("4_m4mw1")
+process_material = SubResource("ParticleProcessMaterial_0rlin")
+
+[node name="Timer" type="Timer" parent="." unique_id=1878507689]

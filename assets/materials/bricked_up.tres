@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://4tu7441pw2ce"]
+
+[ext_resource type="Texture2D" uid="uid://wu7ynrceu3t2" path="res://assets/materials/bricked_up_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://80v28sq8avdx" path="res://assets/materials/bricked_up_normal.png" id="3"]
+
+[resource]
+albedo_color = Color(0.859375, 0.38827658, 0.010070801, 1)
+albedo_texture = ExtResource("1")
+normal_enabled = true
+normal_texture = ExtResource("3")
+uv1_scale = Vector3(5, 5, 5)

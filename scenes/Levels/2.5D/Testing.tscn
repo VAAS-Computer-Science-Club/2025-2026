@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://crpvqtly580hb"]
+
+[ext_resource type="Script" uid="uid://clixhcjh45grh" path="res://scripts/2.5D/LEVELTestingConstants.gd" id="1_5vww3"]
+[ext_resource type="Material" uid="uid://d0evw603ws78i" path="res://assets/materials/grass_place.tres" id="1_qovp1"]
+[ext_resource type="Texture2D" uid="uid://dn3xwsp60lkm2" path="res://assets/images/magic_circle.png" id="3_qovp1"]
+[ext_resource type="Material" uid="uid://4tu7441pw2ce" path="res://assets/materials/bricked_up.tres" id="3_v8l2m"]
+[ext_resource type="Texture2D" uid="uid://bdn7a6ec4lr04" path="res://assets/images/magic_circle_emission.png" id="4_10mg8"]
+[ext_resource type="PackedScene" uid="uid://hplq2kxvlego" path="res://scenes/Entities/2.5D/npc_base.tscn" id="5_5vww3"]
+[ext_resource type="PackedScene" uid="uid://6eng3vhv7naf" path="res://scenes/Subsystems/Travel/bridge.tscn" id="6_8mrwc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_v8l2m"]
+
+[sub_resource type="Sky" id="Sky_grfr1"]
+sky_material = SubResource("ProceduralSkyMaterial_v8l2m")
+
+[sub_resource type="Environment" id="Environment_qovp1"]
+background_mode = 2
+sky = SubResource("Sky_grfr1")
+tonemap_mode = 3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w5roj"]
+material = ExtResource("1_qovp1")
+size = Vector2(20, 20)
+subdivide_width = 5
+subdivide_depth = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcc7i"]
+size = Vector3(20, 0, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_10mg8"]
+lightmap_size_hint = Vector2i(34, 81)
+material = ExtResource("3_v8l2m")
+add_uv2 = true
+size = Vector3(5, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_grfr1"]
+size = Vector3(1, 1, 0.1)
+
+[sub_resource type="Animation" id="Animation_10mg8"]
+resource_name = "day_night"
+length = 24.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vww3"]
+_data = {
+&"day_night": SubResource("Animation_10mg8")
+}
+
+[node name="Level Node" type="Node3D" unique_id=1994816318]
+script = ExtResource("1_5vww3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=148486971]
+environment = SubResource("Environment_qovp1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1810431755]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=2123926944]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1329576822]
+mesh = SubResource("PlaneMesh_w5roj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=545742712]
+shape = SubResource("BoxShape3D_mcc7i")
+
+[node name="Box" type="StaticBody3D" parent="." unique_id=75967690]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 10, 2.2901256, 0.8875208, -3.0041482)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box" unique_id=191057015]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_10mg8")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box" unique_id=912709587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.002532903)
+shape = SubResource("BoxShape3D_grfr1")
+
+[node name="Decal" type="Decal" parent="." unique_id=523846418]
+transform = Transform3D(0.64368296, -3.345199e-08, -0.7652923, -0.7652923, -2.8136276e-08, -0.64368296, 0, 1, -4.371139e-08, 1.6862202, 1.6623795, -2.4841673)
+size = Vector3(2, 0.2, 2)
+texture_albedo = ExtResource("3_qovp1")
+texture_normal = ExtResource("4_10mg8")
+texture_emission = ExtResource("4_10mg8")
+emission_energy = 0.01
+upper_fade = 0.33923578
+lower_fade = 1e-05
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=293297073]
+libraries/ = SubResource("AnimationLibrary_5vww3")
+
+[node name="NPC" parent="." unique_id=493324001 instance=ExtResource("5_5vww3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5941615, 1.286744, 0)
+
+[node name="Bridge" parent="." unique_id=32936363 instance=ExtResource("6_8mrwc")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12.058424, -0.09913683, 0)
+
+[node name="Bridge2" parent="." unique_id=1196657421 instance=ExtResource("6_8mrwc")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 11.734579, -0.09913683, 0)
