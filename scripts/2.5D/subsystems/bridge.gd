@@ -10,3 +10,4 @@ func _on_body_entered(body: Node3D) -> void:
 		if (body.active_transfer == false):
 			global.change_level.emit(level, is_left)
 			body.active_transfer = true
+			body.bridge_left = is_left

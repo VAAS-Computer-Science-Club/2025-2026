@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://vaghk6vlbvfb" path="res://assets/images/sfb.png" id="7_yql6x"]
 [ext_resource type="Texture2D" uid="uid://dthe4qq8gbxd8" path="res://assets/images/E.png" id="8_n1upn"]
 [ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="10_ba84i"]
+[ext_resource type="PackedScene" uid="uid://diu57w480js75" path="res://scenes/UI/loading_screen.tscn" id="11_yql6x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yql6x"]
 bg_color = Color(0.10980392, 0.10980392, 0.10980392, 0.5882353)
@@ -317,3 +318,11 @@ offset_top = -261.0
 offset_right = 1438.7
 offset_bottom = 971.0
 color = Color(0, 0, 0, 1)
+
+[node name="Loading_Screen" parent="." unique_id=1261572481 instance=ExtResource("11_yql6x")]
+visible = false
+layout_mode = 1
+offset_left = 565.0
+offset_top = 321.0
+offset_right = 565.0
+offset_bottom = 321.0

@@ -1,6 +1,82 @@
 [gd_scene format=3 uid="uid://diu57w480js75"]
 
+[ext_resource type="Script" uid="uid://l5bn5gykyr5s" path="res://scripts/2.5D/UI/loading_screen.gd" id="1_2t34d"]
 [ext_resource type="Texture2D" uid="uid://bqukocse8bbky" path="res://assets/images/Bg idk.png" id="1_35dpi"]
+[ext_resource type="Texture2D" uid="uid://11c06km77nu6" path="res://assets/images/annie/wink.png" id="2_pe18t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t34d"]
+atlas = ExtResource("2_pe18t")
+region = Rect2(0, 0, 2048, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85qbq"]
+atlas = ExtResource("2_pe18t")
+region = Rect2(2048, 0, 2048, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uno8"]
+atlas = ExtResource("2_pe18t")
+region = Rect2(4096, 0, 2048, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x40i"]
+atlas = ExtResource("2_pe18t")
+region = Rect2(6144, 0, 2048, 1920)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oheac"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2t34d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85qbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uno8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x40i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="Animation" id="Animation_pbjre"]
+resource_name = "LoadingAnim"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Loading Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["Loading", "Loading.", "Loading..", "Loading..."]
+}
+
+[sub_resource type="Animation" id="Animation_hhx2x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Loading Text:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Loading"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3jb2k"]
+_data = {
+&"LoadingAnim": SubResource("Animation_pbjre"),
+&"RESET": SubResource("Animation_hhx2x")
+}
 
 [node name="Loading_Screen" type="Control" unique_id=1261572481]
 layout_mode = 3
@@ -9,6 +85,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2t34d")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1271421696]
 layout_mode = 0
@@ -21,3 +98,22 @@ expand_mode = 2
 stretch_mode = 4
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1695557549]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1534868647]
+position = Vector2(-472.9999, 229)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_oheac")
+frame_progress = 0.04181033
+
+[node name="Loading Text" type="RichTextLabel" parent="." unique_id=833760279]
+layout_mode = 0
+offset_left = -419.0
+offset_top = 207.0
+offset_right = 238.0
+offset_bottom = 377.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/normal_font_size = 128
+text = "Loading"
+
+[node name="Loading" type="AnimationPlayer" parent="." unique_id=1869442412]
+libraries/ = SubResource("AnimationLibrary_3jb2k")

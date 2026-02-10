@@ -24,6 +24,8 @@ func _ready() -> void:
 
 func change_level(level_resource : Resource, is_left : bool):
 	global.fade_out.emit(2)
+	await global.fade_finished
+	global.loading.emit(1)
 	var level = level_resource.instantiate()
 	level_node.queue_free()
 	level_node = level

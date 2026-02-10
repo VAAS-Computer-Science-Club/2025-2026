@@ -16,6 +16,7 @@ enum dir {
 }
 
 
-
+signal loading
 signal fade_in
 signal fade_out
+signal fade_finished
