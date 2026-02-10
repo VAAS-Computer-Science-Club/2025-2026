@@ -14,3 +14,8 @@ enum dir {
 	Up,
 	Down
 }
+
+
+
+signal fade_in
+signal fade_out

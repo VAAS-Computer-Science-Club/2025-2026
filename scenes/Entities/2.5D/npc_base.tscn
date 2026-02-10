@@ -84,6 +84,7 @@ animation = &"idle_side"
 [node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=1530811626]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
 material_overlay = SubResource("StandardMaterial3D_x07t5")
+shaded = true
 texture = SubResource("ViewportTexture_t57dp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1147391633]

@@ -48,7 +48,7 @@ size = Vector3(1, 1.7456665, 1)
 [sub_resource type="ViewportTexture" id="ViewportTexture_7m7ow"]
 viewport_path = NodePath("Health")
 
-[node name="CharacterBody3D" type="CharacterBody3D" unique_id=915692485 groups=["player"]]
+[node name="PlayerController" type="CharacterBody3D" unique_id=915692485 groups=["player"]]
 script = ExtResource("1_7emhp")
 
 [node name="Health" type="SubViewport" parent="." unique_id=1131727483]
@@ -95,6 +95,7 @@ shape = SubResource("BoxShape3D_7emhp")
 [node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=294849310]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
 material_overlay = SubResource("StandardMaterial3D_vijvp")
+shaded = true
 texture = SubResource("ViewportTexture_7emhp")
 
 [node name="HurtBox" type="Area3D" parent="." unique_id=418501028]

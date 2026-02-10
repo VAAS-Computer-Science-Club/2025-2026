@@ -22,12 +22,21 @@ func _ready() -> void:
 
 
 
-func change_level(level_resource : Resource,Entrance : global.dir):
+func change_level(level_resource : Resource, is_left : bool):
+	global.fade_out.emit(2)
 	var level = level_resource.instantiate()
 	level_node.queue_free()
 	level_node = level
-	match Entrance:
-		global.dir.Left:
-			spawnPoint = level_node.left_spawn
-		global.dir.Right:
-			spawnPoint = level_node.right_spawn
+	if spawnPoint == null:
+		spawnPoint = level.right_spawn
+	print(spawnPoint)
+	add_child(level)
+	await get_tree().create_timer(0.1).timeout
+	if (is_left):
+		spawnPoint = level.left_spawn
+	else:
+		spawnPoint = level.right_spawn
+	player.position = spawnPoint
+	player.active_transfer = false
+	global.fade_in.emit(0.5)
+		
