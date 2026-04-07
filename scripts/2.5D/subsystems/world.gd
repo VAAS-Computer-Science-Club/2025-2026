@@ -32,7 +32,7 @@ func change_level(level_resource : Resource, is_left : bool):
 	if spawnPoint == null:
 		spawnPoint = level.right_spawn
 	print(spawnPoint)
-	add_child(level)
+	add_child(level,true)
 	await get_tree().create_timer(0.1).timeout
 	if (is_left):
 		spawnPoint = level.left_spawn

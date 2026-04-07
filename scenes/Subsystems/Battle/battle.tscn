@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://omlt0h8ncvgc"]
+
+[ext_resource type="Script" uid="uid://bn1n1oxwimmy4" path="res://scripts/battle.gd" id="1_d844g"]
+[ext_resource type="PackedScene" uid="uid://bx8i0c2imivm7" path="res://scenes/Subsystems/Battle/playerbattle.tscn" id="2_78ltx"]
+[ext_resource type="Texture2D" uid="uid://cxk2odrxitx8g" path="res://assets/images/heads.png" id="3_78ltx"]
+[ext_resource type="Texture2D" uid="uid://cfqlnk3rl2tn2" path="res://assets/images/tails.png" id="4_r6uqb"]
+
+[sub_resource type="Gradient" id="Gradient_d844g"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
+gradient = SubResource("Gradient_d844g")
+
+[node name="Battle" type="Control" unique_id=438008570]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d844g")
+
+[node name="playerbattle" parent="." unique_id=1013336732 instance=ExtResource("2_78ltx")]
+
+[node name="UI" type="SubViewportContainer" parent="." unique_id=513740711]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="UI" unique_id=1491583508]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="BattleVisuals" type="SubViewportContainer" parent="." unique_id=1036677343]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="BattleVisuals" unique_id=937365163]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=565026902]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 470.0
+offset_right = 480.0
+offset_bottom = 622.0
+texture = SubResource("GradientTexture2D_78ltx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect" unique_id=861881291]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 452.0
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="TextureRect/HBoxContainer" unique_id=718711562]
+layout_mode = 2
+text = "Attack"
+
+[node name="Button2" type="Button" parent="TextureRect/HBoxContainer" unique_id=2127346780]
+layout_mode = 2
+text = "Item"
+
+[node name="Button3" type="Button" parent="TextureRect/HBoxContainer" unique_id=1359110389]
+layout_mode = 2
+text = "Flee"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect/HBoxContainer" unique_id=311630320]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Health: "
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="TextureRect/HBoxContainer" unique_id=1287266733]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "SP: "
+
+[node name="heads" type="TextureRect" parent="TextureRect" unique_id=1041645540]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("3_78ltx")
+stretch_mode = 4
+
+[node name="tails" type="TextureRect" parent="TextureRect" unique_id=1378166851]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("4_r6uqb")
+stretch_mode = 4
+
+[node name="playercoins" type="HBoxContainer" parent="." unique_id=47193774]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 7.0
+offset_right = 294.0
+offset_bottom = 23.0
+scale = Vector2(4, 4)
+
+[node name="enemycoins" type="HBoxContainer" parent="." unique_id=1125595916]
+layout_mode = 0
+offset_left = 655.0
+offset_top = 4.0
+offset_right = 952.0
+offset_bottom = 20.0
+scale = Vector2(4, 4)

@@ -33,6 +33,7 @@ resource_local_to_scene = true
 next_pass = SubResource("StandardMaterial3D_7m7ow")
 transparency = 1
 albedo_texture = SubResource("ViewportTexture_nem0e")
+billboard_mode = 2
 billboard_keep_scale = true
 stencil_mode = 2
 stencil_flags = 2
@@ -83,10 +84,10 @@ render_target_update_mode = 4
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=2058279248]
 position = Vector2(256, 256)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.3, 0.3)
 sprite_frames = ExtResource("1_bmfl6")
 animation = &"walk_side"
-frame_progress = 0.1763471
+frame_progress = 0.044639844
 
 [node name="Collision_Box" type="CollisionShape3D" parent="." unique_id=685178136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8149414, 0)
@@ -95,6 +96,7 @@ shape = SubResource("BoxShape3D_7emhp")
 [node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=294849310]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
 material_overlay = SubResource("StandardMaterial3D_vijvp")
+billboard = 2
 shaded = true
 texture = SubResource("ViewportTexture_7emhp")
 

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cbi5jcc82ircq"]
+
+[ext_resource type="ArrayMesh" uid="uid://cb76cnhgb5ego" path="res://assets/objects/Tree.obj" id="1_4wmva"]
+[ext_resource type="Texture2D" uid="uid://o135f16yt7f4" path="res://assets/materials/TreeLeaves.png" id="2_lfbvp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_03dud"]
+size = Vector3(1, 3.5908813, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kei0j"]
+albedo_texture = ExtResource("2_lfbvp")
+texture_filter = 0
+
+[node name="Tree" type="StaticBody3D" unique_id=1302768329]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=439940317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2954407, 0)
+shape = SubResource("BoxShape3D_03dud")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=708108678]
+mesh = ExtResource("1_4wmva")
+surface_material_override/0 = SubResource("StandardMaterial3D_kei0j")
+surface_material_override/1 = SubResource("StandardMaterial3D_kei0j")
+surface_material_override/2 = SubResource("StandardMaterial3D_kei0j")
+surface_material_override/3 = SubResource("StandardMaterial3D_kei0j")
