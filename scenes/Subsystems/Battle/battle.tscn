@@ -1,14 +1,203 @@
-[gd_scene format=3 uid="uid://omlt0h8ncvgc"]
+[gd_scene format=4 uid="uid://omlt0h8ncvgc"]
 
 [ext_resource type="Script" uid="uid://bn1n1oxwimmy4" path="res://scripts/battle.gd" id="1_d844g"]
 [ext_resource type="PackedScene" uid="uid://bx8i0c2imivm7" path="res://scenes/Subsystems/Battle/playerbattle.tscn" id="2_78ltx"]
 [ext_resource type="Texture2D" uid="uid://cxk2odrxitx8g" path="res://assets/images/heads.png" id="3_78ltx"]
 [ext_resource type="Texture2D" uid="uid://cfqlnk3rl2tn2" path="res://assets/images/tails.png" id="4_r6uqb"]
+[ext_resource type="Shader" uid="uid://bhc04hh12yslm" path="res://assets/shaders/sky.gdshader" id="5_qjeci"]
+[ext_resource type="Material" uid="uid://dgswjh374a6xs" path="res://assets/materials/new_grass.tres" id="6_0ynuc"]
+[ext_resource type="PackedScene" uid="uid://c4r6rrblrx6wg" path="res://scenes/tree.tscn" id="7_w65wj"]
+[ext_resource type="Texture2D" uid="uid://bypjx30oyf0hn" path="res://assets/images/Grass.png" id="8_h47ea"]
+[ext_resource type="Material" uid="uid://4tu7441pw2ce" path="res://assets/materials/bricked_up.tres" id="9_abfx6"]
+[ext_resource type="Texture2D" uid="uid://dp4vtqg0xtv4v" path="res://assets/images/graffiti_006.png" id="10_eukx7"]
+[ext_resource type="Texture2D" uid="uid://53cq2pos2nx3" path="res://assets/images/graffiti_004.png" id="11_27kv5"]
+[ext_resource type="Texture2D" uid="uid://btua31wo5eegp" path="res://assets/images/graffiti_005.png" id="12_jr4ek"]
+[ext_resource type="Texture2D" uid="uid://dt0e5qcsjusde" path="res://assets/images/graffiti_001.png" id="13_25i5n"]
 
 [sub_resource type="Gradient" id="Gradient_d844g"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
 gradient = SubResource("Gradient_d844g")
+
+[sub_resource type="GDScript" id="GDScript_n7mb3"]
+script/source = "extends Node3D
+var spawnPoint = Vector3(0,5,0)
+@onready var BridgeLeft = $Bridge
+@onready var BridgeRight = $Bridge2
+var player;
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass
+
+
+@onready var anim = $AnimationPlayer
+
+func _process(delta: float) -> void:
+	for child in self.get_children():
+		if is_instance_of(child,OmniLight3D):
+			child.light_energy = clamp(anim.current_animation_position,0,11)
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jetka"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sumr0"]
+noise = SubResource("FastNoiseLite_jetka")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sumr0"]
+shader = ExtResource("5_qjeci")
+shader_parameter/day_top_color = Color(0.1, 0.4, 0.8, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.7, 0.9, 1)
+shader_parameter/night_top_color = Color(0.01, 0.01, 0.1, 1)
+shader_parameter/night_bottom_color = Color(0.05, 0.05, 0.05, 1)
+shader_parameter/sun_color = Color(1, 0.9, 0.7, 1)
+shader_parameter/moon_color = Color(1, 1, 1, 1)
+shader_parameter/sun_size = 0.1
+shader_parameter/moon_size = 0.05
+shader_parameter/sun_bloom = 10.0
+shader_parameter/cloud_noise = SubResource("NoiseTexture2D_sumr0")
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_speed = 0.01
+shader_parameter/cloud_density = 0.5
+shader_parameter/star_intensity = 1.0
+
+[sub_resource type="Sky" id="Sky_grfr1"]
+sky_material = SubResource("ShaderMaterial_sumr0")
+
+[sub_resource type="Environment" id="Environment_qovp1"]
+background_mode = 2
+sky = SubResource("Sky_grfr1")
+tonemap_mode = 3
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_w5roj"]
+material = ExtResource("6_0ynuc")
+size = Vector2(20, 20)
+subdivide_width = 5
+subdivide_depth = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mcc7i"]
+size = Vector3(20, 0, 20)
+
+[sub_resource type="Animation" id="Animation_jetka"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_10mg8"]
+resource_name = "day_night"
+length = 24.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 24),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vww3"]
+_data = {
+&"RESET": SubResource("Animation_jetka"),
+&"day_night": SubResource("Animation_10mg8")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jetka"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sumr0"]
+albedo_texture = ExtResource("8_h47ea")
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_w2dcx"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"format": 34896613377,
+"index_count": 168,
+"index_data": PackedByteArray("DQAHAAkADQAJAA4ADgAJAAgADgAPAA0ACgAIAAkABwAKAAkACAAQAA4AEAAPAA4AEQAQAAgACAAKABIAEgARAAgAEQATABAAEwAPABAAEwARABQAFAARABIAEwAVAA8AFAAVABMAFgAPABUAEgAKAAEABgAPABYAFAASAAYADwAGAA0AAQANABIADAAUAAYADAAVABQADAAGABYADAAXABUAFwAMAAUAFQAXAAUABQAMABYAFQAAABYAFQAFAAAABgASAAAABQAWAAQAFgAAAAQAAwAFAAQAAAAFAAMAAwAEAAIABAAAAAIAAAASABgAEgANABgAAAAYAAIABgAAABkAGQAAAAMABgAZAA0AGAANABkAGAABAAIABwANAAEAGQAHABgAGAAHAAEAAwALABkACwADAAIACwAHABkAAQALAAIABwALAAoACgALAAEA"),
+"lods": [1.0488279, PackedByteArray("AQAHAAkABwAKAAkACgAIAAkACAAKAAEABwALAAoACgALAAEACwAHAAAAAAAHAAEACAAGAAkACQAGAAEACAABAAYABgABAAAABgAAAAEAAQALAAIAAAABAAIACwADAAIAAwALAAAAAwAEAAIABAAAAAIABgAAAAQAAwAFAAQAAAAFAAMABQAGAAQADAAFAAAABQAMAAYADAAAAAYACAAMAAYADAAIAAYA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAAAAwAEAAIABAAAAAIAAwAFAAQAAAAFAAMABQAGAAQABgAAAAQABQAAAAYABgABAAAABgAAAAEAAgAHAAAAAAAHAAEABwACAAEABwAGAAEACAAHAAEACAAGAAcACAABAAYABQAIAAYACAAFAAYA")],
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("psSdN7KZAAALkgE3wu4AAPH4fD3j/QAA9e5Xxn68AACf75QhJbkAAFf4WENthgAA0aD0N+t6AACwj8Y7TvgAAAAAnUWcZAAAegMAQa/5AACESAAADvUAANbAO2D//wAABNkdITYDAADXXzzKadMAACwBKYqUywAAMXwOjaRqAAAuEVSKAXMAAP0nMS2tQQAA9oxjIyvfAACzQfQ7AyEAADGdfxATFgAAy+j//+c4AAAuyeA0OHUAAP//zl8AAAAAHJviOxXfAADJsexeA8IAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_f5ii7"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"attribute_data": PackedByteArray("I03S4x54KssXfv//5HwayhZcOfq+NYh+Zj4P0c9C+/2UwRPR37LT4+GHM8sagyTKGcqgfvuB//86vfn9EaIz+hGiM/r6ozH6+4H//+VdEfrPQvv9Flw5+jSAjILi/QTsAYBt46+DoaUBgF7jS3yepSACEOyuf3GCcZRtsXBwVMjJI3WSNBMmn8kjdZJeDLvNruwyn/TISb4hw7yHNHCUz3BwVMg0cJTPI03S4zRwlM8Xfv//cHBUyCNN0uP3Op3lFlw5+iNN0uMXfv//9zqd5SNN0uMWXDn6hZ7X2nGUbbGFntfaEaIz+l4Mu81mPg/Rz0L7/SACEOz3Op3lKuNB9Zvzss2b87LNKuNB9a7sMp8BgG3jGoMkyoWe19rKj53P9MhJvpTBE9FxlG2xGoMkygGAbePKj53PGoMkyr41iH6+NYh+S3yepXBwVMhxlG2xNICMgu+W1oAhw7yH75bWgO+W1oD0yEm+cZRtsV4Mu83JI3WScHBUyBjcgZIhw7yHGcqgfhjcgZKu7DKfIcO8hyHDvIf0yEm+75bWgB54KssXfv//Xgy7zXBwVMhmPg/RkI9XyHGUbbHKj53PhZ7X2pTBE9HfstPjhZ7X2t+y0+MRojP6lMET0fTISb4LxZvlKuNB9RGiM/oBgG3jhZ7X2iACEOxmPg/R9zqd5QAA//8gAhDsz0L7/a7sMp8q40H19MhJvhqDJMpxlG2x4Yczy5CPV8gq40H1Or35/d+y0+Mq40H1/////zq9+f3i/QTs/////yrjQfUq40H137LT4wvFm+VwcFTIS3yepR54KstLfJ6lAYBe4x54KsvkaKqArn9xgr41iH5LfJ6lrn9xgg=="),
+"format": 34896613399,
+"index_count": 168,
+"index_data": PackedByteArray("HgALABYAHwAgAAUAIQAiACMAJAAlACYAJwABAAIAAAAoACkAKgArACwABgAtAC4ABwAvAAQAMAAxADIAMwA0ADUACAA2ADcAGAAPAA0AOAAJADkAHAA6ADsAPAA9AD4AFwA/AEAAQQBCAEMARABFAEYARgBFAEcASABJAEoASwBMABkATQBOAAoAGwBPAB0AUABRAFIAUwBUAFUADABWAFcAWABZAFoAWwBcAF0AXgBfAGAAYQBiAGMAZABlAGYAZwAaAGgAaQBqAGsAbABtAG4AbgBtAG8AcABxAHIAcwAOAHQAdQB2AHcAdwB2AHgAeQB6AHsAfAB9AH4AfwCAAIEAggCDAIQAhQCGAIcAhwCGAIgAiQCKAIsAjACNAI4AjwCQAJEAkgCTAJQAlQCWAJcAmACZAJoAmwCcAJ0AAwCeAJ8AEAARABIAEwAUABUA"),
+"lods": [1.0488279, PackedByteArray("CgALABYAFgAIAAoADAAIABYADAAXAAgACAAJAAoAFwAJAAgACQALAAoAFwAOAAkACQAOAA8AGAALAAkADwAYAAkACwAYABkAGAAPAA0AAAABAAIABAAAAAIAAQAaAAIAGwAaAAEABgAAAAQABgABAAAABwAGAAQABwAcAAYAHAAFAAYABQABAAYABQAbAAEAGwAFAB0AAwAbAB0AEAARABIAEwAUABUA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAEABAAAAAIABQADAAEABgAAAAQABgABAAAABQABAAYABwAGAAQABwAFAAYACAAJAAoACwAIAAoACQALAAoADAAIAAsADQALAAkADAAOAAgADgAJAAgADwANAAkACQAOAA8AEAARABIAEwAUABUA")],
+"material": SubResource("StandardMaterial3D_sumr0"),
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 160,
+"vertex_data": PackedByteArray("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")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_w2dcx")
+
+[sub_resource type="MultiMesh" id="MultiMesh_8iuri"]
+transform_format = 1
+instance_count = 32
+mesh = SubResource("ArrayMesh_f5ii7")
+buffer = PackedFloat32Array(0.29489577, 0, 1.0201241, 7.7693787, 0, 1.061893, 0, -1.0021191, -1.0201241, 0, 0.29489577, 6.4947023, 0.78850096, 0, -0.2260317, -3.485939, 0, 0.82025856, 0, -1.0021191, 0.2260317, 0, 0.78850096, 12.427741, -0.92244095, 0, -0.2783058, -2.0345802, 0, 0.9635099, 0, -1.0021191, 0.2783058, 0, -0.92244095, 10.329853, 0.93205756, 0, -0.4521859, 4.805006, 0, 1.0359553, 0, -1.0021191, 0.4521859, 0, 0.93205756, -0.8526329, -0.30458045, 0, -0.92528224, 4.651846, 0, 0.9741234, 0, -1.0021191, 0.92528224, 0, -0.30458045, 12.284629, -0.8406913, 0, -0.13327381, -5.7855806, 0, 0.8511896, 0, -1.0021191, 0.13327381, 0, -0.8406913, 4.350133, -1.0823802, 0, 0.47846365, -6.7159224, 0, 1.1834164, 0, -1.0021191, -0.47846365, 0, -1.0823802, -0.80525047, -0.49712515, 0, 0.7192088, -0.06679058, 0, 0.87429667, 0, -1.0021191, -0.7192088, 0, -0.49712515, 8.387965, -0.45381686, 0, 1.0923707, -6.462681, 0, 1.1828878, 0, -1.0021191, -1.0923707, 0, -0.45381686, 5.4322166, 0.57906103, 0, 0.8867744, 3.5146399, 0, 1.0590942, 0, -1.0021191, -0.8867744, 0, 0.57906103, 12.013642, -0.58044755, 0, 0.696024, 6.185751, 0, 0.906294, 0, -1.0021191, -0.696024, 0, -0.58044755, 9.417264, -1.135248, 0, 0.21183018, -5.48485, 0, 1.1548419, 0, -1.0021191, -0.21183018, 0, -1.135248, 11.712674, 0.11816461, 0, 0.8999225, -1.7243204, 0, 0.90764713, 0, -1.0021191, -0.8999225, 0, 0.11816461, 2.8678522, -0.7409589, 0, 0.3246696, 0.98433876, 0, 0.8089688, 0, -1.0021191, -0.3246696, 0, -0.7409589, 8.580439, 0.58461314, 0, -0.9064957, 3.8421366, 0, 1.0786598, 0, -1.0021191, 0.9064957, 0, 0.58461314, 4.623947, -0.51198334, 0, 0.7891293, -1.5424156, 0, 0.9406657, 0, -1.0021191, -0.7891293, 0, -0.51198334, 7.76954, 0.46148968, 0, -0.75738966, -3.1752043, 0, 0.8869114, 0, -1.0021191, 0.75738966, 0, 0.46148968, 2.651711, 0.778696, 0, 0.48834988, 1.9777899, 0, 0.9191589, 0, -1.0021191, -0.48834988, 0, 0.778696, 4.4883833, 0.76571894, 0, -0.8735672, 7.9340773, 0, 1.1616563, 0, -1.0021191, 0.8735672, 0, 0.76571894, 4.2725196, -0.30872804, 0, 0.84118664, 2.5306137, 0, 0.89605135, 0, -1.0021191, -0.84118664, 0, -0.30872804, 3.4636333, -0.27951652, 0, -0.77829915, -2.7145243, 0, 0.8269698, 0, -1.0021191, 0.77829915, 0, -0.27951652, 4.7693753, 0.9094873, 0, -0.44779682, 6.2000155, 0, 1.0137501, 0, -1.0021191, 0.44779682, 0, 0.9094873, 0.49998343, 0.4761426, 0, -0.9554223, -7.68867, 0, 1.067494, 0, -1.0021191, 0.9554223, 0, 0.4761426, 9.809763, -0.10744813, 0, -0.9705712, -5.778265, 0, 0.9765007, 0, -1.0021191, 0.9705712, 0, -0.10744813, -1.088105, 0.63682735, 0, 0.87203926, 0.09286785, 0, 1.0798155, 0, -1.0021191, -0.87203926, 0, 0.63682735, -0.63894445, 0.71343595, 0, 0.4233016, 4.315192, 0, 0.8295632, 0, -1.0021191, -0.4233016, 0, 0.71343595, 11.048407, -1.0854996, 0, 0.14829022, 0.2260325, 0, 1.0955818, 0, -1.0021191, -0.14829022, 0, -1.0854996, 4.7499886, -0.802557, 0, 0.71907854, -7.5732594, 0, 1.0775768, 0, -1.0021191, -0.71907854, 0, -0.802557, 13.451286, 0.870505, 0, 0.41122428, -6.291209, 0, 0.9627483, 0, -1.0021191, -0.41122428, 0, 0.870505, 9.694705, -0.45229986, 0, -0.7602574, -0.8018255, 0, 0.8846279, 0, -1.0021191, 0.7602574, 0, -0.45229986, 0.2366817, -1.0470177, 0, 0.047366492, -7.017544, 0, 1.0480886, 0, -1.0021191, -0.047366492, 0, -1.0470177, 2.588554, 1.0632545, 0, -0.3563117, -4.637885, 0, 1.1213689, 0, -1.0021191, 0.3563117, 0, 1.0632545, 1.8719614)
+
+[sub_resource type="MultiMesh" id="MultiMesh_jevjd"]
+transform_format = 1
+instance_count = 32
+mesh = SubResource("ArrayMesh_f5ii7")
+buffer = PackedFloat32Array(-0.17619517, 0, -0.77680457, -15.729418, 0, 0.7965363, 0, -1.6713696, 0.77680457, 0, -0.17619517, -18.590813, 0.8610231, 0, -0.21940717, -14.181413, 0, 0.88853836, 0, -1.6713696, 0.21940717, 0, 0.8610231, -4.3276434, 0.42964217, 0, 0.57721514, -17.122149, 0, 0.7195622, 0, -1.6713696, -0.57721514, 0, 0.42964217, -13.099415, -0.07848742, 0, 0.8120929, -20.424982, 0, 0.8158769, 0, -1.6713696, -0.8120929, 0, -0.07848742, -18.441795, 0.82148886, 0, -0.3606168, -25.005857, 0, 0.89715576, 0, -1.6713696, 0.3606168, 0, 0.82148886, -15.918579, 0.5850527, 0, -0.2968035, -21.655273, 0, 0.6560328, 0, -1.6713696, 0.2968035, 0, 0.5850527, -19.111036, -0.3945119, 0, -0.5677505, -18.62898, 0, 0.6913612, 0, -1.6713696, 0.5677505, 0, -0.3945119, -7.942477, 0.31649572, 0, 0.846433, -18.939344, 0, 0.90366936, 0, -1.6713694, -0.846433, 0, 0.31649572, -6.946742, -0.67752993, 0, 0.095559336, -21.160553, 0, 0.68423563, 0, -1.6713696, -0.095559336, 0, -0.67752993, -15.093914, -0.42423815, 0, -0.73865205, -19.00564, 0, 0.85181266, 0, -1.6713696, 0.73865205, 0, -0.42423815, -10.661977, 0.51322347, 0, 0.6376771, -18.609547, 0, 0.8185538, 0, -1.6713696, -0.6376771, 0, 0.51322347, -16.294174, 0.27149764, 0, 0.5497644, -26.456018, 0, 0.61314917, 0, -1.6713696, -0.5497644, 0, 0.27149764, -9.342155, 0.637651, 0, 0.21144146, -21.932022, 0, 0.67179334, 0, -1.6713696, -0.21144146, 0, 0.637651, -7.625086, 0.9262045, 0, 0.13553023, -28.886473, 0, 0.93606794, 0, -1.6713696, -0.13553023, 0, 0.9262045, -17.758408, -0.641694, 0, -0.20664759, -27.600718, 0, 0.6741472, 0, -1.6713696, 0.20664759, 0, -0.641694, -16.537756, 0.24690565, 0, 0.8740397, -14.441847, 0, 0.9082444, 0, -1.6713696, -0.8740397, 0, 0.24690565, -17.850187, -0.7570533, 0, 0.006585243, -16.787886, 0, 0.757082, 0, -1.6713696, -0.006585243, 0, -0.7570533, -18.95857, 0.56233734, 0, 0.22767289, -28.745329, 0, 0.606678, 0, -1.6713696, -0.22767289, 0, 0.56233734, -11.873363, 0.22830214, 0, 0.7203335, -20.611614, 0, 0.7556469, 0, -1.6713696, -0.7203335, 0, 0.22830214, -15.375643, -0.50111073, 0, 0.68224907, -26.890463, 0, 0.846508, 0, -1.6713696, -0.68224907, 0, -0.50111073, -14.144325, -0.07553042, 0, 0.61346036, -27.481398, 0, 0.6180926, 0, -1.6713696, -0.61346036, 0, -0.07553042, -10.738139, -0.37605065, 0, -0.8384076, -17.80714, 0, 0.91888046, 0, -1.6713696, 0.8384076, 0, -0.37605065, -3.8677044, -0.39368013, 0, 0.7080144, -16.527325, 0, 0.81010395, 0, -1.6713696, -0.7080144, 0, -0.39368013, -7.1147237, -0.77281874, 0, 0.20398505, -17.738665, 0, 0.79928637, 0, -1.6713696, -0.20398505, 0, -0.77281874, -11.82829, 0.6843176, 0, -0.6997531, -27.939762, 0, 0.9787466, 0, -1.6713696, 0.6997531, 0, 0.6843176, -14.044804, 0.5423594, 0, 0.5093695, -19.909851, 0, 0.7440504, 0, -1.6713696, -0.5093695, 0, 0.5423594, -11.093094, -0.01646213, 0, -0.6203976, -19.46063, 0, 0.62061596, 0, -1.6713696, 0.6203976, 0, -0.01646213, -9.992952, -0.30849987, 0, -0.52285683, -28.762512, 0, 0.6070844, 0, -1.6713696, 0.52285683, 0, -0.30849987, -8.295006, 0.6573115, 0, -0.57587904, -28.622173, 0, 0.8738965, 0, -1.6713696, 0.57587904, 0, 0.6573115, -14.399091, 0.735414, 0, 0.008705617, -19.757572, 0, 0.7354655, 0, -1.6713696, -0.008705617, 0, 0.735414, -16.15771, -0.25396153, 0, 0.65125304, -21.044052, 0, 0.6990186, 0, -1.6713696, -0.65125304, 0, -0.25396153, -4.9409657, -0.18186228, 0, 0.58260614, -19.33197, 0, 0.6103309, 0, -1.6713696, -0.58260614, 0, -0.18186228, -16.832611)
+
+[sub_resource type="BoxMesh" id="BoxMesh_10mg8"]
+lightmap_size_hint = Vector2i(34, 81)
+material = ExtResource("9_abfx6")
+add_uv2 = true
+size = Vector3(5, 5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_grfr1"]
+size = Vector3(1, 1, 0.1)
 
 [node name="Battle" type="Control" unique_id=438008570]
 layout_mode = 3
@@ -28,7 +217,104 @@ offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="UI" unique_id=1491583508]
 handle_input_locally = false
+size = Vector2i(1035, 636)
 render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="UI/SubViewport" unique_id=565026902]
+offset_left = 31.0
+offset_top = 470.0
+offset_right = 480.0
+offset_bottom = 622.0
+texture = SubResource("GradientTexture2D_78ltx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=861881291]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 452.0
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=718711562]
+layout_mode = 2
+text = "Attack"
+
+[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=2127346780]
+layout_mode = 2
+text = "Item"
+
+[node name="Button3" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1359110389]
+layout_mode = 2
+text = "Flee"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=311630320]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Health: "
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1287266733]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "SP: "
+
+[node name="heads" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1041645540]
+visible = false
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("3_78ltx")
+stretch_mode = 4
+
+[node name="tails" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1378166851]
+visible = false
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("4_r6uqb")
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=1524147359]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=1886329731]
+layout_mode = 2
+text = "Skill One"
+
+[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=604864705]
+layout_mode = 2
+text = "Skill Two"
+
+[node name="playercoins" type="HBoxContainer" parent="UI/SubViewport" unique_id=47193774]
+offset_left = -3.0
+offset_top = 7.0
+offset_right = 294.0
+offset_bottom = 23.0
+scale = Vector2(4, 4)
+
+[node name="enemycoins" type="HBoxContainer" parent="UI/SubViewport" unique_id=1125595916]
+offset_left = 655.0
+offset_top = 4.0
+offset_right = 952.0
+offset_bottom = 20.0
+scale = Vector2(4, 4)
+
+[node name="PlayerCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1702785780]
+offset_left = 523.0
+offset_top = 485.0
+offset_right = 1099.0
+offset_bottom = 744.0
+text = "PLAYER COIN VALUE"
+
+[node name="EnemyCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1224242738]
+offset_left = 525.0
+offset_top = 594.0
+offset_right = 1101.0
+offset_bottom = 853.0
+text = "Enemy COIN VALUE"
 
 [node name="BattleVisuals" type="SubViewportContainer" parent="." unique_id=1036677343]
 layout_mode = 0
@@ -39,71 +325,142 @@ offset_bottom = 40.0
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=565026902]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 470.0
-offset_right = 480.0
-offset_bottom = 622.0
-texture = SubResource("GradientTexture2D_78ltx")
+[node name="Level Node" type="Node3D" parent="BattleVisuals/SubViewport" unique_id=1994816318]
+script = SubResource("GDScript_n7mb3")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect" unique_id=861881291]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-offset_right = 452.0
-grow_vertical = 0
+[node name="WorldEnvironment" type="WorldEnvironment" parent="BattleVisuals/SubViewport/Level Node" unique_id=148486971]
+environment = SubResource("Environment_qovp1")
 
-[node name="Button" type="Button" parent="TextureRect/HBoxContainer" unique_id=718711562]
-layout_mode = 2
-text = "Attack"
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1810431755]
+transform = Transform3D(1, 0, 0, 0, 1, -1.7484555e-07, 0, 1.7484555e-07, 1, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
 
-[node name="Button2" type="Button" parent="TextureRect/HBoxContainer" unique_id=2127346780]
-layout_mode = 2
-text = "Item"
+[node name="Ground" type="StaticBody3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=2123926944]
 
-[node name="Button3" type="Button" parent="TextureRect/HBoxContainer" unique_id=1359110389]
-layout_mode = 2
-text = "Flee"
+[node name="Ground" type="MeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Ground" unique_id=1329576822]
+mesh = SubResource("PlaneMesh_w5roj")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TextureRect/HBoxContainer" unique_id=311630320]
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-text = "Health: "
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BattleVisuals/SubViewport/Level Node/Ground" unique_id=545742712]
+shape = SubResource("BoxShape3D_mcc7i")
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="TextureRect/HBoxContainer" unique_id=1287266733]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 2
-text = "SP: "
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BattleVisuals/SubViewport/Level Node" unique_id=293297073]
+libraries/ = SubResource("AnimationLibrary_5vww3")
+speed_scale = 0.1
 
-[node name="heads" type="TextureRect" parent="TextureRect" unique_id=1041645540]
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
-texture = ExtResource("3_78ltx")
-stretch_mode = 4
+[node name="LeftEnter" type="Marker3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1138018772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.844, 0)
 
-[node name="tails" type="TextureRect" parent="TextureRect" unique_id=1378166851]
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
-texture = ExtResource("4_r6uqb")
-stretch_mode = 4
+[node name="RightEnter" type="Marker3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1364782699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.844, 0)
 
-[node name="playercoins" type="HBoxContainer" parent="." unique_id=47193774]
-layout_mode = 0
-offset_left = -3.0
-offset_top = 7.0
-offset_right = 294.0
-offset_bottom = 23.0
-scale = Vector2(4, 4)
+[node name="Decoration" type="Node3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=602585265]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -6.7607703, 0.026157856, -3.7119236)
 
-[node name="enemycoins" type="HBoxContainer" parent="." unique_id=1125595916]
-layout_mode = 0
-offset_left = 655.0
-offset_top = 4.0
-offset_right = 952.0
-offset_bottom = 20.0
-scale = Vector2(4, 4)
+[node name="Tree" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=2061366391 instance=ExtResource("7_w65wj")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.5667133, -0.052315712, 18.093273)
+
+[node name="Tree2" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=1005268451 instance=ExtResource("7_w65wj")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25.511255, -0.052315712, -7.84814)
+
+[node name="Tree3" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=1887251480 instance=ExtResource("7_w65wj")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25.511255, -0.052315712, 18.060505)
+
+[node name="Tree4" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=234450637 instance=ExtResource("7_w65wj")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0.26515007, -0.052315712, -3.7422705)
+
+[node name="grasssourceplane" type="MeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=546612827]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 23.98359, -0.11850262, 13.315267)
+mesh = SubResource("PlaneMesh_jetka")
+skeleton = NodePath("../MultiMeshInstance3D")
+
+[node name="grasssourceplane2" type="MeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=1008467237]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.9636698, -0.11850262, -4.190076)
+mesh = SubResource("PlaneMesh_jetka")
+skeleton = NodePath("../MultiMeshInstance3D")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=290086950]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.98359, 1.0901575, 7.423847)
+multimesh = SubResource("MultiMesh_8iuri")
+
+[node name="MultiMeshInstance3D2" type="MultiMeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=735520285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.98359, 1.8254585, 7.423847)
+multimesh = SubResource("MultiMesh_jevjd")
+
+[node name="BaseGrass" type="MeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=1244357561]
+mesh = SubResource("ArrayMesh_f5ii7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_sumr0")
+
+[node name="Box" type="StaticBody3D" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=75967690]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 20, 18.101791, 1.7227259, 1.4155507)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BattleVisuals/SubViewport/Level Node/Decoration/Box" unique_id=191057015]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_10mg8")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BattleVisuals/SubViewport/Level Node/Decoration/Box" unique_id=912709587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.002532903)
+shape = SubResource("BoxShape3D_grfr1")
+
+[node name="Decal" type="Decal" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=523846418]
+transform = Transform3D(1.9378849, 2.1618469e-08, 0.494573, 0.494573, -8.4707644e-08, -1.9378849, 0, 2, -8.742278e-08, 16.893982, 3.2724433, 2.4555125)
+size = Vector3(4, 0.2, 4)
+texture_albedo = ExtResource("10_eukx7")
+emission_energy = 0.01
+upper_fade = 0.33923578
+lower_fade = 1e-05
+
+[node name="Decal3" type="Decal" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=457152593]
+transform = Transform3D(1.9378849, 2.1618469e-08, 0.494573, 0.494573, -8.4707644e-08, -1.9378849, 0, 2, -8.742278e-08, 14.924235, 5.1702294, 2.4555125)
+size = Vector3(4, 0.2, 4)
+texture_albedo = ExtResource("11_27kv5")
+emission_energy = 0.01
+upper_fade = 0.33923578
+lower_fade = 1e-05
+
+[node name="Decal4" type="Decal" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=1184052974]
+transform = Transform3D(1.9554567, -1.8347817e-08, -0.41974917, -0.41974917, -8.5475726e-08, -1.9554567, -1.7570763e-15, 2, -8.742277e-08, 21.901543, 4.3407855, 2.4555125)
+size = Vector3(4, 0.2, 4)
+texture_albedo = ExtResource("12_jr4ek")
+emission_energy = 0.01
+upper_fade = 0.33923578
+lower_fade = 1e-05
+
+[node name="Decal2" type="Decal" parent="BattleVisuals/SubViewport/Level Node/Decoration" unique_id=2068733600]
+transform = Transform3D(1.8607457, -3.2050494e-08, -0.73322976, -0.73322976, -8.133577e-08, -1.8607457, 0, 2, -8.742278e-08, 20.235155, 3.2724433, 2.4555125)
+texture_albedo = ExtResource("13_25i5n")
+emission_energy = 0.01
+upper_fade = 0.33923578
+lower_fade = 1e-05
+
+[node name="OmniLight3D" type="OmniLight3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1989030422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9990907, 0.36300445, 4.0377636)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 11.059
+shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=118218432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2694, 0.36300445, 4.0377636)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 11.059
+shadow_enabled = true
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=848203571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2694, 0.36300445, -2.9723072)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 11.059
+shadow_enabled = true
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1476321663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6048272, 0.36300445, -2.1930017)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 11.059
+shadow_enabled = true
+
+[connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button" to="." method="attack_on_button_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button2" to="." method="item_on_button_2_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button3" to="." method="flee_on_button_3_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/VBoxContainer/Button" to="." method="onskillbutton1_Pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/VBoxContainer/Button2" to="." method="onskillbutton2Pressed"]

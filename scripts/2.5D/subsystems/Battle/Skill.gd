@@ -28,8 +28,10 @@ var coins = {
 func roll_skill(sanity,coinsub):
 	var value = 0;
 	var heads = 0;
+	print(coin_count - coinsub)
 	for coin in coin_count - coinsub:
 		var flip = randf_range(0,1)
+		print("flip " + str(coin))
 		if (flip + sanity >=  0.5):
 			value += coin_value
 			heads += 1

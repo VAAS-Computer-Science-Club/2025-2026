@@ -3,10 +3,10 @@ signal state
 signal InteractRadius
 signal change_level
 signal hurt
-var health = 100
-var sp = 10
-var maxsp = 10
-var maxhealth = 100
+var health = 10
+var sp = 0.45
+var maxsp = 0.45
+var maxhealth = 10
 enum actor_states {
 	Annie,
 	Calypso,

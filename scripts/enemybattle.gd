@@ -6,7 +6,7 @@ var maxsp = 0.45
 var maxhealth = 10
 
 func _ready() -> void:
-	print(skill3.roll_skill(0.45))
+	pass
 
 var skill1 : Skill = Skill.new(
 	3,
