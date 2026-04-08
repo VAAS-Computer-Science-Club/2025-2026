@@ -1,7 +1,131 @@
 [gd_scene format=3 uid="uid://dq462litu74we"]
 
 [ext_resource type="Script" uid="uid://fwkjauu8nf5j" path="res://scripts/enemybattle.gd" id="1_r8n34"]
-[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="2_6tt8s"]
+[ext_resource type="Texture2D" uid="uid://cjmrpj155uvms" path="res://assets/images/Enemy Attack.png" id="2_6fjho"]
+[ext_resource type="Texture2D" uid="uid://b72y2cfpbsaks" path="res://assets/images/Enemy idle.png" id="3_tt2tw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6n87"]
+atlas = ExtResource("2_6fjho")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ox3"]
+atlas = ExtResource("2_6fjho")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpi8u"]
+atlas = ExtResource("2_6fjho")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwys4"]
+atlas = ExtResource("2_6fjho")
+region = Rect2(5760, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4n7n"]
+atlas = ExtResource("2_6fjho")
+region = Rect2(7680, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgi4l"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4j1t"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykuav"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nu3q5"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(5760, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbvfv"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(7680, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1qvf"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(0, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqhlp"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(1920, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2q03n"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(3840, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57rnk"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(5760, 0, 1920, 1920)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhs1k"]
+atlas = ExtResource("3_tt2tw")
+region = Rect2(7680, 0, 1920, 1920)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_utdrf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6n87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46ox3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpi8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwys4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4n7n")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgi4l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4j1t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykuav")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nu3q5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbvfv")
+}],
+"loop": true,
+"name": &"idle_side",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1qvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqhlp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2q03n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57rnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhs1k")
+}],
+"loop": true,
+"name": &"walk_side",
+"speed": 6.0
+}]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6fjho"]
 viewport_path = NodePath("Sprite")
@@ -46,8 +170,9 @@ render_target_update_mode = 4
 [node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=715877053]
 position = Vector2(256, 256)
 scale = Vector2(0.3, 0.3)
-sprite_frames = ExtResource("2_6tt8s")
-animation = &"attack"
+sprite_frames = SubResource("SpriteFrames_utdrf")
+animation = &"walk_side"
+frame_progress = 0.06527968
 
 [node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=1067284251]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)

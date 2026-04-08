@@ -1,7 +1,7 @@
 extends Control
 @onready var player : Node3D = $playerbattle
 @onready var healthidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel
-@onready var spidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel2
+@onready var spidentifier = $UI/SubViewport/TextureRect/TextureProgressBar
 @onready var heads = $UI/SubViewport/TextureRect/heads
 @onready var tails = $UI/SubViewport/TextureRect/tails
 @onready var playercont = $UI/SubViewport/playercoins
@@ -45,11 +45,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	healthidentifier.clear()
 	healthidentifier.add_text("Health: " + str(playerbasefighter.health) + "/" + str(playerbasefighter.maxhealth))
-	spidentifier.clear()
-	spidentifier.add_text("SP: " + str(playerbasefighter.sp) + "/" + str(playerbasefighter.maxsp))
+	spidentifier.value = playerbasefighter.sp
 	if (playeraction != null && enemyaction != null && thoughtenemyaction == false):
+		midpoint = Vector3(midpoint.x + randf_range(-1,1),midpoint.y,midpoint.z + randf_range(-1,1))
 		$UI/SubViewport/TextureRect.visible = false
 		thoughtenemyaction = true
 		await get_tree().create_timer(1 - (tieamount/10)).timeout
@@ -58,7 +59,6 @@ func _process(delta: float) -> void:
 		for child : Node in enemycont.get_children():
 			enemycont.remove_child(child)
 		playercont.get_children()
-		
 		#play combat anim
 		if (playeraction != null):
 			if (playersubcoins == playeraction.coin_count):
@@ -74,6 +74,23 @@ func _process(delta: float) -> void:
 				playersubcoins = 0
 				genskill = false
 				skill1button.get_parent().visible = false
+				var tween : Tween = get_tree().create_tween()
+				var tweenb : Tween = get_tree().create_tween()
+				$Running.play()
+				tweenb.tween_property(
+			enemy,"global_position",Vector3(baseplayerLocation.x + 1, baseplayerLocation.y, baseplayerLocation.z),0.5
+			)
+				await get_tree().create_timer(0.5).timeout
+				$Running.stop()
+				enemy.anim.play("attack")
+				$Stab.pitch_scale = randf_range(1,1.5)
+				$Stab.play()
+				await get_tree().create_timer(0.5).timeout
+				tween = get_tree().create_tween()
+				tween.tween_property(
+					enemy,"global_position",Vector3(baseenemyLocation),0.2
+				)
+				enemy.anim.play("idle_side")
 				return
 				#enemy fully won
 				pass
@@ -91,6 +108,23 @@ func _process(delta: float) -> void:
 				thoughtenemyaction = false
 				genskill = false
 				skill1button.get_parent().visible = false
+				var tween : Tween = get_tree().create_tween()
+				var tweenb : Tween = get_tree().create_tween()
+				tweenb.tween_property(
+			player,"global_position",Vector3(baseenemyLocation.x - 2, baseenemyLocation.y, baseenemyLocation.z),0.5
+			)
+				$Running.play()
+				await get_tree().create_timer(0.5).timeout
+				$Running.stop()
+				player.anim.play("attack")
+				$Stab.pitch_scale = randf_range(1,1.5)
+				$Stab.play()
+				await get_tree().create_timer(0.5).timeout
+				tween = get_tree().create_tween()
+				tween.tween_property(
+					player,"global_position",Vector3(baseplayerLocation),0.2
+				)
+				player.anim.play("idle_side")
 				return
 		if (playeraction != null && enemyaction != null):
 			var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
@@ -112,14 +146,14 @@ func _process(delta: float) -> void:
 				head.visible = true
 				await get_tree().create_timer(0.1- (tieamount/100)).timeout
 			PlayerCoinValue.clear()
-			PlayerCoinValue.add_text("PLAYER COIN VALUE " + str(playerValue[0]))
+			PlayerCoinValue.add_text(str(playerValue[0]))
 			for x in enemyValue[1]:
 				var head = heads.duplicate()
 				enemycont.add_child(head)
 				head.visible = true
 				await get_tree().create_timer(0.1- (tieamount/100)).timeout
 			EnemyCoinValue.clear()
-			EnemyCoinValue.add_text("Enemy COIN VALUE " + str(enemyValue[0]))
+			EnemyCoinValue.add_text(str(enemyValue[0]))
 			if (enemyaction != null):
 				if (enemyValue[1] != enemyaction.coin_count-enemysubcoins):
 					for x in (enemyaction.coin_count-enemysubcoins) - enemyValue[1]:
@@ -146,11 +180,19 @@ func _process(delta: float) -> void:
 			tweenb.tween_property(
 			enemy,"global_position",midpoint,0.5
 			)
+			$Running.play()
+			await get_tree().create_timer(0.5).timeout
+			$Running.stop()
 			player.anim.play("attack")
 			player.anim.flip_h = true
 			enemy.anim.play("attack")
 			enemy.anim.flip_h = false
+			$GPUParticles3D.global_position = midpoint
+			$GPUParticles3D.emitting = true
+			$Clash.pitch_scale = randf_range(0.5,1.5)
+			$Clash.play()
 			await player.anim.animation_finished
+
 			await get_tree().create_timer(0.6-(tieamount/10)).timeout
 			player.anim.play("walk_side")
 			player.anim.flip_h = false
@@ -194,17 +236,23 @@ func _process(delta: float) -> void:
 func onskillbutton2Pressed() -> void:
 	playeraction = skillb
 	skill1button.get_parent().visible = false
+	$Button.pitch_scale = 1.2
+	$Button.play()
 
 
 
 func onskillbutton1_Pressed() -> void:
 	playeraction = skilla
 	skill1button.get_parent().visible = false
+	$Button.pitch_scale = 1.5
+	$Button.play()
 
 @onready var skilla : Skill
 @onready var skillb : Skill
 func attack_on_button_pressed() -> void:
 	if (playeraction == null):
+		$Button.pitch_scale = 1
+		$Button.play()
 		genskill = true
 		skilla = playerbasefighter.genskills()
 		skillb = playerbasefighter.genskills()

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://50dk5nrowa2p"]
+
+[sub_resource type="Gradient" id="Gradient_s3fmc"]
+colors = PackedColorArray(0.91764706, 0.3647059, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ewux6"]
+gradient = SubResource("Gradient_s3fmc")
+
+[sub_resource type="Curve" id="Curve_lmx4x"]
+_data = [Vector2(0.123655915, 0.15883672), 0.0, 0.0, 0, 0, Vector2(0.8763441, 0.901566), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_bqw2r"]
+curve = SubResource("Curve_lmx4x")
+
+[sub_resource type="Curve" id="Curve_6sn3s"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.2580645, 0.14988816), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_n323c"]
+curve = SubResource("Curve_6sn3s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i5u4b"]
+orbit_velocity_min = 1.4900001
+orbit_velocity_max = 1.4940002
+radial_velocity_min = 11.999977
+radial_velocity_max = 11.999977
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+radial_accel_min = -2.2351742e-06
+radial_accel_max = -2.2351742e-06
+scale_curve = SubResource("CurveTexture_n323c")
+color_ramp = SubResource("GradientTexture1D_ewux6")
+color_initial_ramp = SubResource("GradientTexture1D_ewux6")
+hue_variation_curve = SubResource("CurveTexture_bqw2r")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uu3ij"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ngai4"]
+material = SubResource("StandardMaterial3D_uu3ij")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="GPUParticles3D" type="GPUParticles3D" unique_id=128768351]
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_i5u4b")
+draw_pass_1 = SubResource("BoxMesh_ngai4")

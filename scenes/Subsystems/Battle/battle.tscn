@@ -13,6 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://53cq2pos2nx3" path="res://assets/images/graffiti_004.png" id="11_27kv5"]
 [ext_resource type="Texture2D" uid="uid://btua31wo5eegp" path="res://assets/images/graffiti_005.png" id="12_jr4ek"]
 [ext_resource type="Texture2D" uid="uid://dt0e5qcsjusde" path="res://assets/images/graffiti_001.png" id="13_25i5n"]
+[ext_resource type="AudioStream" uid="uid://c22edlmrsmks6" path="res://assets/audio/clash.mp3" id="14_0ynuc"]
+[ext_resource type="Texture2D" uid="uid://dnlm6apjc3eb1" path="res://assets/images/Stamina outline.png" id="14_27kv5"]
+[ext_resource type="AudioStream" uid="uid://wj0gupgis15l" path="res://assets/audio/button.mp3" id="15_abfx6"]
+[ext_resource type="Texture2D" uid="uid://ybrwqlcph1xd" path="res://assets/images/Stamina counting.png" id="15_jr4ek"]
+[ext_resource type="AudioStream" uid="uid://dxfnieeymnqke" path="res://assets/audio/stab.mp3" id="15_w65wj"]
+[ext_resource type="AudioStream" uid="uid://enxvp67igsoc" path="res://assets/audio/running.mp3" id="16_h47ea"]
 
 [sub_resource type="GDScript" id="GDScript_n7mb3"]
 script/source = "extends Node3D
@@ -191,6 +197,48 @@ size = Vector3(1, 1, 0.1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
 gradient = SubResource("Gradient_d844g")
+
+[sub_resource type="Gradient" id="Gradient_qjeci"]
+colors = PackedColorArray(0.91764706, 0.3647059, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ynuc"]
+gradient = SubResource("Gradient_qjeci")
+
+[sub_resource type="Curve" id="Curve_w65wj"]
+_data = [Vector2(0.123655915, 0.15883672), 0.0, 0.0, 0, 0, Vector2(0.8763441, 0.901566), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_h47ea"]
+curve = SubResource("Curve_w65wj")
+
+[sub_resource type="Curve" id="Curve_abfx6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.2580645, 0.14988816), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_eukx7"]
+curve = SubResource("Curve_abfx6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_27kv5"]
+orbit_velocity_min = 1.4900001
+orbit_velocity_max = 1.4940002
+radial_velocity_min = 11.999977
+radial_velocity_max = 11.999977
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+radial_accel_min = -2.2351742e-06
+radial_accel_max = -2.2351742e-06
+scale_curve = SubResource("CurveTexture_eukx7")
+color_ramp = SubResource("GradientTexture1D_0ynuc")
+color_initial_ramp = SubResource("GradientTexture1D_0ynuc")
+hue_variation_curve = SubResource("CurveTexture_h47ea")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jr4ek"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_25i5n"]
+material = SubResource("StandardMaterial3D_jr4ek")
+size = Vector3(0.2, 0.2, 0.2)
 
 [node name="Battle" type="Control" unique_id=438008570]
 layout_mode = 3
@@ -380,16 +428,25 @@ texture = ExtResource("4_r6uqb")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="tails2" type="TextureRect" parent="UI/SubViewport/playercoins" unique_id=51460929]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_r6uqb")
+expand_mode = 1
+stretch_mode = 4
+
 [node name="enemycoins" type="VBoxContainer" parent="UI/SubViewport" unique_id=776235977]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -143.0
-offset_top = 18.0
-offset_right = -111.0
-offset_bottom = 172.75
+anchors_preset = -1
+anchor_left = 0.8758681
+anchor_top = 0.028301887
+anchor_right = 0.9869792
+anchor_bottom = 1.0015724
+offset_right = -96.0
+offset_bottom = -464.25
 grow_horizontal = 0
 scale = Vector2(4, 4)
+metadata/_edit_use_anchors_ = true
 
 [node name="heads" type="TextureRect" parent="UI/SubViewport/enemycoins" unique_id=2016356232]
 texture_filter = 1
@@ -432,11 +489,6 @@ custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 text = "Health: "
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1287266733]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 2
-text = "SP: "
-
 [node name="heads" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1041645540]
 visible = false
 texture_filter = 1
@@ -475,19 +527,54 @@ text = "Skill One"
 layout_mode = 2
 text = "Skill Two"
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/SubViewport/TextureRect" unique_id=1188648668]
+layout_mode = 0
+offset_left = 271.0
+offset_top = -40.0
+offset_right = 527.0
+offset_bottom = 216.0
+max_value = 0.45
+step = 0.01
+value = 0.45
+nine_patch_stretch = true
+texture_under = ExtResource("14_27kv5")
+texture_progress = ExtResource("15_jr4ek")
+
 [node name="PlayerCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1702785780]
-offset_left = 523.0
-offset_top = 485.0
-offset_right = 1099.0
-offset_bottom = 744.0
-text = "PLAYER COIN VALUE"
+offset_left = 127.0
+offset_top = -31.0
+offset_right = 703.0
+offset_bottom = 228.0
+theme_override_font_sizes/normal_font_size = 128
+text = "9"
 
 [node name="EnemyCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1224242738]
-offset_left = 525.0
-offset_top = 594.0
-offset_right = 1101.0
-offset_bottom = 853.0
-text = "Enemy COIN VALUE"
+offset_left = 902.0
+offset_top = -29.0
+offset_right = 1478.0
+offset_bottom = 230.0
+theme_override_font_sizes/normal_font_size = 128
+text = "9"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1953889512]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_27kv5")
+draw_pass_1 = SubResource("BoxMesh_25i5n")
+
+[node name="Clash" type="AudioStreamPlayer" parent="." unique_id=287488812]
+stream = ExtResource("14_0ynuc")
+
+[node name="Button" type="AudioStreamPlayer" parent="." unique_id=245617332]
+stream = ExtResource("15_abfx6")
+
+[node name="Stab" type="AudioStreamPlayer" parent="." unique_id=549938789]
+stream = ExtResource("15_w65wj")
+
+[node name="Running" type="AudioStreamPlayer" parent="." unique_id=265981927]
+stream = ExtResource("16_h47ea")
+volume_db = -4.0
 
 [connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button" to="." method="attack_on_button_pressed"]
 [connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button2" to="." method="item_on_button_2_pressed"]

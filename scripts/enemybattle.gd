@@ -1,7 +1,7 @@
 extends Node3D
 
 var health = 0
-var sp = 0.25
+var sp = 0
 var maxsp = 0.45
 var maxhealth = 10
 @onready var anim = $Sprite/Sprite
@@ -54,13 +54,5 @@ var base : baseFighter = baseFighter.new(
 
 
 func action():
-	base.healSp(1)
-	sp = base.sp
-	if (sp >= 0.25): 
-		return skill3
-	if (sp >= 0.15): 
-		return skill2
-	if (sp < 0.15):
-		return skill3
-	return skill1
+	return base.genskills()
 		

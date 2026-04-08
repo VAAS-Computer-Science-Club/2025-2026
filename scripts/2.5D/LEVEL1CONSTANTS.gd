@@ -1,4 +1,4 @@
-extends Node3D
+extends NavigationRegion3D
 var spawnPoint = Vector3(0,5,0)
 @onready var BridgeLeft = $Bridge
 @onready var BridgeRight = $Bridge2
