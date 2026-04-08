@@ -1,7 +1,7 @@
 extends Node3D
 var level_node : Node
 signal levelchange
-var base_level = preload("res://scenes/Levels/2.5D/Testing.tscn")
+var base_level = preload("res://scenes/Levels/2.5D/level_1.tscn")
 var player_instance = preload("res://scenes/Entities/2.5D/Player/Player.tscn")
 var player
 var spawnPoint = Vector3(0,0,0)
@@ -33,11 +33,17 @@ func change_level(level_resource : Resource, is_left : bool):
 		spawnPoint = level.right_spawn
 	print(spawnPoint)
 	add_child(level,true)
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.3).timeout
 	if (is_left):
-		spawnPoint = level.left_spawn
+		if (level != null):
+			spawnPoint = level.left_spawn
+		else:
+			spawnPoint = Vector3(0,0,0)
 	else:
-		spawnPoint = level.right_spawn
+		if (level != null):
+			spawnPoint = level.right_spawn
+		else:
+			spawnPoint = Vector3(0,0,0)
 	player.position = spawnPoint
 	player.active_transfer = false
 	global.fade_in.emit(0.5)

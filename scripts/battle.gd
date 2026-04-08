@@ -1,5 +1,5 @@
 extends Control
-@onready var player = $playerbattle
+@onready var player : Node3D = $playerbattle
 @onready var healthidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel
 @onready var spidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel2
 @onready var heads = $UI/SubViewport/TextureRect/heads
@@ -24,12 +24,22 @@ var playeraction : Skill
 var enemysubcoins = 0
 var playersubcoins = 0
 var tieamount = 0
-
+var baseplayerLocation : Vector3
+var baseenemyLocation : Vector3
+var midpoint : Vector3
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	enemy = enemypreload.instantiate()
 	self.add_child(enemy)
 	playerbasefighter = player.base
+	baseplayerLocation = player.global_position
+	enemy.global_position = $"BattleVisuals/SubViewport/Level Node/Marker3D".global_position
+	baseenemyLocation = enemy.global_position
+	midpoint = Vector3(
+		(baseplayerLocation.x+baseenemyLocation.x)/2,
+		(baseplayerLocation.y+baseenemyLocation.y)/2,
+		(baseplayerLocation.z+baseenemyLocation.z)/2
+		)
 
 
 
@@ -117,7 +127,6 @@ func _process(delta: float) -> void:
 						var tails = tails.duplicate()
 						enemycont.add_child(tails)
 						tails.visible = true
-					
 			if (playeraction != null):
 				if (playerValue[1] != playeraction.coin_count-playersubcoins):
 					for x in (playeraction.coin_count-playersubcoins) - enemyValue[1]:
@@ -125,6 +134,42 @@ func _process(delta: float) -> void:
 						var tails = tails.duplicate()
 						playercont.add_child(tails)
 						tails.visible = true
+			player.anim.play("walk_side")
+			player.anim.flip_h = true
+			enemy.anim.play("walk_side")
+			enemy.anim.flip_h = true
+			var tween : Tween = get_tree().create_tween()
+			var tweenb : Tween = get_tree().create_tween()
+			tween.tween_property(
+			player,"global_position",midpoint,0.5
+			)
+			tweenb.tween_property(
+			enemy,"global_position",midpoint,0.5
+			)
+			player.anim.play("attack")
+			player.anim.flip_h = true
+			enemy.anim.play("attack")
+			enemy.anim.flip_h = false
+			await player.anim.animation_finished
+			await get_tree().create_timer(0.6-(tieamount/10)).timeout
+			player.anim.play("walk_side")
+			player.anim.flip_h = false
+			enemy.anim.play("walk_side")
+			enemy.anim.flip_h = true
+			tween = get_tree().create_tween()
+			tweenb = get_tree().create_tween()
+			tween.tween_property(
+				player,"global_position",baseplayerLocation,0.2
+				)
+			tweenb.tween_property(
+				enemy,"global_position",baseenemyLocation,0.2
+				)
+			await get_tree().create_timer(0.3-(tieamount/10)).timeout
+			player.anim.play("idle_side")
+			player.anim.flip_h = true
+			enemy.anim.play("idle_side")
+			enemy.anim.flip_h = false
+			
 
 		thoughtenemyaction = false
 	await get_tree().create_timer(0.5 - (tieamount/10)).timeout

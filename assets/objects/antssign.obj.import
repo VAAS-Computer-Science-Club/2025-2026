@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://rvtkqgn0umri"
+path="res://.godot/imported/antssign.obj-9f2b43a1e8cf202142769b8ed561a58d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/antssign.obj-9f2b43a1e8cf202142769b8ed561a58d.mesh"]
+
+source_file="res://assets/objects/antssign.obj"
+dest_files=["res://.godot/imported/antssign.obj-9f2b43a1e8cf202142769b8ed561a58d.mesh", "res://.godot/imported/antssign.obj-9f2b43a1e8cf202142769b8ed561a58d.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

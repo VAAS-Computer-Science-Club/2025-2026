@@ -1,0 +1,857 @@
+[gd_scene format=4 uid="uid://bxdof6idlrpvr"]
+
+[ext_resource type="Shader" uid="uid://bhc04hh12yslm" path="res://assets/shaders/sky.gdshader" id="2_2ygmq"]
+[ext_resource type="Material" uid="uid://dgswjh374a6xs" path="res://assets/materials/new_grass.tres" id="3_ssc51"]
+[ext_resource type="PackedScene" uid="uid://6eng3vhv7naf" path="res://scenes/Subsystems/Travel/bridge.tscn" id="4_6t7k7"]
+[ext_resource type="PackedScene" uid="uid://c4r6rrblrx6wg" path="res://scenes/tree.tscn" id="5_rhf7t"]
+[ext_resource type="Texture2D" uid="uid://bypjx30oyf0hn" path="res://assets/images/Grass.png" id="6_44vd2"]
+[ext_resource type="Texture2D" uid="uid://b476anbk7rv4p" path="res://assets/images/Green Grass 2.PNG" id="7_wmvqm"]
+[ext_resource type="Texture2D" uid="uid://d2xteeavlbnbe" path="res://assets/images/Green Grass 1.PNG" id="8_0xteo"]
+[ext_resource type="Texture2D" uid="uid://ca3nyfpkxnax7" path="res://assets/images/Teal Grass 1.png" id="9_sugoo"]
+[ext_resource type="Texture2D" uid="uid://cv0nrrlb1htxq" path="res://assets/images/Teal Grass 2.png" id="10_ur437"]
+[ext_resource type="Texture2D" uid="uid://bh0lsvec88m3h" path="res://assets/images/Red Grass 1.png" id="11_ryqhc"]
+[ext_resource type="Texture2D" uid="uid://bskpnq2lbbc7u" path="res://assets/images/Red Grass 2.png" id="12_r0jkm"]
+[ext_resource type="ArrayMesh" uid="uid://bcqsjblm2d3xr" path="res://assets/objects/mountain.obj" id="13_dhsuh"]
+[ext_resource type="ArrayMesh" uid="uid://rvtkqgn0umri" path="res://assets/objects/antssign.obj" id="16_6un3d"]
+[ext_resource type="Texture2D" uid="uid://ddlkrukvwy1w7" path="res://assets/objects/ants.png" id="17_otsji"]
+[ext_resource type="Shader" uid="uid://dlwqfka1b2n7b" path="res://scenes/Levels/2.5D/fire.gdshader" id="17_qulp1"]
+[ext_resource type="NoiseTexture3D" uid="uid://dtslqj6qgbsi0" path="res://scenes/Levels/campfire3DNoiseResource.tres" id="18_qti7d"]
+
+[sub_resource type="GDScript" id="GDScript_xy7be"]
+script/source = "extends Node3D
+var spawnPoint = Vector3(0,5,0)
+@onready var BridgeLeft = $Bridge
+@onready var BridgeRight = $Bridge2
+var player;
+var left_level = preload(\"res://scenes/Levels/2.5D/Testing.tscn\")
+var right_level = preload(\"res://scenes/Levels/2.5D/level_1.tscn\")
+@onready var left_spawn = $RightEnter.position
+@onready var right_spawn = $LeftEnter.position
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	set_bridges()
+
+
+@onready var anim = $AnimationPlayer
+
+func set_bridges():
+	BridgeLeft.level = left_level
+	BridgeLeft.is_left = true
+	BridgeRight.level = right_level
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qw0fr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sumr0"]
+noise = SubResource("FastNoiseLite_qw0fr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4lcvh"]
+shader = ExtResource("2_2ygmq")
+shader_parameter/day_top_color = Color(0.1, 0.4, 0.8, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.7, 0.9, 1)
+shader_parameter/night_top_color = Color(0.01, 0.01, 0.1, 1)
+shader_parameter/night_bottom_color = Color(0.05, 0.05, 0.05, 1)
+shader_parameter/sun_color = Color(1, 0.9, 0.7, 1)
+shader_parameter/moon_color = Color(1, 1, 1, 1)
+shader_parameter/sun_size = 0.1
+shader_parameter/moon_size = 0.05
+shader_parameter/sun_bloom = 10.0
+shader_parameter/cloud_noise = SubResource("NoiseTexture2D_sumr0")
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_speed = 0.01
+shader_parameter/cloud_density = 0.5
+shader_parameter/star_intensity = 1.0
+
+[sub_resource type="Sky" id="Sky_grfr1"]
+sky_material = SubResource("ShaderMaterial_4lcvh")
+
+[sub_resource type="Environment" id="Environment_abxe4"]
+background_mode = 2
+sky = SubResource("Sky_grfr1")
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 4
+tonemap_exposure = 1.87
+tonemap_white = 16.0
+glow_enabled = true
+glow_normalized = true
+glow_blend_mode = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_grpyn"]
+material = ExtResource("3_ssc51")
+size = Vector2(20, 20)
+subdivide_width = 5
+subdivide_depth = 5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83814"]
+size = Vector3(20, 0, 20)
+
+[sub_resource type="Animation" id="Animation_jetka"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_10mg8"]
+resource_name = "day_night"
+length = 24.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionalLight3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 24),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.2831855, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qve8d"]
+_data = {
+&"RESET": SubResource("Animation_jetka"),
+&"day_night": SubResource("Animation_10mg8")
+}
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_u7qoc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sumr0"]
+albedo_texture = ExtResource("6_44vd2")
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ajv41"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"format": 34896613377,
+"index_count": 168,
+"index_data": PackedByteArray("DQAHAAkADQAJAA4ADgAJAAgADgAPAA0ACgAIAAkABwAKAAkACAAQAA4AEAAPAA4AEQAQAAgACAAKABIAEgARAAgAEQATABAAEwAPABAAEwARABQAFAARABIAEwAVAA8AFAAVABMAFgAPABUAEgAKAAEABgAPABYAFAASAAYADwAGAA0AAQANABIADAAUAAYADAAVABQADAAGABYADAAXABUAFwAMAAUAFQAXAAUABQAMABYAFQAAABYAFQAFAAAABgASAAAABQAWAAQAFgAAAAQAAwAFAAQAAAAFAAMAAwAEAAIABAAAAAIAAAASABgAEgANABgAAAAYAAIABgAAABkAGQAAAAMABgAZAA0AGAANABkAGAABAAIABwANAAEAGQAHABgAGAAHAAEAAwALABkACwADAAIACwAHABkAAQALAAIABwALAAoACgALAAEA"),
+"lods": [1.0488279, PackedByteArray("AQAHAAkABwAKAAkACgAIAAkACAAKAAEABwALAAoACgALAAEACwAHAAAAAAAHAAEACAAGAAkACQAGAAEACAABAAYABgABAAAABgAAAAEAAQALAAIAAAABAAIACwADAAIAAwALAAAAAwAEAAIABAAAAAIABgAAAAQAAwAFAAQAAAAFAAMABQAGAAQADAAFAAAABQAMAAYADAAAAAYACAAMAAYADAAIAAYA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAAAAwAEAAIABAAAAAIAAwAFAAQAAAAFAAMABQAGAAQABgAAAAQABQAAAAYABgABAAAABgAAAAEAAgAHAAAAAAAHAAEABwACAAEABwAGAAEACAAHAAEACAAGAAcACAABAAYABQAIAAYACAAFAAYA")],
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("psSdN7KZAAALkgE3wu4AAPH4fD3j/QAA9e5Xxn68AACf75QhJbkAAFf4WENthgAA0aD0N+t6AACwj8Y7TvgAAAAAnUWcZAAAegMAQa/5AACESAAADvUAANbAO2D//wAABNkdITYDAADXXzzKadMAACwBKYqUywAAMXwOjaRqAAAuEVSKAXMAAP0nMS2tQQAA9oxjIyvfAACzQfQ7AyEAADGdfxATFgAAy+j//+c4AAAuyeA0OHUAAP//zl8AAAAAHJviOxXfAADJsexeA8IAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_f5ii7"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"attribute_data": PackedByteArray("I03S4x54KssXfv//5HwayhZcOfq+NYh+Zj4P0c9C+/2UwRPR37LT4+GHM8sagyTKGcqgfvuB//86vfn9EaIz+hGiM/r6ozH6+4H//+VdEfrPQvv9Flw5+jSAjILi/QTsAYBt46+DoaUBgF7jS3yepSACEOyuf3GCcZRtsXBwVMjJI3WSNBMmn8kjdZJeDLvNruwyn/TISb4hw7yHNHCUz3BwVMg0cJTPI03S4zRwlM8Xfv//cHBUyCNN0uP3Op3lFlw5+iNN0uMXfv//9zqd5SNN0uMWXDn6hZ7X2nGUbbGFntfaEaIz+l4Mu81mPg/Rz0L7/SACEOz3Op3lKuNB9Zvzss2b87LNKuNB9a7sMp8BgG3jGoMkyoWe19rKj53P9MhJvpTBE9FxlG2xGoMkygGAbePKj53PGoMkyr41iH6+NYh+S3yepXBwVMhxlG2xNICMgu+W1oAhw7yH75bWgO+W1oD0yEm+cZRtsV4Mu83JI3WScHBUyBjcgZIhw7yHGcqgfhjcgZKu7DKfIcO8hyHDvIf0yEm+75bWgB54KssXfv//Xgy7zXBwVMhmPg/RkI9XyHGUbbHKj53PhZ7X2pTBE9HfstPjhZ7X2t+y0+MRojP6lMET0fTISb4LxZvlKuNB9RGiM/oBgG3jhZ7X2iACEOxmPg/R9zqd5QAA//8gAhDsz0L7/a7sMp8q40H19MhJvhqDJMpxlG2x4Yczy5CPV8gq40H1Or35/d+y0+Mq40H1/////zq9+f3i/QTs/////yrjQfUq40H137LT4wvFm+VwcFTIS3yepR54KstLfJ6lAYBe4x54KsvkaKqArn9xgr41iH5LfJ6lrn9xgg=="),
+"format": 34896613399,
+"index_count": 168,
+"index_data": PackedByteArray("HgALABYAHwAgAAUAIQAiACMAJAAlACYAJwABAAIAAAAoACkAKgArACwABgAtAC4ABwAvAAQAMAAxADIAMwA0ADUACAA2ADcAGAAPAA0AOAAJADkAHAA6ADsAPAA9AD4AFwA/AEAAQQBCAEMARABFAEYARgBFAEcASABJAEoASwBMABkATQBOAAoAGwBPAB0AUABRAFIAUwBUAFUADABWAFcAWABZAFoAWwBcAF0AXgBfAGAAYQBiAGMAZABlAGYAZwAaAGgAaQBqAGsAbABtAG4AbgBtAG8AcABxAHIAcwAOAHQAdQB2AHcAdwB2AHgAeQB6AHsAfAB9AH4AfwCAAIEAggCDAIQAhQCGAIcAhwCGAIgAiQCKAIsAjACNAI4AjwCQAJEAkgCTAJQAlQCWAJcAmACZAJoAmwCcAJ0AAwCeAJ8AEAARABIAEwAUABUA"),
+"lods": [1.0488279, PackedByteArray("CgALABYAFgAIAAoADAAIABYADAAXAAgACAAJAAoAFwAJAAgACQALAAoAFwAOAAkACQAOAA8AGAALAAkADwAYAAkACwAYABkAGAAPAA0AAAABAAIABAAAAAIAAQAaAAIAGwAaAAEABgAAAAQABgABAAAABwAGAAQABwAcAAYAHAAFAAYABQABAAYABQAbAAEAGwAFAB0AAwAbAB0AEAARABIAEwAUABUA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAEABAAAAAIABQADAAEABgAAAAQABgABAAAABQABAAYABwAGAAQABwAFAAYACAAJAAoACwAIAAoACQALAAoADAAIAAsADQALAAkADAAOAAgADgAJAAgADwANAAkACQAOAA8AEAARABIAEwAUABUA")],
+"material": SubResource("StandardMaterial3D_sumr0"),
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 160,
+"vertex_data": PackedByteArray("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")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ajv41")
+
+[sub_resource type="MultiMesh" id="MultiMesh_5kfvn"]
+transform_format = 1
+instance_count = 32
+mesh = SubResource("ArrayMesh_f5ii7")
+buffer = PackedFloat32Array(0.29489577, 0, 1.0201241, 7.7693787, 0, 1.061893, 0, -1.0021191, -1.0201241, 0, 0.29489577, 6.4947023, 0.78850096, 0, -0.2260317, -3.485939, 0, 0.82025856, 0, -1.0021191, 0.2260317, 0, 0.78850096, 12.427741, -0.92244095, 0, -0.2783058, -2.0345802, 0, 0.9635099, 0, -1.0021191, 0.2783058, 0, -0.92244095, 10.329853, 0.93205756, 0, -0.4521859, 4.805006, 0, 1.0359553, 0, -1.0021191, 0.4521859, 0, 0.93205756, -0.8526329, -0.30458045, 0, -0.92528224, 4.651846, 0, 0.9741234, 0, -1.0021191, 0.92528224, 0, -0.30458045, 12.284629, -0.8406913, 0, -0.13327381, -5.7855806, 0, 0.8511896, 0, -1.0021191, 0.13327381, 0, -0.8406913, 4.350133, -1.0823802, 0, 0.47846365, -6.7159224, 0, 1.1834164, 0, -1.0021191, -0.47846365, 0, -1.0823802, -0.80525047, -0.49712515, 0, 0.7192088, -0.06679058, 0, 0.87429667, 0, -1.0021191, -0.7192088, 0, -0.49712515, 8.387965, -0.45381686, 0, 1.0923707, -6.462681, 0, 1.1828878, 0, -1.0021191, -1.0923707, 0, -0.45381686, 5.4322166, 0.57906103, 0, 0.8867744, 3.5146399, 0, 1.0590942, 0, -1.0021191, -0.8867744, 0, 0.57906103, 12.013642, -0.58044755, 0, 0.696024, 6.185751, 0, 0.906294, 0, -1.0021191, -0.696024, 0, -0.58044755, 9.417264, -1.135248, 0, 0.21183018, -5.48485, 0, 1.1548419, 0, -1.0021191, -0.21183018, 0, -1.135248, 11.712674, 0.11816461, 0, 0.8999225, -1.7243204, 0, 0.90764713, 0, -1.0021191, -0.8999225, 0, 0.11816461, 2.8678522, -0.7409589, 0, 0.3246696, 0.98433876, 0, 0.8089688, 0, -1.0021191, -0.3246696, 0, -0.7409589, 8.580439, 0.58461314, 0, -0.9064957, 3.8421366, 0, 1.0786598, 0, -1.0021191, 0.9064957, 0, 0.58461314, 4.623947, -0.51198334, 0, 0.7891293, -1.5424156, 0, 0.9406657, 0, -1.0021191, -0.7891293, 0, -0.51198334, 7.76954, 0.46148968, 0, -0.75738966, -3.1752043, 0, 0.8869114, 0, -1.0021191, 0.75738966, 0, 0.46148968, 2.651711, 0.778696, 0, 0.48834988, 1.9777899, 0, 0.9191589, 0, -1.0021191, -0.48834988, 0, 0.778696, 4.4883833, 0.76571894, 0, -0.8735672, 7.9340773, 0, 1.1616563, 0, -1.0021191, 0.8735672, 0, 0.76571894, 4.2725196, -0.30872804, 0, 0.84118664, 2.5306137, 0, 0.89605135, 0, -1.0021191, -0.84118664, 0, -0.30872804, 3.4636333, -0.27951652, 0, -0.77829915, -2.7145243, 0, 0.8269698, 0, -1.0021191, 0.77829915, 0, -0.27951652, 4.7693753, 0.9094873, 0, -0.44779682, 6.2000155, 0, 1.0137501, 0, -1.0021191, 0.44779682, 0, 0.9094873, 0.49998343, 0.4761426, 0, -0.9554223, -7.68867, 0, 1.067494, 0, -1.0021191, 0.9554223, 0, 0.4761426, 9.809763, -0.10744813, 0, -0.9705712, -5.778265, 0, 0.9765007, 0, -1.0021191, 0.9705712, 0, -0.10744813, -1.088105, 0.63682735, 0, 0.87203926, 0.09286785, 0, 1.0798155, 0, -1.0021191, -0.87203926, 0, 0.63682735, -0.63894445, 0.71343595, 0, 0.4233016, 4.315192, 0, 0.8295632, 0, -1.0021191, -0.4233016, 0, 0.71343595, 11.048407, -1.0854996, 0, 0.14829022, 0.2260325, 0, 1.0955818, 0, -1.0021191, -0.14829022, 0, -1.0854996, 4.7499886, -0.802557, 0, 0.71907854, -7.5732594, 0, 1.0775768, 0, -1.0021191, -0.71907854, 0, -0.802557, 13.451286, 0.870505, 0, 0.41122428, -6.291209, 0, 0.9627483, 0, -1.0021191, -0.41122428, 0, 0.870505, 9.694705, -0.45229986, 0, -0.7602574, -0.8018255, 0, 0.8846279, 0, -1.0021191, 0.7602574, 0, -0.45229986, 0.2366817, -1.0470177, 0, 0.047366492, -7.017544, 0, 1.0480886, 0, -1.0021191, -0.047366492, 0, -1.0470177, 2.588554, 1.0632545, 0, -0.3563117, -4.637885, 0, 1.1213689, 0, -1.0021191, 0.3563117, 0, 1.0632545, 1.8719614)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_w2dcx"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"format": 34896613377,
+"index_count": 168,
+"index_data": PackedByteArray("DQAHAAkADQAJAA4ADgAJAAgADgAPAA0ACgAIAAkABwAKAAkACAAQAA4AEAAPAA4AEQAQAAgACAAKABIAEgARAAgAEQATABAAEwAPABAAEwARABQAFAARABIAEwAVAA8AFAAVABMAFgAPABUAEgAKAAEABgAPABYAFAASAAYADwAGAA0AAQANABIADAAUAAYADAAVABQADAAGABYADAAXABUAFwAMAAUAFQAXAAUABQAMABYAFQAAABYAFQAFAAAABgASAAAABQAWAAQAFgAAAAQAAwAFAAQAAAAFAAMAAwAEAAIABAAAAAIAAAASABgAEgANABgAAAAYAAIABgAAABkAGQAAAAMABgAZAA0AGAANABkAGAABAAIABwANAAEAGQAHABgAGAAHAAEAAwALABkACwADAAIACwAHABkAAQALAAIABwALAAoACgALAAEA"),
+"lods": [1.0488279, PackedByteArray("AQAHAAkABwAKAAkACgAIAAkACAAKAAEABwALAAoACgALAAEACwAHAAAAAAAHAAEACAAGAAkACQAGAAEACAABAAYABgABAAAABgAAAAEAAQALAAIAAAABAAIACwADAAIAAwALAAAAAwAEAAIABAAAAAIABgAAAAQAAwAFAAQAAAAFAAMABQAGAAQADAAFAAAABQAMAAYADAAAAAYACAAMAAYADAAIAAYA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAAAAwAEAAIABAAAAAIAAwAFAAQAAAAFAAMABQAGAAQABgAAAAQABQAAAAYABgABAAAABgAAAAEAAgAHAAAAAAAHAAEABwACAAEABwAGAAEACAAHAAEACAAGAAcACAABAAYABQAIAAYACAAFAAYA")],
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 26,
+"vertex_data": PackedByteArray("psSdN7KZAAALkgE3wu4AAPH4fD3j/QAA9e5Xxn68AACf75QhJbkAAFf4WENthgAA0aD0N+t6AACwj8Y7TvgAAAAAnUWcZAAAegMAQa/5AACESAAADvUAANbAO2D//wAABNkdITYDAADXXzzKadMAACwBKYqUywAAMXwOjaRqAAAuEVSKAXMAAP0nMS2tQQAA9oxjIyvfAACzQfQ7AyEAADGdfxATFgAAy+j//+c4AAAuyeA0OHUAAP//zl8AAAAAHJviOxXfAADJsexeA8IAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_06x5i"]
+_surfaces = [{
+"aabb": AABB(-1.909251, -0.181837, -1.855667, 3.8933668, 0.307574, 3.779794),
+"attribute_data": PackedByteArray("I03S4x54KssXfv//5HwayhZcOfq+NYh+Zj4P0c9C+/2UwRPR37LT4+GHM8sagyTKGcqgfvuB//86vfn9EaIz+hGiM/r6ozH6+4H//+VdEfrPQvv9Flw5+jSAjILi/QTsAYBt46+DoaUBgF7jS3yepSACEOyuf3GCcZRtsXBwVMjJI3WSNBMmn8kjdZJeDLvNruwyn/TISb4hw7yHNHCUz3BwVMg0cJTPI03S4zRwlM8Xfv//cHBUyCNN0uP3Op3lFlw5+iNN0uMXfv//9zqd5SNN0uMWXDn6hZ7X2nGUbbGFntfaEaIz+l4Mu81mPg/Rz0L7/SACEOz3Op3lKuNB9Zvzss2b87LNKuNB9a7sMp8BgG3jGoMkyoWe19rKj53P9MhJvpTBE9FxlG2xGoMkygGAbePKj53PGoMkyr41iH6+NYh+S3yepXBwVMhxlG2xNICMgu+W1oAhw7yH75bWgO+W1oD0yEm+cZRtsV4Mu83JI3WScHBUyBjcgZIhw7yHGcqgfhjcgZKu7DKfIcO8hyHDvIf0yEm+75bWgB54KssXfv//Xgy7zXBwVMhmPg/RkI9XyHGUbbHKj53PhZ7X2pTBE9HfstPjhZ7X2t+y0+MRojP6lMET0fTISb4LxZvlKuNB9RGiM/oBgG3jhZ7X2iACEOxmPg/R9zqd5QAA//8gAhDsz0L7/a7sMp8q40H19MhJvhqDJMpxlG2x4Yczy5CPV8gq40H1Or35/d+y0+Mq40H1/////zq9+f3i/QTs/////yrjQfUq40H137LT4wvFm+VwcFTIS3yepR54KstLfJ6lAYBe4x54KsvkaKqArn9xgr41iH5LfJ6lrn9xgg=="),
+"format": 34896613399,
+"index_count": 168,
+"index_data": PackedByteArray("HgALABYAHwAgAAUAIQAiACMAJAAlACYAJwABAAIAAAAoACkAKgArACwABgAtAC4ABwAvAAQAMAAxADIAMwA0ADUACAA2ADcAGAAPAA0AOAAJADkAHAA6ADsAPAA9AD4AFwA/AEAAQQBCAEMARABFAEYARgBFAEcASABJAEoASwBMABkATQBOAAoAGwBPAB0AUABRAFIAUwBUAFUADABWAFcAWABZAFoAWwBcAF0AXgBfAGAAYQBiAGMAZABlAGYAZwAaAGgAaQBqAGsAbABtAG4AbgBtAG8AcABxAHIAcwAOAHQAdQB2AHcAdwB2AHgAeQB6AHsAfAB9AH4AfwCAAIEAggCDAIQAhQCGAIcAhwCGAIgAiQCKAIsAjACNAI4AjwCQAJEAkgCTAJQAlQCWAJcAmACZAJoAmwCcAJ0AAwCeAJ8AEAARABIAEwAUABUA"),
+"lods": [1.0488279, PackedByteArray("CgALABYAFgAIAAoADAAIABYADAAXAAgACAAJAAoAFwAJAAgACQALAAoAFwAOAAkACQAOAA8AGAALAAkADwAYAAkACwAYABkAGAAPAA0AAAABAAIABAAAAAIAAQAaAAIAGwAaAAEABgAAAAQABgABAAAABwAGAAQABwAcAAYAHAAFAAYABQABAAYABQAbAAEAGwAFAB0AAwAbAB0AEAARABIAEwAUABUA"), 1.5831666, PackedByteArray("AAABAAIAAwACAAEABAAAAAIABQADAAEABgAAAAQABgABAAAABQABAAYABwAGAAQABwAFAAYACAAJAAoACwAIAAoACQALAAoADAAIAAsADQALAAkADAAOAAgADgAJAAgADwANAAkACQAOAA8AEAARABIAEwAUABUA")],
+"material": SubResource("StandardMaterial3D_sumr0"),
+"name": "Grass",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 160,
+"vertex_data": PackedByteArray("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")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_w2dcx")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aaka3"]
+albedo_texture = ExtResource("6_44vd2")
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_jbbps"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8t2c"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d4x5l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xxja"]
+render_priority = 0
+shader = ExtResource("17_qulp1")
+shader_parameter/raymarch_steps = 6
+shader_parameter/sample_jitter = true
+shader_parameter/potato_mode = true
+shader_parameter/sample_noise = ExtResource("18_qti7d")
+shader_parameter/billboard = true
+shader_parameter/billboard_z_offset = 0.675
+shader_parameter/proximity_fade_distance = 2.485
+shader_parameter/time_scale = 0.027
+shader_parameter/noise_scale = 0.335
+shader_parameter/noise_threshold = 0.43
+shader_parameter/fire_height = 4.115
+shader_parameter/fire_width = 5.27
+shader_parameter/box_center = Vector3(0, 0, 0)
+shader_parameter/box_rotation = Vector3(0, 0, 0)
+shader_parameter/taper_factor = 1.06
+shader_parameter/wobble_strength = 5.455
+shader_parameter/wobble_speed = 7.14
+shader_parameter/wobble_noise_frequency = 4.06400018978012
+shader_parameter/sharpness_cutoff = 7.726000366985
+shader_parameter/emission_strength = 13.125
+shader_parameter/core_glow_multiplier = 16.0
+shader_parameter/color_core = Vector3(1, 0.9, 0.5)
+shader_parameter/color_mid = Vector3(1, 0.625, 0)
+shader_parameter/color_outer = Vector3(0.8, 0.01, 0)
+shader_parameter/color_smoke = Vector3(-0.067, -0.067, -0.067)
+shader_parameter/jitter_multiplier = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_64aje"]
+material = SubResource("ShaderMaterial_1xxja")
+size = Vector2(16.41, 12.37)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ygmq"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ssc51"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t7k7"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhf7t"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_44vd2"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmvqm"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xteo"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sugoo"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ur437"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryqhc"]
+resource_name = "m_d0444f1f-23fd-ef93-63b5-965dfd6ca181"
+albedo_texture = ExtResource("17_otsji")
+texture_filter = 0
+
+[node name="Level2" type="Node3D" unique_id=295779643]
+script = SubResource("GDScript_xy7be")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=316602199]
+environment = SubResource("Environment_abxe4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=357559775]
+transform = Transform3D(1, 0, 0, 0, 1, -1.7484555e-07, 0, 1.7484555e-07, 1, 0, 0, 0)
+shadow_enabled = true
+shadow_normal_bias = 3.683
+directional_shadow_mode = 0
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1531125266]
+
+[node name="Ground" type="MeshInstance3D" parent="Ground" unique_id=436451168]
+mesh = SubResource("PlaneMesh_grpyn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1122701584]
+shape = SubResource("BoxShape3D_83814")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1436331604]
+libraries/ = SubResource("AnimationLibrary_qve8d")
+speed_scale = 0.1
+
+[node name="Bridge" parent="." unique_id=32936363 instance=ExtResource("4_6t7k7")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12.058424, -0.09913683, 0)
+
+[node name="Bridge2" parent="." unique_id=80625943 instance=ExtResource("4_6t7k7")]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 11.734579, -0.09913683, 0)
+
+[node name="LeftEnter" type="Marker3D" parent="." unique_id=1447357278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.844, 0)
+
+[node name="RightEnter" type="Marker3D" parent="." unique_id=1981690507]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.844, 0)
+
+[node name="Decoration" type="Node3D" parent="." unique_id=1608446024]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -6.7607703, 0.026157856, -3.7119236)
+
+[node name="Tree" parent="Decoration" unique_id=2061366391 instance=ExtResource("5_rhf7t")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.5667133, -0.052315712, 18.093273)
+
+[node name="Tree2" parent="Decoration" unique_id=1227028754 instance=ExtResource("5_rhf7t")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25.511255, -0.052315712, -7.84814)
+
+[node name="Tree3" parent="Decoration" unique_id=1812775329 instance=ExtResource("5_rhf7t")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25.511255, -0.052315712, 18.060505)
+
+[node name="Tree4" parent="Decoration" unique_id=1982127262 instance=ExtResource("5_rhf7t")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0.26515007, -0.052315712, -3.7422705)
+
+[node name="grasssourceplane" type="MeshInstance3D" parent="Decoration" unique_id=555645332]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 23.98359, -0.11850262, 13.315267)
+mesh = SubResource("PlaneMesh_u7qoc")
+skeleton = NodePath("../MultiMeshInstance3D")
+
+[node name="grasssourceplane2" type="MeshInstance3D" parent="Decoration" unique_id=1793685774]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.9636698, -0.11850262, -4.190076)
+mesh = SubResource("PlaneMesh_u7qoc")
+skeleton = NodePath("../MultiMeshInstance3D")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Decoration" unique_id=1463250361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.98359, 1.0901575, 7.423847)
+multimesh = SubResource("MultiMesh_5kfvn")
+
+[node name="MultiMeshInstance3D2" type="MultiMeshInstance3D" parent="Decoration" unique_id=1825864416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.530324, 1.0901575, 10.206214)
+multimesh = SubResource("MultiMesh_5kfvn")
+
+[node name="BaseGrass" type="MeshInstance3D" parent="Decoration" unique_id=968024743]
+mesh = SubResource("ArrayMesh_06x5i")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_aaka3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Decoration" unique_id=958965157]
+transform = Transform3D(-6.54166e-06, 0, 171.60869, 0, 2, 0, -149.65572, 0, -7.5012545e-06, -13.317349, -1.700942, 6.7106304)
+mesh = SubResource("BoxMesh_jbbps")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_w8t2c")
+
+[node name="Grass34" type="Node3D" parent="Decoration" unique_id=411334556]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8.660801, 11.82563, -14.341692)
+visible = false
+
+[node name="Grass" type="Sprite3D" parent="Decoration/Grass34" unique_id=780165388]
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("7_wmvqm")
+
+[node name="Grass4" type="Sprite3D" parent="Decoration/Grass34" unique_id=549649072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3135223, 2.1883197, 0.06481075)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("8_0xteo")
+
+[node name="Grass2" type="Sprite3D" parent="Decoration/Grass34" unique_id=1056768057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8220596, 0, 1.121727)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass3" type="Sprite3D" parent="Decoration/Grass34" unique_id=1321448874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.748842, 0, 1.121727)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass5" type="Sprite3D" parent="Decoration/Grass34" unique_id=1051699343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0999255, -1.8299656)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("11_ryqhc")
+
+[node name="Grass6" type="Sprite3D" parent="Decoration/Grass34" unique_id=1595358631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3135223, 7.304361, -1.7651548)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("12_r0jkm")
+
+[node name="Grass7" type="Sprite3D" parent="Decoration/Grass34" unique_id=472663857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8220596, 1.7232037, -0.7082386)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass8" type="Sprite3D" parent="Decoration/Grass34" unique_id=734771477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.748842, 1.7232037, -0.7082386)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass9" type="Sprite3D" parent="Decoration/Grass34" unique_id=565591925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.124197, 0, 7.307025)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("7_wmvqm")
+
+[node name="Grass10" type="Sprite3D" parent="Decoration/Grass34" unique_id=188109577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.810675, 2.1883197, 7.3718357)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("8_0xteo")
+
+[node name="Grass11" type="Sprite3D" parent="Decoration/Grass34" unique_id=29507341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.946257, 0, 8.428752)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass12" type="Sprite3D" parent="Decoration/Grass34" unique_id=1073714239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.375355, 0, 8.428752)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass13" type="Sprite3D" parent="Decoration/Grass34" unique_id=206381585]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.124197, 4.0999255, 5.4770594)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("11_ryqhc")
+
+[node name="Grass14" type="Sprite3D" parent="Decoration/Grass34" unique_id=505379896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.810675, 7.304361, 5.54187)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("12_r0jkm")
+
+[node name="Grass15" type="Sprite3D" parent="Decoration/Grass34" unique_id=1610456205]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.946257, 1.7232037, 6.5987864)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass16" type="Sprite3D" parent="Decoration/Grass34" unique_id=153344289]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -4.6623363, 1.7232037, -4.901679)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass17" type="Sprite3D" parent="Decoration/Grass34" unique_id=142225710]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -11.604822, 0, 0.46914387)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("7_wmvqm")
+
+[node name="Grass18" type="Sprite3D" parent="Decoration/Grass34" unique_id=1542898959]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -7.118094, 2.1883197, -2.378131)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("8_0xteo")
+
+[node name="Grass19" type="Sprite3D" parent="Decoration/Grass34" unique_id=141800387]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -13.356424, 0, 2.9499068)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass20" type="Sprite3D" parent="Decoration/Grass34" unique_id=1433832979]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -3.663042, 0, -3.3686476)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass21" type="Sprite3D" parent="Decoration/Grass34" unique_id=797768830]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -12.604116, 4.0999255, -1.0638876)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("11_ryqhc")
+
+[node name="Grass22" type="Sprite3D" parent="Decoration/Grass34" unique_id=1578237314]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -8.117388, 7.304361, -3.9111624)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("12_r0jkm")
+
+[node name="Grass23" type="Sprite3D" parent="Decoration/Grass34" unique_id=762280415]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -14.355719, 1.7232037, 1.4168749)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass24" type="Sprite3D" parent="Decoration/Grass34" unique_id=378148944]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -4.6623363, 1.7232037, -4.901679)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass25" type="Sprite3D" parent="Decoration/Grass34" unique_id=308006056]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 26.866735, 1.7232037, 0.47430134)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass26" type="Sprite3D" parent="Decoration/Grass34" unique_id=1276323437]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 19.92425, 0, 5.8451242)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("7_wmvqm")
+
+[node name="Grass27" type="Sprite3D" parent="Decoration/Grass34" unique_id=1220889242]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 24.410978, 2.1883197, 2.9978495)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("8_0xteo")
+
+[node name="Grass28" type="Sprite3D" parent="Decoration/Grass34" unique_id=1918947896]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 18.172647, 0, 8.325888)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass29" type="Sprite3D" parent="Decoration/Grass34" unique_id=979163557]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 27.86603, 0, 2.0073328)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="Grass30" type="Sprite3D" parent="Decoration/Grass34" unique_id=744908953]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 18.924955, 4.0999255, 4.312093)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("11_ryqhc")
+
+[node name="Grass31" type="Sprite3D" parent="Decoration/Grass34" unique_id=1004821861]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 23.411684, 7.304361, 1.464818)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("12_r0jkm")
+
+[node name="Grass32" type="Sprite3D" parent="Decoration/Grass34" unique_id=1625613539]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 17.173353, 1.7232037, 6.7928553)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("9_sugoo")
+
+[node name="Grass33" type="Sprite3D" parent="Decoration/Grass34" unique_id=534960690]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 26.866735, 1.7232037, 0.47430134)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("10_ur437")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Decoration" unique_id=909887188]
+transform = Transform3D(5.61, 0, 0, 0, 5.61, 0, 0, 0, 5.61, 5.330888, 0, -12.927767)
+mesh = ExtResource("13_dhsuh")
+surface_material_override/0 = SubResource("StandardMaterial3D_d4x5l")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Decoration" unique_id=1629736875]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.792492, -0.68231344, -1.349575)
+mesh = SubResource("QuadMesh_64aje")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Decoration" unique_id=1040932693]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.76186, -0.68231344, -0.21733952)
+mesh = SubResource("QuadMesh_64aje")
+
+[node name="ant" type="MeshInstance3D" parent="Decoration" unique_id=421178359]
+transform = Transform3D(-1.873723, 0, 0.6994013, 0, 2, 0, -0.6994013, 0, -1.873723, 20.432356, 0, -1.4764862)
+mesh = ExtResource("16_6un3d")
+surface_material_override/0 = SubResource("StandardMaterial3D_2ygmq")
+surface_material_override/1 = SubResource("StandardMaterial3D_ssc51")
+surface_material_override/2 = SubResource("StandardMaterial3D_6t7k7")
+surface_material_override/3 = SubResource("StandardMaterial3D_rhf7t")
+surface_material_override/4 = SubResource("StandardMaterial3D_44vd2")
+surface_material_override/5 = SubResource("StandardMaterial3D_wmvqm")
+surface_material_override/6 = SubResource("StandardMaterial3D_0xteo")
+surface_material_override/7 = SubResource("StandardMaterial3D_sugoo")
+surface_material_override/8 = SubResource("StandardMaterial3D_ur437")
+surface_material_override/9 = SubResource("StandardMaterial3D_ryqhc")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1345791465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9990907, 0.36300445, 4.0377636)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="." unique_id=150694541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9990907, 0.36300445, -5.733817)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="." unique_id=652059014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.073733, 0.36300445, -0.3887396)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="." unique_id=1986494070]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.522489, 0.36300445, -0.3887396)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=901086886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2694, 0.36300445, 4.0377636)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1208936936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2694, 0.36300445, -2.9723072)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=1746538540]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6048272, 0.36300445, -2.1930017)
+light_color = Color(0.9727537, 0.46165973, 0, 1)
+light_energy = 16.0
+shadow_enabled = true

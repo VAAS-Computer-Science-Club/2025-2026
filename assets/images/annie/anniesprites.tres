@@ -1,7 +1,32 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://ux5x06gl5ny2"]
 
+[ext_resource type="Texture2D" uid="uid://c7jugvxpl1hje" path="res://assets/images/annie/Annie Attack.png" id="1_4u3gs"]
 [ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="1_uhq0n"]
 [ext_resource type="Texture2D" uid="uid://dg6wp46itgw8p" path="res://assets/images/annie/annie_run.png" id="2_4u3gs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnfp2"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(0, 0, 1227, 1396)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adwxq"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(1227, 0, 1227, 1396)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3aujr"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(2454, 0, 1227, 1396)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i7nq"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(3681, 0, 1227, 1396)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymwh4"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(4908, 0, 1227, 1396)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ek0l"]
+atlas = ExtResource("1_4u3gs")
+region = Rect2(0, 1396, 1227, 1396)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uhq0n"]
 atlas = ExtResource("1_uhq0n")
@@ -49,6 +74,29 @@ region = Rect2(5352, 0, 1338, 1620)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnfp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adwxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3aujr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i7nq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymwh4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ek0l")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 12.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uhq0n")

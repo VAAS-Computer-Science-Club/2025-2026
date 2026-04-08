@@ -14,16 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://btua31wo5eegp" path="res://assets/images/graffiti_005.png" id="12_jr4ek"]
 [ext_resource type="Texture2D" uid="uid://dt0e5qcsjusde" path="res://assets/images/graffiti_001.png" id="13_25i5n"]
 
-[sub_resource type="Gradient" id="Gradient_d844g"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
-gradient = SubResource("Gradient_d844g")
-
 [sub_resource type="GDScript" id="GDScript_n7mb3"]
 script/source = "extends Node3D
 var spawnPoint = Vector3(0,5,0)
-@onready var BridgeLeft = $Bridge
-@onready var BridgeRight = $Bridge2
 var player;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,11 +24,6 @@ func _ready() -> void:
 
 
 @onready var anim = $AnimationPlayer
-
-func _process(delta: float) -> void:
-	for child in self.get_children():
-		if is_instance_of(child,OmniLight3D):
-			child.light_energy = clamp(anim.current_animation_position,0,11)
 "
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jetka"]
@@ -199,6 +187,11 @@ size = Vector3(5, 5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_grfr1"]
 size = Vector3(1, 1, 0.1)
 
+[sub_resource type="Gradient" id="Gradient_d844g"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
+gradient = SubResource("Gradient_d844g")
+
 [node name="Battle" type="Control" unique_id=438008570]
 layout_mode = 3
 anchors_preset = 15
@@ -209,120 +202,16 @@ grow_vertical = 2
 script = ExtResource("1_d844g")
 
 [node name="playerbattle" parent="." unique_id=1013336732 instance=ExtResource("2_78ltx")]
-
-[node name="UI" type="SubViewportContainer" parent="." unique_id=513740711]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SubViewport" type="SubViewport" parent="UI" unique_id=1491583508]
-handle_input_locally = false
-size = Vector2i(1035, 636)
-render_target_update_mode = 4
-
-[node name="TextureRect" type="TextureRect" parent="UI/SubViewport" unique_id=565026902]
-offset_left = 31.0
-offset_top = 470.0
-offset_right = 480.0
-offset_bottom = 622.0
-texture = SubResource("GradientTexture2D_78ltx")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=861881291]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-offset_right = 452.0
-grow_vertical = 0
-
-[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=718711562]
-layout_mode = 2
-text = "Attack"
-
-[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=2127346780]
-layout_mode = 2
-text = "Item"
-
-[node name="Button3" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1359110389]
-layout_mode = 2
-text = "Flee"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=311630320]
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-text = "Health: "
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1287266733]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 2
-text = "SP: "
-
-[node name="heads" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1041645540]
-visible = false
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
-texture = ExtResource("3_78ltx")
-stretch_mode = 4
-
-[node name="tails" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1378166851]
-visible = false
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
-texture = ExtResource("4_r6uqb")
-stretch_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=1524147359]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=1886329731]
-layout_mode = 2
-text = "Skill One"
-
-[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=604864705]
-layout_mode = 2
-text = "Skill Two"
-
-[node name="playercoins" type="HBoxContainer" parent="UI/SubViewport" unique_id=47193774]
-offset_left = -3.0
-offset_top = 7.0
-offset_right = 294.0
-offset_bottom = 23.0
-scale = Vector2(4, 4)
-
-[node name="enemycoins" type="HBoxContainer" parent="UI/SubViewport" unique_id=1125595916]
-offset_left = 655.0
-offset_top = 4.0
-offset_right = 952.0
-offset_bottom = 20.0
-scale = Vector2(4, 4)
-
-[node name="PlayerCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1702785780]
-offset_left = 523.0
-offset_top = 485.0
-offset_right = 1099.0
-offset_bottom = 744.0
-text = "PLAYER COIN VALUE"
-
-[node name="EnemyCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1224242738]
-offset_left = 525.0
-offset_top = 594.0
-offset_right = 1101.0
-offset_bottom = 853.0
-text = "Enemy COIN VALUE"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6703763, 0.84090257, 0)
 
 [node name="BattleVisuals" type="SubViewportContainer" parent="." unique_id=1036677343]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1149.0
+offset_bottom = 650.0
 
 [node name="SubViewport" type="SubViewport" parent="BattleVisuals" unique_id=937365163]
 handle_input_locally = false
+size = Vector2i(1155, 639)
 render_target_update_mode = 4
 
 [node name="Level Node" type="Node3D" parent="BattleVisuals/SubViewport" unique_id=1994816318]
@@ -458,6 +347,147 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6048272, 0.36300445, -2.193
 light_color = Color(0.9727537, 0.46165973, 0, 1)
 light_energy = 11.059
 shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=1171567231]
+transform = Transform3D(1, 0, 0, 0, 0.87880045, 0.47718945, 0, -0.47718945, 0.87880045, 0, 3.8750353, 4.678498)
+
+[node name="Marker3D" type="Marker3D" parent="BattleVisuals/SubViewport/Level Node" unique_id=730890747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.697, 0.841, 0)
+
+[node name="UI" type="SubViewportContainer" parent="." unique_id=513740711]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="UI" unique_id=1491583508]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 636)
+render_target_update_mode = 4
+
+[node name="playercoins" type="VBoxContainer" parent="UI/SubViewport" unique_id=1579884315]
+offset_left = -2.0
+offset_top = 3.0
+offset_right = 48.75
+offset_bottom = 162.25
+scale = Vector2(4, 4)
+
+[node name="tails" type="TextureRect" parent="UI/SubViewport/playercoins" unique_id=1875155513]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("4_r6uqb")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="enemycoins" type="VBoxContainer" parent="UI/SubViewport" unique_id=776235977]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 18.0
+offset_right = -111.0
+offset_bottom = 172.75
+grow_horizontal = 0
+scale = Vector2(4, 4)
+
+[node name="heads" type="TextureRect" parent="UI/SubViewport/enemycoins" unique_id=2016356232]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_78ltx")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="UI/SubViewport" unique_id=565026902]
+offset_left = 31.0
+offset_top = 470.0
+offset_right = 480.0
+offset_bottom = 622.0
+texture = SubResource("GradientTexture2D_78ltx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=861881291]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 452.0
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=718711562]
+layout_mode = 2
+text = "Attack"
+
+[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=2127346780]
+layout_mode = 2
+text = "Item"
+
+[node name="Button3" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1359110389]
+layout_mode = 2
+text = "Flee"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=311630320]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Health: "
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=1287266733]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "SP: "
+
+[node name="heads" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1041645540]
+visible = false
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("3_78ltx")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="tails" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1378166851]
+visible = false
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+texture = ExtResource("4_r6uqb")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=1524147359]
+visible = false
+layout_mode = 0
+offset_left = 1.0
+offset_top = 43.0
+offset_right = 77.0
+offset_bottom = 109.0
+
+[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=1886329731]
+layout_mode = 2
+text = "Skill One"
+
+[node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=604864705]
+layout_mode = 2
+text = "Skill Two"
+
+[node name="PlayerCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1702785780]
+offset_left = 523.0
+offset_top = 485.0
+offset_right = 1099.0
+offset_bottom = 744.0
+text = "PLAYER COIN VALUE"
+
+[node name="EnemyCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1224242738]
+offset_left = 525.0
+offset_top = 594.0
+offset_right = 1101.0
+offset_bottom = 853.0
+text = "Enemy COIN VALUE"
 
 [connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button" to="." method="attack_on_button_pressed"]
 [connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button2" to="." method="item_on_button_2_pressed"]

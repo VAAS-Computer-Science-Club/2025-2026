@@ -1,6 +1,57 @@
 [gd_scene format=3 uid="uid://dq462litu74we"]
 
 [ext_resource type="Script" uid="uid://fwkjauu8nf5j" path="res://scripts/enemybattle.gd" id="1_r8n34"]
+[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="2_6tt8s"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_6fjho"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tt2tw"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6n87"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = SubResource("ViewportTexture_tt2tw")
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46ox3"]
+resource_local_to_scene = true
+next_pass = SubResource("StandardMaterial3D_u6n87")
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_6fjho")
+billboard_mode = 2
+billboard_keep_scale = true
+stencil_mode = 2
+stencil_flags = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_gpi8u"]
+viewport_path = NodePath("Sprite")
 
 [node name="enemybattle" type="Node3D" unique_id=1000893701]
 script = ExtResource("1_r8n34")
+
+[node name="Sprite" type="SubViewport" parent="." unique_id=1736885602]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=715877053]
+position = Vector2(256, 256)
+scale = Vector2(0.3, 0.3)
+sprite_frames = ExtResource("2_6tt8s")
+animation = &"attack"
+
+[node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=1067284251]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
+material_overlay = SubResource("StandardMaterial3D_46ox3")
+billboard = 2
+shaded = true
+texture = SubResource("ViewportTexture_gpi8u")

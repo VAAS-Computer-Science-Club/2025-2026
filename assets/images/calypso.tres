@@ -1,0 +1,109 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bhi2oyaeh8vn1"]
+
+[ext_resource type="Texture2D" uid="uid://cqt0fpchpul7d" path="res://assets/images/mantis/mantisthing.png" id="1_cwyk1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcj8a"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(0, 0, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lm4e4"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(1239, 0, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hukuk"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(2478, 0, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7ucw"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(3717, 0, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dq63h"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(4956, 0, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwkab"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(0, 1631, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skyn0"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(1239, 1631, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ifmhy"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(2478, 1631, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qepgk"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(3717, 1631, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdlt0"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(4956, 1631, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjmgk"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(0, 3262, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdotl"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(1239, 3262, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_313fc"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(2478, 3262, 1239, 1631)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tblc"]
+atlas = ExtResource("1_cwyk1")
+region = Rect2(3717, 3262, 1239, 1631)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcj8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lm4e4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hukuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7ucw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dq63h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwkab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skyn0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ifmhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qepgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vdlt0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjmgk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdotl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_313fc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tblc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]

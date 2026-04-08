@@ -4,7 +4,7 @@ var health = 0
 var sp = 0.25
 var maxsp = 0.45
 var maxhealth = 10
-
+@onready var anim = $Sprite/Sprite
 func _ready() -> void:
 	pass
 

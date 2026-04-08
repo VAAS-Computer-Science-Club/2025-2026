@@ -12,6 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://btua31wo5eegp" path="res://assets/images/graffiti_005.png" id="7_sumr0"]
 [ext_resource type="PackedScene" uid="uid://c4r6rrblrx6wg" path="res://scenes/tree.tscn" id="8_1viak"]
 [ext_resource type="Texture2D" uid="uid://dt0e5qcsjusde" path="res://assets/images/graffiti_001.png" id="8_f5ii7"]
+[ext_resource type="Texture2D" uid="uid://b476anbk7rv4p" path="res://assets/images/Green Grass 2.PNG" id="13_gourg"]
+[ext_resource type="Texture2D" uid="uid://d2xteeavlbnbe" path="res://assets/images/Green Grass 1.PNG" id="14_pfopj"]
+[ext_resource type="Texture2D" uid="uid://ca3nyfpkxnax7" path="res://assets/images/Teal Grass 1.png" id="15_uf87e"]
+[ext_resource type="Texture2D" uid="uid://cv0nrrlb1htxq" path="res://assets/images/Teal Grass 2.png" id="16_8adi0"]
+[ext_resource type="Texture2D" uid="uid://bh0lsvec88m3h" path="res://assets/images/Red Grass 1.png" id="17_6hnec"]
+[ext_resource type="Texture2D" uid="uid://bskpnq2lbbc7u" path="res://assets/images/Red Grass 2.png" id="18_cnjw8"]
+[ext_resource type="ArrayMesh" uid="uid://bcqsjblm2d3xr" path="res://assets/objects/mountain.obj" id="19_pfopj"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_jetka"]
 
@@ -41,7 +48,14 @@ sky_material = SubResource("ShaderMaterial_sumr0")
 [sub_resource type="Environment" id="Environment_qovp1"]
 background_mode = 2
 sky = SubResource("Sky_grfr1")
-tonemap_mode = 3
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 4
+tonemap_exposure = 1.87
+tonemap_white = 16.0
+glow_enabled = true
+glow_normalized = true
+glow_blend_mode = 2
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_w5roj"]
 material = ExtResource("2_v8l2m")
@@ -174,6 +188,13 @@ size = Vector3(5, 5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_grfr1"]
 size = Vector3(1, 1, 0.1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_akdnu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u3aey"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uf87e"]
+
 [node name="Level Node" type="Node3D" unique_id=1994816318]
 script = ExtResource("1_5vww3")
 
@@ -183,6 +204,7 @@ environment = SubResource("Environment_qovp1")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1810431755]
 transform = Transform3D(1, 0, 0, 0, 1, -1.7484555e-07, 0, 1.7484555e-07, 1, 0, 0, 0)
 shadow_enabled = true
+shadow_normal_bias = 3.683
 directional_shadow_mode = 0
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=2123926944]
@@ -292,6 +314,400 @@ texture_albedo = ExtResource("8_f5ii7")
 emission_energy = 0.01
 upper_fade = 0.33923578
 lower_fade = 1e-05
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Decoration" unique_id=661551278]
+transform = Transform3D(-6.54166e-06, 0, 171.60869, 0, 2, 0, -149.65572, 0, -7.5012545e-06, -13.317349, -1.700942, 6.7106304)
+mesh = SubResource("BoxMesh_akdnu")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_u3aey")
+
+[node name="Grass34" type="Node3D" parent="Decoration" unique_id=946115241]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 8.660801, 11.82563, -14.341692)
+visible = false
+
+[node name="Grass" type="Sprite3D" parent="Decoration/Grass34" unique_id=1977385230]
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("13_gourg")
+
+[node name="Grass4" type="Sprite3D" parent="Decoration/Grass34" unique_id=190026215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3135223, 2.1883197, 0.06481075)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("14_pfopj")
+
+[node name="Grass2" type="Sprite3D" parent="Decoration/Grass34" unique_id=1950714285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8220596, 0, 1.121727)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass3" type="Sprite3D" parent="Decoration/Grass34" unique_id=1879778293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.748842, 0, 1.121727)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass5" type="Sprite3D" parent="Decoration/Grass34" unique_id=1008452345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0999255, -1.8299656)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("17_6hnec")
+
+[node name="Grass6" type="Sprite3D" parent="Decoration/Grass34" unique_id=482459148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3135223, 7.304361, -1.7651548)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("18_cnjw8")
+
+[node name="Grass7" type="Sprite3D" parent="Decoration/Grass34" unique_id=554632543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8220596, 1.7232037, -0.7082386)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass8" type="Sprite3D" parent="Decoration/Grass34" unique_id=1498890088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.748842, 1.7232037, -0.7082386)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass9" type="Sprite3D" parent="Decoration/Grass34" unique_id=2064410192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.124197, 0, 7.307025)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("13_gourg")
+
+[node name="Grass10" type="Sprite3D" parent="Decoration/Grass34" unique_id=1958811211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.810675, 2.1883197, 7.3718357)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("14_pfopj")
+
+[node name="Grass11" type="Sprite3D" parent="Decoration/Grass34" unique_id=569545584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.946257, 0, 8.428752)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass12" type="Sprite3D" parent="Decoration/Grass34" unique_id=511971243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.375355, 0, 8.428752)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass13" type="Sprite3D" parent="Decoration/Grass34" unique_id=968152397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.124197, 4.0999255, 5.4770594)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("17_6hnec")
+
+[node name="Grass14" type="Sprite3D" parent="Decoration/Grass34" unique_id=1391626477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.810675, 7.304361, 5.54187)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("18_cnjw8")
+
+[node name="Grass15" type="Sprite3D" parent="Decoration/Grass34" unique_id=1759287221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.946257, 1.7232037, 6.5987864)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass16" type="Sprite3D" parent="Decoration/Grass34" unique_id=977069064]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -4.6623363, 1.7232037, -4.901679)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass17" type="Sprite3D" parent="Decoration/Grass34" unique_id=1623661729]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -11.604822, 0, 0.46914387)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("13_gourg")
+
+[node name="Grass18" type="Sprite3D" parent="Decoration/Grass34" unique_id=335975048]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -7.118094, 2.1883197, -2.378131)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("14_pfopj")
+
+[node name="Grass19" type="Sprite3D" parent="Decoration/Grass34" unique_id=550545677]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -13.356424, 0, 2.9499068)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass20" type="Sprite3D" parent="Decoration/Grass34" unique_id=244696438]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -3.663042, 0, -3.3686476)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass21" type="Sprite3D" parent="Decoration/Grass34" unique_id=415600701]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -12.604116, 4.0999255, -1.0638876)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("17_6hnec")
+
+[node name="Grass22" type="Sprite3D" parent="Decoration/Grass34" unique_id=349233809]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -8.117388, 7.304361, -3.9111624)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("18_cnjw8")
+
+[node name="Grass23" type="Sprite3D" parent="Decoration/Grass34" unique_id=1339511388]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -14.355719, 1.7232037, 1.4168749)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass24" type="Sprite3D" parent="Decoration/Grass34" unique_id=1279952723]
+transform = Transform3D(0.8377378, 0, 0.5460727, 0, 1, 0, -0.5460727, 0, 0.8377378, -4.6623363, 1.7232037, -4.901679)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass25" type="Sprite3D" parent="Decoration/Grass34" unique_id=1811398473]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 26.866735, 1.7232037, 0.47430134)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass26" type="Sprite3D" parent="Decoration/Grass34" unique_id=166791965]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 19.92425, 0, 5.8451242)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("13_gourg")
+
+[node name="Grass27" type="Sprite3D" parent="Decoration/Grass34" unique_id=388955848]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 24.410978, 2.1883197, 2.9978495)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("14_pfopj")
+
+[node name="Grass28" type="Sprite3D" parent="Decoration/Grass34" unique_id=1467454223]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 18.172647, 0, 8.325888)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass29" type="Sprite3D" parent="Decoration/Grass34" unique_id=1091724705]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 27.86603, 0, 2.0073328)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="Grass30" type="Sprite3D" parent="Decoration/Grass34" unique_id=1973776118]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 18.924955, 4.0999255, 4.312093)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("17_6hnec")
+
+[node name="Grass31" type="Sprite3D" parent="Decoration/Grass34" unique_id=1072929307]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 23.411684, 7.304361, 1.464818)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("18_cnjw8")
+
+[node name="Grass32" type="Sprite3D" parent="Decoration/Grass34" unique_id=609023482]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 17.173353, 1.7232037, 6.7928553)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("15_uf87e")
+
+[node name="Grass33" type="Sprite3D" parent="Decoration/Grass34" unique_id=1496771132]
+transform = Transform3D(0.8377187, 0, -0.5461019, 0, 1, 0, 0.5461019, 0, 0.8377187, 26.866735, 1.7232037, 0.47430134)
+layers = 16
+cast_shadow = 0
+gi_mode = 0
+flip_h = true
+shaded = true
+alpha_cut = 1
+alpha_antialiasing_mode = 1
+texture_filter = 0
+texture = ExtResource("16_8adi0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Decoration" unique_id=130873620]
+transform = Transform3D(5.61, 0, 0, 0, 5.61, 0, 0, 0, 5.61, 5.330888, 0, -12.927767)
+mesh = ExtResource("19_pfopj")
+surface_material_override/0 = SubResource("StandardMaterial3D_uf87e")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1989030422]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9990907, 0.36300445, 4.0377636)

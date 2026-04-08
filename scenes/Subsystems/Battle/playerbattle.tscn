@@ -1,6 +1,57 @@
 [gd_scene format=3 uid="uid://bx8i0c2imivm7"]
 
 [ext_resource type="Script" uid="uid://ddq30orri5m8d" path="res://scenes/Subsystems/Battle/playerbattle.gd" id="1_r71ut"]
+[ext_resource type="SpriteFrames" uid="uid://ux5x06gl5ny2" path="res://assets/images/annie/anniesprites.tres" id="2_56xoi"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_56xoi"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_up0oj"]
+viewport_path = NodePath("Sprite")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p2w5e"]
+resource_local_to_scene = true
+render_priority = 1
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = SubResource("ViewportTexture_up0oj")
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lp11n"]
+resource_local_to_scene = true
+next_pass = SubResource("StandardMaterial3D_p2w5e")
+transparency = 1
+albedo_texture = SubResource("ViewportTexture_56xoi")
+billboard_mode = 2
+billboard_keep_scale = true
+stencil_mode = 2
+stencil_flags = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_p2h31"]
+viewport_path = NodePath("Sprite")
 
 [node name="playerbattle" type="Node3D" unique_id=1013336732]
 script = ExtResource("1_r71ut")
+
+[node name="Sprite" type="SubViewport" parent="." unique_id=1009704661]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Sprite" unique_id=317859182]
+position = Vector2(256, 256)
+scale = Vector2(0.3, 0.3)
+sprite_frames = ExtResource("2_56xoi")
+animation = &"walk_side"
+
+[node name="Fake_Sprite" type="Sprite3D" parent="." unique_id=1388090146]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.107071996, 0)
+material_overlay = SubResource("StandardMaterial3D_lp11n")
+billboard = 2
+shaded = true
+texture = SubResource("ViewportTexture_p2h31")
