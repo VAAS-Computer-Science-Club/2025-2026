@@ -28,6 +28,7 @@ func _ready() -> void:
 	global.InteractRadius.connect(InteractLogic)
 	global.dialog.connect(dialog)
 	global.finishedDialog.connect(end_dialog)
+	
 
 func dialog():
 	dialog_lock(true)
@@ -43,7 +44,7 @@ func dialog_lock(lock):
 
 func InteractLogic(can_interact, node):
 	interact_node = node
-
+var justswitched = false
 func _physics_process(delta: float) -> void:
 	healthbar.value = global.health
 	healthbar.max_value = global.maxhealth
@@ -96,9 +97,11 @@ func _physics_process(delta: float) -> void:
 						velocity.x = direction.x * SPEED
 						velocity.z = direction.z * SPEED
 		play_animation(input_dir)
+
 		if (can_move == true):
 			move_and_slide()
-	
+	if (velocity != Vector3.ZERO && $"Footste[".playing == false && isbattling == false):
+		$"Footste[".play()
 	
 
 func play_animation(direction):

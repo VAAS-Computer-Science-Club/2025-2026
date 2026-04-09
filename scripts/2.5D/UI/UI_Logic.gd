@@ -21,10 +21,13 @@ func end_dialog():
 	dialogBox.visible = false
 	$"../../../dialog_box".visible = false
 	dialogSprite.visible = false
-
-
+signal textfinished
+var queuedText = 0
 func dialog(spoken):
+	print(dialogActive)
 	if (dialogActive == false):
+		dialogActive = true
+		print("ran")
 		dialogBox.visible = true
 		$"../../../dialog_box".visible = true
 		dialogSprite.visible = true
@@ -33,7 +36,9 @@ func dialog(spoken):
 		run_dialog(spoken.dialog)
 	else:
 		dialogActive = false
-		await get_tree().create_timer(0.05).timeout
+		queuedText += 1
+		for x in queuedText:
+			await dialogfinished
 		dialog(spoken)
 func set_actor(actor):
 	$"../../../AnimatedSprite2D/SwitchSprite".play("SwitchSprite")
@@ -48,7 +53,7 @@ func set_actor(actor):
 			dialogSprite.play("ricardo")
 
 var dialogActive = false
-
+signal dialogfinished
 func run_dialog(dialog : String):
 	dialogBox.clear()
 	dialogActive = true
@@ -71,9 +76,9 @@ func run_dialog(dialog : String):
 		if (dialog[iteration]) == "-":
 			extratime = -0.15
 		await get_tree().create_timer(0.05 + extratime).timeout
-		
 		dialogBox.add_text(dialog[iteration])
 	dialogActive = false
+	dialogfinished.emit()
 
 var ismovinghealth = false
 func hurt(damage):
@@ -91,6 +96,8 @@ func hurt(damage):
 		hurt(damage)
 
 func _process(delta: float) -> void:
+	if (dialogBox.visible):
+		global.dialogactive = true
 	if (global.health <= 0):
 		$"../../../TextureRect".visible = true
 		await get_tree().create_timer(20).timeout

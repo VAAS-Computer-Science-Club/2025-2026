@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c6xascym17tst" path="res://assets/images/under.png" id="2_7m7ow"]
 [ext_resource type="Texture2D" uid="uid://b10klil5r52l7" path="res://assets/images/over.png" id="3_vijvp"]
 [ext_resource type="Texture2D" uid="uid://cu2xjqhfxbqks" path="res://assets/images/progress.png" id="4_otu8x"]
+[ext_resource type="AudioStream" uid="uid://ctjnkviqqvxhx" path="res://assets/audio/footste[.mp3" id="6_vijvp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7emhp"]
 size = Vector3(1, 0.3701172, 1)
@@ -138,3 +139,6 @@ spot_range = 5.895
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.86210614, 0)
 layers = 0
 mesh = SubResource("PlaneMesh_7m7ow")
+
+[node name="Footste[" type="AudioStreamPlayer" parent="." unique_id=265673813]
+stream = ExtResource("6_vijvp")

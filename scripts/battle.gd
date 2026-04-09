@@ -1,5 +1,5 @@
 extends Control
-@onready var healthidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel
+@onready var healthidentifier = $UI/SubViewport/TextureRect/RichTextLabel
 @onready var spidentifier = $UI/SubViewport/TextureRect/TextureProgressBar
 @onready var heads = $UI/SubViewport/TextureRect/heads
 @onready var tails = $UI/SubViewport/TextureRect/tails
@@ -60,8 +60,8 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	healthidentifier.clear()
-	healthidentifier.add_text("Health: " + str(playerbasefighter.health) + "/" + str(playerbasefighter.maxhealth))
+	healthidentifier.value = global.health
+	healthidentifier.max_value = global.maxhealth
 	spidentifier.value = playerbasefighter.sp
 	global.health = playerbasefighter.health
 	if (playeraction != null && enemyaction != null && thoughtenemyaction == false):
@@ -78,17 +78,6 @@ func _process(delta: float) -> void:
 		if (playeraction != null):
 			if (playersubcoins == playeraction.coin_count):
 				var enemyValue = enemyaction.roll_skill(enemy.base.sp,enemysubcoins)
-				playerbasefighter.damage(enemyValue[0])
-				playerbasefighter.damagesp(0.1)
-				enemy.base.healSp(0.1)
-				isPlayerturn = false
-				playeraction = null
-				enemyaction = null
-				thoughtenemyaction = false
-				enemysubcoins = 0
-				playersubcoins = 0
-				genskill = false
-				skill1button.get_parent().visible = false
 				var tween : Tween = get_tree().create_tween()
 				var tweenb : Tween = get_tree().create_tween()
 				$Running.play()
@@ -106,24 +95,23 @@ func _process(delta: float) -> void:
 					enemy,"global_position",Vector3(baseenemyLocation),0.2
 				)
 				enemy.anim.play("idle_side")
+				playerbasefighter.damage(enemyValue[0])
+				playerbasefighter.damagesp(0.1)
+				enemy.base.healSp(0.1)
+				isPlayerturn = false
+				playeraction = null
+				enemyaction = null
+				thoughtenemyaction = false
+				enemysubcoins = 0
+				playersubcoins = 0
+				genskill = false
+				skill1button.get_parent().visible = false
 				return
 				#enemy fully won
 				pass
 		if (enemyaction != null && playeraction != null):
 			if (enemysubcoins == enemyaction.coin_count):
 				#player fully won
-				var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
-				enemy.base.damage(playerValue[0])
-				enemy.base.damagesp(0.10)
-				playerbasefighter.healSp(0.1)
-				isPlayerturn = false
-				playeraction = null
-				enemyaction = null
-				enemysubcoins = 0
-				playersubcoins = 0
-				thoughtenemyaction = false
-				genskill = false
-				skill1button.get_parent().visible = false
 				var tween : Tween = get_tree().create_tween()
 				var tweenb : Tween = get_tree().create_tween()
 				tweenb.tween_property(
@@ -143,6 +131,18 @@ func _process(delta: float) -> void:
 				player.anim.play("idle_side")
 				print("player fully won!")
 				print(enemy.base.health)
+				var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
+				enemy.base.damage(playerValue[0])
+				enemy.base.damagesp(0.10)
+				playerbasefighter.healSp(0.1)
+				isPlayerturn = false
+				playeraction = null
+				enemyaction = null
+				enemysubcoins = 0
+				playersubcoins = 0
+				thoughtenemyaction = false
+				genskill = false
+				skill1button.get_parent().visible = false
 				return
 		if (playeraction != null && enemyaction != null):
 			var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
@@ -249,6 +249,7 @@ func _process(delta: float) -> void:
 	if (global.health == 0):
 		pass #gameover
 	if (enemy.base.health <= 0):
+		global.combat = 1
 		global.isbattling = false
 		player.isbattling = false
 		enemymain.die()
@@ -277,6 +278,7 @@ func onskillbutton1_Pressed() -> void:
 @onready var skillb : Skill
 func attack_on_button_pressed() -> void:
 	if (playeraction == null):
+		print("attackbutton")
 		$Button.pitch_scale = 1
 		$Button.play()
 		genskill = true
@@ -294,9 +296,25 @@ func dif_skills(skill : Skill, basefighter : baseFighter):
 	else:
 		return 3
 
-func item_on_button_2_pressed() -> void:
-	pass # Replace with function body.
 
 
 func flee_on_button_3_pressed() -> void:
 	pass # Replace with function body.
+
+
+func _on_fight_pressed() -> void:
+	if (playeraction == null):
+		playeraction = playerbasefighter.skill1
+		skill1button.get_parent().visible = false
+		$Button.pitch_scale = 1.2
+		$Button.play()
+
+
+func _on_item_pressed() -> void:
+	$Button.pitch_scale = -0.3
+	$Button.play()
+
+
+func _on_flee_pressed() -> void:
+	$Button.pitch_scale = -0.3
+	$Button.play()

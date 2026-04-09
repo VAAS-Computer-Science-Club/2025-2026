@@ -5,10 +5,10 @@ class_name NPC
 
 
 var conversation = {
-	0 : spoken.new("Baller", global.actor_states.Annie),
-	1 : spoken.new("Baller", global.actor_states.Calypso),
-	2 : spoken.new("Baller.", global.actor_states.Ricardo),
-	3: spoken.new("WHAT?!!", global.actor_states.Annie)
+	0 : spoken.new("Who are you? Why are you just standing here?", global.actor_states.Annie),
+	1 : spoken.new("The flames are nice", global.actor_states.Calypso),
+	2 : spoken.new("The heat is kinda soothing", global.actor_states.Calypso),
+	3: spoken.new("Well, alright then.", global.actor_states.Annie)
 }
 
 var current_dialog = 0

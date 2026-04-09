@@ -2,18 +2,21 @@
 
 [ext_resource type="Script" uid="uid://bn1n1oxwimmy4" path="res://scripts/battle.gd" id="1_d844g"]
 [ext_resource type="Texture2D" uid="uid://cxk2odrxitx8g" path="res://assets/images/heads.png" id="3_78ltx"]
+[ext_resource type="Texture2D" uid="uid://8bpsdgthgu1f" path="res://assets/images/Box Yes Infill.png" id="4_0ynuc"]
 [ext_resource type="Texture2D" uid="uid://cfqlnk3rl2tn2" path="res://assets/images/tails.png" id="4_r6uqb"]
+[ext_resource type="Texture2D" uid="uid://dnyxqmhduvqj6" path="res://assets/images/Skill.png" id="7_w65wj"]
+[ext_resource type="Texture2D" uid="uid://c6xascym17tst" path="res://assets/images/under.png" id="8_abfx6"]
+[ext_resource type="Texture2D" uid="uid://b1f04m88i0ff" path="res://assets/images/Attack.png" id="8_h47ea"]
+[ext_resource type="Texture2D" uid="uid://t758gwd560im" path="res://assets/images/Item.png" id="9_abfx6"]
+[ext_resource type="Texture2D" uid="uid://b10klil5r52l7" path="res://assets/images/over.png" id="9_eukx7"]
+[ext_resource type="Texture2D" uid="uid://cu2xjqhfxbqks" path="res://assets/images/progress.png" id="10_27kv5"]
+[ext_resource type="Texture2D" uid="uid://c8hdqqoe4dvgf" path="res://assets/images/Flee.png" id="10_eukx7"]
 [ext_resource type="AudioStream" uid="uid://c22edlmrsmks6" path="res://assets/audio/clash.mp3" id="14_0ynuc"]
 [ext_resource type="Texture2D" uid="uid://dnlm6apjc3eb1" path="res://assets/images/Stamina outline.png" id="14_27kv5"]
 [ext_resource type="AudioStream" uid="uid://wj0gupgis15l" path="res://assets/audio/button.mp3" id="15_abfx6"]
 [ext_resource type="Texture2D" uid="uid://ybrwqlcph1xd" path="res://assets/images/Stamina counting.png" id="15_jr4ek"]
 [ext_resource type="AudioStream" uid="uid://dxfnieeymnqke" path="res://assets/audio/stab.mp3" id="15_w65wj"]
 [ext_resource type="AudioStream" uid="uid://enxvp67igsoc" path="res://assets/audio/running.mp3" id="16_h47ea"]
-
-[sub_resource type="Gradient" id="Gradient_d844g"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_78ltx"]
-gradient = SubResource("Gradient_d844g")
 
 [sub_resource type="Gradient" id="Gradient_qjeci"]
 colors = PackedColorArray(0.91764706, 0.3647059, 0, 1, 1, 1, 0, 1)
@@ -122,29 +125,13 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="TextureRect" type="TextureRect" parent="UI/SubViewport" unique_id=565026902]
-offset_left = 31.0
-offset_top = 470.0
-offset_right = 480.0
-offset_bottom = 622.0
-texture = SubResource("GradientTexture2D_78ltx")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=861881291]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -31.0
-offset_right = 452.0
-grow_vertical = 0
-
-[node name="Button" type="Button" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=718711562]
-layout_mode = 2
-text = "Attack"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/SubViewport/TextureRect/HBoxContainer" unique_id=311630320]
-custom_minimum_size = Vector2(128, 0)
-layout_mode = 2
-text = "Health: "
+offset_left = 192.0
+offset_top = -34.0
+offset_right = 933.0
+offset_bottom = 707.0
+texture = ExtResource("4_0ynuc")
+expand_mode = 4
+stretch_mode = 5
 
 [node name="heads" type="TextureRect" parent="UI/SubViewport/TextureRect" unique_id=1041645540]
 visible = false
@@ -168,13 +155,78 @@ texture = ExtResource("4_r6uqb")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/SubViewport/TextureRect" unique_id=1188648668]
+layout_mode = 0
+offset_left = 715.0
+offset_top = 424.0
+offset_right = 971.0
+offset_bottom = 680.0
+max_value = 0.45
+step = 0.01
+value = 0.45
+nine_patch_stretch = true
+texture_under = ExtResource("14_27kv5")
+texture_progress = ExtResource("15_jr4ek")
+
+[node name="fight" type="TextureButton" parent="UI/SubViewport/TextureRect" unique_id=2087377205]
+layout_mode = 0
+offset_top = 322.0
+offset_right = 264.0
+offset_bottom = 567.0
+texture_normal = ExtResource("8_h47ea")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RichTextLabel" type="TextureProgressBar" parent="UI/SubViewport/TextureRect" unique_id=2066312294]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 0
+offset_left = -159.0
+offset_top = 520.0
+offset_right = -31.0
+offset_bottom = 648.0
+fill_mode = 4
+texture_under = ExtResource("8_abfx6")
+texture_over = ExtResource("9_eukx7")
+texture_progress = ExtResource("10_27kv5")
+
+[node name="item" type="TextureButton" parent="UI/SubViewport/TextureRect" unique_id=508753051]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 322.0
+offset_right = 814.0
+offset_bottom = 599.0
+texture_normal = ExtResource("9_abfx6")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="flee" type="TextureButton" parent="UI/SubViewport/TextureRect" unique_id=217520292]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 476.0
+offset_right = 472.0
+offset_bottom = 617.0
+texture_normal = ExtResource("10_eukx7")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="skill" type="TextureButton" parent="UI/SubViewport/TextureRect" unique_id=1896324380]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 0
+offset_left = 236.0
+offset_top = 148.0
+offset_right = 492.0
+offset_bottom = 404.0
+texture_normal = ExtResource("7_w65wj")
+ignore_texture_size = true
+stretch_mode = 5
+
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/SubViewport/TextureRect" unique_id=1524147359]
 visible = false
 layout_mode = 0
-offset_left = 1.0
-offset_top = 43.0
-offset_right = 77.0
-offset_bottom = 109.0
+offset_left = 326.0
+offset_top = 400.0
+offset_right = 402.0
+offset_bottom = 466.0
 
 [node name="Button" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=1886329731]
 layout_mode = 2
@@ -183,19 +235,6 @@ text = "Skill One"
 [node name="Button2" type="Button" parent="UI/SubViewport/TextureRect/VBoxContainer" unique_id=604864705]
 layout_mode = 2
 text = "Skill Two"
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/SubViewport/TextureRect" unique_id=1188648668]
-layout_mode = 0
-offset_left = 191.0
-offset_top = -99.0
-offset_right = 447.0
-offset_bottom = 157.0
-max_value = 0.45
-step = 0.01
-value = 0.45
-nine_patch_stretch = true
-texture_under = ExtResource("14_27kv5")
-texture_progress = ExtResource("15_jr4ek")
 
 [node name="PlayerCoinValue" type="RichTextLabel" parent="UI/SubViewport" unique_id=1702785780]
 offset_left = 127.0
@@ -233,6 +272,9 @@ stream = ExtResource("15_w65wj")
 stream = ExtResource("16_h47ea")
 volume_db = -4.0
 
-[connection signal="pressed" from="UI/SubViewport/TextureRect/HBoxContainer/Button" to="." method="attack_on_button_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/fight" to="." method="_on_fight_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/item" to="." method="_on_item_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/flee" to="." method="_on_flee_pressed"]
+[connection signal="pressed" from="UI/SubViewport/TextureRect/skill" to="." method="attack_on_button_pressed"]
 [connection signal="pressed" from="UI/SubViewport/TextureRect/VBoxContainer/Button" to="." method="onskillbutton1_Pressed"]
 [connection signal="pressed" from="UI/SubViewport/TextureRect/VBoxContainer/Button2" to="." method="onskillbutton2Pressed"]

@@ -14,7 +14,7 @@ func set_movement_target(movement_target: Vector3):
 
 func _physics_process(delta):
 	# Save the delta for use in _on_velocity_computed.
-	if (!isbattling):
+	if (isbattling == false):
 		if (following):
 			battler.anim.play("walk_side")
 		else:
@@ -22,34 +22,38 @@ func _physics_process(delta):
 			
 		if (following && followingwho != null):
 			set_movement_target(followingwho.global_position)
-		physics_delta = delta
-		# Do not query when the map has never synchronized and is empty.
-		if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
-			return
-		if navigation_agent.is_navigation_finished():
-			return
-
-		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
-		var new_velocity: Vector3 = global_position.direction_to(next_path_position) * movement_speed
-		if navigation_agent.avoidance_enabled:
-			navigation_agent.set_velocity(new_velocity)
-		else:
-			_on_velocity_computed(new_velocity)
-
+			physics_delta = delta
+			# Do not query when the map has never synchronized and is empty.
+			if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
+				return
+			if navigation_agent.is_navigation_finished():
+				return
+	
+			var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+			var new_velocity: Vector3 = global_position.direction_to(next_path_position) * movement_speed
+			if navigation_agent.avoidance_enabled:
+				navigation_agent.set_velocity(new_velocity)
+			else:
+				_on_velocity_computed(new_velocity)
+	
 func _on_velocity_computed(safe_velocity: Vector3) -> void:
 	global_position = global_position.move_toward(global_position + safe_velocity, physics_delta * movement_speed)
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if (body.is_in_group("player") && !isbattling):
-		set_movement_target(body.global_position)
-		following = true
-		followingwho = body
+		print("here")
+		if (body.isbattling == false && body.active_transfer == false):
+			print("here")
+			set_movement_target(body.global_position)
+			following = true
+			followingwho = body
 
 
 func _on_area_3d_body_exited(body: Node3D) -> void:
 	if (following && followingwho != null && !isbattling):
-		followingwho = null
-		following = false
+		if (followingwho == body):
+			followingwho = null
+			following = false
 
 func die():
 	get_parent().add_child($GPUParticles3D.duplicate())
@@ -58,4 +62,5 @@ func die():
 
 func _on_area_3d_2_body_entered(body: Node3D) -> void:
 	if (body.is_in_group("player") && !isbattling):
-		global.battle(self,body)
+		if (!body.isbattling && !body.active_transfer):
+			global.battle(self,body)
