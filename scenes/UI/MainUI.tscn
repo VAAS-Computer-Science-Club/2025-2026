@@ -22,7 +22,5 @@ script = ExtResource("1_sb5dd")
 
 [node name="State" type="RichTextLabel" parent="Dev Stats" unique_id=1698515972]
 layout_mode = 2
-text = "Idle
-Big 
-Balls"
+text = "Idle"
 fit_content = true

@@ -1011,3 +1011,4 @@ light_energy = 16.0
 shadow_enabled = true
 
 [node name="enemy" parent="." unique_id=388640629 instance=ExtResource("19_1xxja")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.454888, 0, 0)

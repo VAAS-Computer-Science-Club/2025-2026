@@ -71,6 +71,7 @@ sky_material = SubResource("ShaderMaterial_4lcvh")
 [sub_resource type="Environment" id="Environment_abxe4"]
 background_mode = 2
 sky = SubResource("Sky_grfr1")
+sky_rotation = Vector3(4.79791, 0, 0)
 ambient_light_source = 1
 reflected_light_source = 1
 tonemap_mode = 4

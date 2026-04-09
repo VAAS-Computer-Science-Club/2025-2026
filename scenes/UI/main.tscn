@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://d4jyjv2w8xgw7" path="res://assets/images/annie/annie_idle.png" id="12_glou8"]
 [ext_resource type="Texture2D" uid="uid://cqt0fpchpul7d" path="res://assets/images/mantis/mantisthing.png" id="13_bkahq"]
 [ext_resource type="Texture2D" uid="uid://hqxrgsi505kb" path="res://assets/images/ricardo.png" id="14_bkahq"]
+[ext_resource type="Texture2D" uid="uid://dcp8mah1vhxye" path="res://assets/images/gameover.png" id="15_netu8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_glou8"]
 atlas = ExtResource("7_uot0q")
@@ -420,11 +421,7 @@ shadow_offset = Vector2(20, 30)
 
 [node name="Main" type="Control" unique_id=1006127574]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
 [node name="World" type="SubViewportContainer" parent="." unique_id=829929121]
 layout_mode = 0
@@ -439,11 +436,9 @@ render_target_update_mode = 4
 [node name="World" parent="World/World" unique_id=361932945 instance=ExtResource("1_wodnj")]
 
 [node name="UI" type="SubViewportContainer" parent="." unique_id=143667236]
-layout_mode = 1
-offset_left = -575.7
-offset_top = -300.0
-offset_right = 576.3
-offset_bottom = 348.0
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
 
 [node name="UI" type="SubViewport" parent="UI" unique_id=218909754]
 transparent_bg = true
@@ -452,10 +447,15 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="UI" parent="UI/UI" unique_id=1137044431 instance=ExtResource("2_es7p3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 script = ExtResource("3_wodnj")
 
 [node name="HBOX" type="HBoxContainer" parent="UI/UI/UI" unique_id=256879812]
-layout_mode = 1
+layout_mode = 0
 offset_right = 280.0
 offset_bottom = 128.0
 scale = Vector2(1.25, 1.25)
@@ -508,30 +508,17 @@ texture = ExtResource("7_yql6x")
 stretch_mode = 4
 
 [node name="E" type="TextureRect" parent="UI/UI/UI" unique_id=869101158]
-visible = false
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -149.0
-offset_top = -149.0
-offset_right = -21.0
-offset_bottom = -21.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 0
+offset_left = 1066.0
+offset_top = 569.0
+offset_right = 1194.0
+offset_bottom = 697.0
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_n1upn")
 
 [node name="fade" type="AnimationPlayer" parent="UI/UI/UI" unique_id=108996202]
 libraries/ = SubResource("AnimationLibrary_glou8")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1204593165]
-limit_left = 0
-limit_top = 0
-limit_right = 1152
-limit_bottom = 648
 
 [node name="fade" type="AnimationPlayer" parent="." unique_id=140220353]
 libraries/ = SubResource("AnimationLibrary_glou8")
@@ -539,10 +526,8 @@ libraries/ = SubResource("AnimationLibrary_glou8")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1013686276]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = -427.3
-offset_top = -261.0
-offset_right = 1438.7
-offset_bottom = 971.0
+offset_right = 1866.0
+offset_bottom = 1232.0
 color = Color(0, 0, 0, 1)
 
 [node name="Loading_Screen" parent="." unique_id=1261572481 instance=ExtResource("11_yql6x")]
@@ -556,7 +541,7 @@ offset_bottom = 321.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1402839095]
 visible = false
 position = Vector2(347.69998, 433)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.305, 0.305)
 sprite_frames = SubResource("SpriteFrames_pg1qy")
 animation = &"ricardo"
 autoplay = "annie"
@@ -568,20 +553,23 @@ speed_scale = 5.0
 
 [node name="dialog_box" type="PanelContainer" parent="." unique_id=1031190056]
 visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -350.0
-offset_top = -200.0
-offset_right = 350.0
-grow_horizontal = 2
-grow_vertical = 0
+layout_mode = 0
+offset_left = 210.0
+offset_top = 438.0
+offset_right = 910.0
+offset_bottom = 638.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_yql6x")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="dialog_box" unique_id=550154651]
 layout_mode = 2
 text = "mute"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1605931848]
+visible = false
+layout_mode = 0
+offset_left = -7.0
+offset_right = 1155.0
+offset_bottom = 646.0
+texture = ExtResource("15_netu8")
+expand_mode = 2

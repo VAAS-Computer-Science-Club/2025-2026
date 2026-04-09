@@ -1,5 +1,4 @@
 extends Control
-@onready var player : Node3D = $playerbattle
 @onready var healthidentifier = $UI/SubViewport/TextureRect/HBoxContainer/RichTextLabel
 @onready var spidentifier = $UI/SubViewport/TextureRect/TextureProgressBar
 @onready var heads = $UI/SubViewport/TextureRect/heads
@@ -11,9 +10,11 @@ extends Control
 @onready var skill2button = $UI/SubViewport/TextureRect/VBoxContainer/Button2
 @onready var PlayerCoinValue = $UI/SubViewport/PlayerCoinValue
 @onready var EnemyCoinValue = $UI/SubViewport/EnemyCoinValue
+@onready var player : CharacterBody3D
 var playerbasefighter : baseFighter
-var enemypreload = preload("res://scenes/Subsystems/Battle/enemybattle.tscn")
+var enemypreload = preload("res://scenes/Entities/2.5D/enemy.tscn")
 var enemy
+var enemymain
 var isPlayerturn = false
 var mainscene
 var thoughtenemyaction = false
@@ -27,13 +28,27 @@ var tieamount = 0
 var baseplayerLocation : Vector3
 var baseenemyLocation : Vector3
 var midpoint : Vector3
+var wasenemynull = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	enemy = enemypreload.instantiate()
-	self.add_child(enemy)
+	var marker
+	if (enemymain == null):
+		enemymain = enemypreload.instantiate()
+		self.add_child(enemymain)
+		marker = Marker3D.new()
+		add_child(marker)
+		marker.global_position = player.global_position + Vector3(4,0,0)
+		wasenemynull = true
+	enemy = enemymain.battler
+	enemymain.isbattling = true
 	playerbasefighter = player.base
+	player.isbattling = true
 	baseplayerLocation = player.global_position
-	enemy.global_position = $"BattleVisuals/SubViewport/Level Node/Marker3D".global_position
+	if (wasenemynull || player.global_position.distance_to(enemymain.global_position) < 5):
+		marker = Marker3D.new()
+		add_child(marker)
+		marker.global_position = player.global_position + Vector3(4,0,0)
+		enemymain.global_position = marker.global_position
 	baseenemyLocation = enemy.global_position
 	midpoint = Vector3(
 		(baseplayerLocation.x+baseenemyLocation.x)/2,
@@ -45,10 +60,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
 	healthidentifier.clear()
 	healthidentifier.add_text("Health: " + str(playerbasefighter.health) + "/" + str(playerbasefighter.maxhealth))
 	spidentifier.value = playerbasefighter.sp
+	global.health = playerbasefighter.health
 	if (playeraction != null && enemyaction != null && thoughtenemyaction == false):
 		midpoint = Vector3(midpoint.x + randf_range(-1,1),midpoint.y,midpoint.z + randf_range(-1,1))
 		$UI/SubViewport/TextureRect.visible = false
@@ -100,6 +115,7 @@ func _process(delta: float) -> void:
 				var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
 				enemy.base.damage(playerValue[0])
 				enemy.base.damagesp(0.10)
+				playerbasefighter.healSp(0.1)
 				isPlayerturn = false
 				playeraction = null
 				enemyaction = null
@@ -125,6 +141,8 @@ func _process(delta: float) -> void:
 					player,"global_position",Vector3(baseplayerLocation),0.2
 				)
 				player.anim.play("idle_side")
+				print("player fully won!")
+				print(enemy.base.health)
 				return
 		if (playeraction != null && enemyaction != null):
 			var playerValue = playeraction.roll_skill(playerbasefighter.sp,playersubcoins)
@@ -228,6 +246,14 @@ func _process(delta: float) -> void:
 		if (thoughtenemyaction == false && enemyaction == null):
 			enemyaction = enemy.action()
 		isPlayerturn = true
+	if (global.health == 0):
+		pass #gameover
+	if (enemy.base.health <= 0):
+		global.isbattling = false
+		player.isbattling = false
+		enemymain.die()
+		await get_tree().create_timer(0.5)
+		self.queue_free()
 
 
 

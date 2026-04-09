@@ -90,6 +90,16 @@ func hurt(damage):
 		await get_tree().create_timer(0.1).timeout
 		hurt(damage)
 
+func _process(delta: float) -> void:
+	if (global.health <= 0):
+		$"../../../TextureRect".visible = true
+		await get_tree().create_timer(20).timeout
+		get_tree().quit()
+	self.visible = !global.isbattling
+	$HBOX.global_position = Vector2(-590,-320.78)
+	$HBOX/VBoxContainer/Health.value = global.health
+	$HBOX/VBoxContainer/Health.max_value = global.maxhealth
+
 
 func Interact(can_interact, node):
 	E.visible = can_interact

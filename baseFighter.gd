@@ -47,6 +47,9 @@ func damagesp(value):
 	sp = clamp(sp-value,0,maxsp)
 
 func damage(value):
+	if (health-value == 0):
+		health = 0
+		return
 	health = clamp(health-value,0,maxhealth)
 	
 	

@@ -1,6 +1,6 @@
 extends Node3D
 
-var health = 0
+var health = 10
 var sp = 0
 var maxsp = 0.45
 var maxhealth = 10
